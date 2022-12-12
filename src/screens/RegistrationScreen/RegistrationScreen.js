@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { auth, db } from '../../firebase/config'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import styles from './styles';
@@ -14,6 +15,33 @@ export default function RegistrationScreen({navigation}) {
     }
 
     const onRegisterPress = () => {
+        if (password !== confirmPassword) {
+            //Need change to UI designer
+            alert("As senhas não combinam!")
+            return
+        }
+        auth.createUserWithEmailAndPassword(email, password).then((response) => {
+            const uid = response.user.uid
+            const data = {
+                id: uid,
+                email,
+                fullName,
+            };
+            const usersRef = db.collection('users')
+            usersRef
+                .doc(uid)
+                .set(data)
+                .then(() => {
+                    navigation.navigate('Entrar', {user: data})
+                })
+                .catch((error) => {
+                     //Need Change to UI deisgner
+                    alert(error)
+                });
+        }).catch((error) => {
+            //Need Change to UI deisgner
+            alert(error)
+        });
     }
 
     return (
