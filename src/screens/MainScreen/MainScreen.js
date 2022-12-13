@@ -1,10 +1,14 @@
-import React from 'react'
-import { Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { FlatList, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import styles from './styles';
+import { firebase } from '../../firebase/config'
 
-export default function MainScreen(props) {
+export default function MainScreen({navigation}) {
+
+   
     return (
-        <View>
-            <Text>Home Screen</Text>
+        <View style={styles.container}>
+            <Text>Don't have an account?</Text>
         </View>
     )
 }

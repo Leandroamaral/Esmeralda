@@ -2,16 +2,18 @@ import React, { useState } from 'react'
 import { auth, db } from '../../firebase/config'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { LinearGradient } from 'expo-linear-gradient'
 import styles from './styles';
 
 export default function RegistrationScreen({navigation}) {
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [telefone, setTelefone] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
 
     const onFooterLinkPress = () => {
-        navigation.navigate('Entrar')
+        navigation.navigate('Login')
     }
 
     const onRegisterPress = () => {
@@ -25,14 +27,14 @@ export default function RegistrationScreen({navigation}) {
             const data = {
                 id: uid,
                 email,
-                fullName,
+                fullName
             };
             const usersRef = db.collection('users')
             usersRef
                 .doc(uid)
                 .set(data)
                 .then(() => {
-                    navigation.navigate('Entrar', {user: data})
+                    navigation.navigate('Home', {user: data})
                 })
                 .catch((error) => {
                      //Need Change to UI deisgner
@@ -51,7 +53,7 @@ export default function RegistrationScreen({navigation}) {
                 keyboardShouldPersistTaps="always">
                 <Image
                     style={styles.logo}
-                    source={require('../../../assets/icon.png')}
+                    source={require('../../../assets/logo.png')}
                 />
                 <TextInput
                     style={styles.input}
@@ -68,6 +70,15 @@ export default function RegistrationScreen({navigation}) {
                     placeholderTextColor="#aaaaaa"
                     onChangeText={(text) => setEmail(text)}
                     value={email}
+                    underlineColorAndroid="transparent"
+                    autoCapitalize="none"
+                />
+                  <TextInput
+                    style={styles.input}
+                    placeholder='Telefone'
+                    placeholderTextColor="#aaaaaa"
+                    onChangeText={(text) => setTelefone(text)}
+                    value={telefone}
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
@@ -92,9 +103,16 @@ export default function RegistrationScreen({navigation}) {
                     autoCapitalize="none"
                 />
                 <TouchableOpacity
-                    style={styles.button}
                     onPress={() => onRegisterPress()}>
-                    <Text style={styles.buttonTitle}>Criar Conta</Text>
+                    <LinearGradient
+                        // Button Linear Gradient
+                        colors={['#1d817e', '#2fa192', '#50c8cc']}
+                        start={[0, 0]}
+                        end={[1, 1]}
+                        location={[0.25, 0.4, 1]}
+                        style={styles.button}>
+                        <Text style={styles.buttonTitle}>Criar Conta</Text>
+                    </LinearGradient>
                 </TouchableOpacity>
                 <View style={styles.footerView}>
                     <Text style={styles.footerText}>Já tem uma conta? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Entrar</Text></Text>
