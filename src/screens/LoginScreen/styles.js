@@ -27,17 +27,17 @@ export default StyleSheet.create({
         paddingLeft: 16
     },
     button: {
-        backgroundColor: '#788eec',
+        backgroundColor: '#2fa192',
         marginLeft: 30,
         marginRight: 30,
         marginTop: 20,
         height: 48,
-        borderRadius: 5,
+        borderRadius: 15,
         alignItems: "center",
         justifyContent: 'center'
     },
     orangeButton:{
-        backgroundColor:'#4285F4'
+        backgroundColor:'#1d6167'
     },
     buttonTitle: {
         color: 'white',
