@@ -50,7 +50,7 @@ export default function LoginScreen({navigation}) {
                 />
                 <LinearGradient
                     // Button Linear Gradient
-                    colors={['#93C6F9', '#97B4FA', '#A768FE']}
+                    colors={['#1d817e', '#2fa192', '#50c8cc']}
                     start={[0, 0]}
                     end={[1, 1]}
                     location={[0.25, 0.4, 1]}
@@ -62,13 +62,22 @@ export default function LoginScreen({navigation}) {
                         <Text style={styles.buttonTitle}>Entrar</Text>
                     </TouchableOpacity>
                 </LinearGradient>
-                <TouchableOpacity
-                    style={[styles.button, styles.orangeButton]}
-                    onPress={() => onLoginGooglePress()}>
-                    <Text style={styles.buttonTitle}>Entrar com Google</Text>
-                </TouchableOpacity>
+                <LinearGradient
+                    // Button Linear Gradient
+                    colors={['#005582', '#0086ad', '#00c2c7']}
+                    start={[0, 0]}
+                    end={[1, 1]}
+                    location={[0.25, 0.4, 1]}
+                    style={styles.button}
+                >
+                    <TouchableOpacity
+                        style={[styles.button]}
+                        onPress={() => onLoginGooglePress()}>
+                        <Text style={styles.buttonTitle}>Entrar com Google</Text>
+                    </TouchableOpacity>
+                </LinearGradient>
                 <View style={styles.footerView}>
-                    <Text style={styles.footerText}>Não tem uma conta? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Registrar-se</Text></Text>
+                    <Text style={styles.footerText}>Não tem uma conta? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Registre-se</Text></Text>
                 </View>
             </KeyboardAwareScrollView>
         </View>

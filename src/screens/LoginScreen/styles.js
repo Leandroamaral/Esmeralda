@@ -31,7 +31,7 @@ export default StyleSheet.create({
         marginRight: 30,
         marginTop: 20,
         height: 48,
-        borderRadius: 15,
+        borderRadius: 30,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -41,6 +41,7 @@ export default StyleSheet.create({
     buttonTitle: {
         color: 'white',
         fontSize: 16,
+        marginTop: -20,
         fontWeight: "bold"
     },
     footerView: {
@@ -53,14 +54,9 @@ export default StyleSheet.create({
         color: '#2e2e2d'
     },
     footerLink: {
-        color: "#788eec",
+        color: "#0086ad",
         fontWeight: "bold",
         fontSize: 16
-    },
-    gradient: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems:'center',
-        borderRadius: 5
-      }
+    }
+
 })
