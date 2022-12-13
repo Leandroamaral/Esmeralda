@@ -2,6 +2,7 @@
   "expo": {
     "name": "react-native-firebase",
     "slug": "react-native-firebase",
+    "scheme":"com.esmeralda",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,9 +19,16 @@
       "**/*"
     ],
     "ios": {
+      "googleServicesFile":"./GoogleService-info.plist",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.125988439077-stj9pu1ulf5ec3absihsnp579rav8m3p"
+        }
+      },
       "supportsTablet": true
     },
     "android": {
+      "googleServicesFile":"./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

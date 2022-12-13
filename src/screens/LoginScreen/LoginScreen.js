@@ -1,14 +1,41 @@
-
 import React, { useState } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import {LinearGradient} from 'expo-linear-gradient'
 import { firebase } from '../../firebase/config'
+
+//Authetication Social
+import { ResponseType } from 'expo-auth-session';
+import * as Google from 'expo-auth-session/providers/google';
+import { getAuth, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
+import * as WebBrowser from 'expo-web-browser';
+WebBrowser.maybeCompleteAuthSession();
+
+
 import styles from './styles';
+
 
 export default function LoginScreen({navigation}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    const [request, response, promptAsync] = Google.useIdTokenAuthRequest(
+        {
+          clientId: '125988439077-lp5tcdml4r1p7rlp9pptecv58fvso9ri.apps.googleusercontent.com',
+        },
+    );
+    React.useEffect(() => {
+        if (response?.type === 'success') {
+          const { id_token } = response.params;
+          const auth = getAuth();
+          const credential = GoogleAuthProvider.credential(id_token);
+          signInWithCredential(auth, credential);
+        }
+    }, [response]);
+    
+    const onLoginGooglePress = () =>{
+        promptAsync();
+    }
 
     const onFooterLinkPress = () => {
         navigation.navigate('Registro')
@@ -42,9 +69,7 @@ export default function LoginScreen({navigation}) {
 
     }
 
-    const onLoginGooglePress = () =>{
-
-    }
+  
     
     return (
         <View style={styles.container}>

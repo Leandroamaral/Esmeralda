@@ -8,7 +8,7 @@ export default function MainScreen({navigation}) {
    
     return (
         <View style={styles.container}>
-            <Text>Don't have an account?</Text>
+            <Text>TO DO/ TO THE FROTNEND DEV haha</Text>
         </View>
     )
 }
