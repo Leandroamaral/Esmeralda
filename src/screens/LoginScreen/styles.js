@@ -27,13 +27,12 @@ export default StyleSheet.create({
         paddingLeft: 16
     },
     button: {
-        backgroundColor: '#2fa192',
         marginLeft: 30,
         marginRight: 30,
         marginTop: 20,
         height: 48,
         borderRadius: 15,
-        alignItems: "center",
+        alignItems: 'center',
         justifyContent: 'center'
     },
     orangeButton:{
@@ -57,5 +56,11 @@ export default StyleSheet.create({
         color: "#788eec",
         fontWeight: "bold",
         fontSize: 16
-    }
+    },
+    gradient: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems:'center',
+        borderRadius: 5
+      }
 })

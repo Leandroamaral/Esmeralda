@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {LinearGradient} from 'expo-linear-gradient'
 import styles from './styles';
 
 export default function LoginScreen({navigation}) {
@@ -27,15 +28,16 @@ export default function LoginScreen({navigation}) {
                     style={styles.logo}
                     source={require('../../../assets/icon.png')}
                 />
-                <TextInput
-                    style={styles.input}
-                    placeholder='E-mail'
-                    placeholderTextColor="#aaaaaa"
-                    onChangeText={(text) => setEmail(text)}
-                    value={email}
-                    underlineColorAndroid="transparent"
-                    autoCapitalize="none"
-                />
+                    <TextInput
+                        style={styles.input}
+                        placeholder='E-mail'
+                        placeholderTextColor="#aaaaaa"
+                        onChangeText={(text) => setEmail(text)}
+                        value={email}
+                        underlineColorAndroid="transparent"
+                        autoCapitalize="none"
+                    />
+                
                 <TextInput
                     style={styles.input}
                     placeholderTextColor="#aaaaaa"
@@ -46,11 +48,20 @@ export default function LoginScreen({navigation}) {
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
-                <TouchableOpacity
+                <LinearGradient
+                    // Button Linear Gradient
+                    colors={['#93C6F9', '#97B4FA', '#A768FE']}
+                    start={[0, 0]}
+                    end={[1, 1]}
+                    location={[0.25, 0.4, 1]}
                     style={styles.button}
-                    onPress={() => onLoginPress()}>
-                    <Text style={styles.buttonTitle}>Entrar</Text>
-                </TouchableOpacity>
+                >
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => onLoginPress()}>
+                        <Text style={styles.buttonTitle}>Entrar</Text>
+                    </TouchableOpacity>
+                </LinearGradient>
                 <TouchableOpacity
                     style={[styles.button, styles.orangeButton]}
                     onPress={() => onLoginGooglePress()}>
