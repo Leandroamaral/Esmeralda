@@ -11,7 +11,12 @@ import { firebase } from '../../firebase/config'
 function Feed() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Feed!</Text>
+      <Image
+            style={{width: 400 , 
+                height: 500,
+                marginLeft: -30}}
+            source={require('../../../assets/img1.png')}
+        />
     </View>
   );
 }
@@ -36,14 +41,21 @@ function LogoTitle() {
     return (
         <LinearGradient
             // Button Linear Gradient
-            colors={['#1d817e', '#2fa192', '#50c8cc']}
+            colors={['#21816d', '#3dab93', '#3debc5']}
             start={[0, 0]}
             end={[1, 1]}
             location={[0.25, 0.4, 1]}
-            style={{borderRadius: 30}}>
+            style={{borderRadius: 30,
+                    height: 200 
+            }}>
         <Image
-        style={{ width: 200, height: 200 }}
-        source={require('../../../assets/logo.png')}
+        style={{ 
+            width: 222, 
+            height: 65,
+            marginTop: 50,
+            alignSelf: "center"
+        }}
+        source={require('../../../assets/logobw.png')}
       />
       </LinearGradient>
      
@@ -58,9 +70,13 @@ function MyTabs() {
       initialRouteName="Feed"
       
       screenOptions={{
-        tabBarActiveTintColor: '#1d817e',
-        tabBarStyle: { borderRadius: 30 },
-        header: (props) => <LogoTitle {...props} />, 
+        tabBarActiveTintColor: 'white',
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarStyle: { 
+            height: 250,
+            backgroundColor: '#21816d'
+        },
       }}
     >
       <Tab.Screen
