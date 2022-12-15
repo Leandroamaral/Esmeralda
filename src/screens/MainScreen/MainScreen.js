@@ -73,6 +73,7 @@ function MyTabs() {
         tabBarActiveTintColor: 'white',
         headerShown: false,
         tabBarShowLabel: false,
+
         tabBarStyle: { 
             height: 250,
             backgroundColor: '#21816d'
