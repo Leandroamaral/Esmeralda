@@ -115,8 +115,13 @@ function MyTabs() {
 }
 
 export default function MainScreen({navigation}) {
-  return (
-      <MyTabs />
-  );
+
+    const onLogoutPress = () =>{
+        firebase.auth().signOut();
+        navigation.navigate("Login");
+    }
+    return (
+        <MyTabs />
+    );
 }
 

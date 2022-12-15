@@ -12,19 +12,20 @@ import { getAuth, GoogleAuthProvider, signInWithCredential } from 'firebase/auth
 import * as WebBrowser from 'expo-web-browser';
 WebBrowser.maybeCompleteAuthSession();
 
-
 import styles from './styles';
-
 
 export default function LoginScreen({navigation}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+
+    //Auth with google
     const [request, response, promptAsync] = Google.useIdTokenAuthRequest(
         {
           clientId: '125988439077-lp5tcdml4r1p7rlp9pptecv58fvso9ri.apps.googleusercontent.com',
         },
     );
+
     React.useEffect(() => {
         if (response?.type === 'success') {
           const { id_token } = response.params;
@@ -69,9 +70,7 @@ export default function LoginScreen({navigation}) {
         })
 
     }
-
   
-    
     return (
         <View style={styles.container}>
             <KeyboardAwareScrollView
