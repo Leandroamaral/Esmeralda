@@ -20,11 +20,6 @@
     ],
     "ios": {
       "googleServicesFile":"./GoogleService-info.plist",
-      "config": {
-        "googleSignIn": {
-          "reservedClientId": "com.googleusercontent.apps.125988439077-stj9pu1ulf5ec3absihsnp579rav8m3p"
-        }
-      },
       "supportsTablet": true
     },
     "android": {
