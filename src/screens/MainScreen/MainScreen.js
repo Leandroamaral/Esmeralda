@@ -1,30 +1,110 @@
 import * as React from 'react';
-import { Image, Text, View, Dimensions } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { Image, Text, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { getHeaderTitle } from '@react-navigation/elements';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient'
+import { Tile } from 'react-native-elements';
 import styles from './styles';
-import { firebase } from '../../firebase/config'
+import { firebase } from '../../firebase/config';
+import  {Corte, Alisamento} from './icons';
+
+
 
 
 function Feed() {
   return (
-    <View style={{ flex: 1,  marginTop: 25, marginLeft: 20 }}>
-      <Text style={{fontSize: 28}}>Olá, <Text style={{fontSize: 28, fontWeight: 'bold'}}>Leandro</Text></Text>
-      <Text>Bem vindo a <Text style={{fontSize: 16}}>Esmeralda Studio</Text></Text>
-      <Text></Text>
-      <Image
-        style={{width: 320 , 
-            height: 180,
-            borderRadius: 10,
-            }}
-        source={require('../../../assets/img1.png')}
-      />
-     
-    </View>
-    
+    <>
+    <SafeAreaView style={{flex: 1, padding: 10, flexDirection: "column"}}>
+      <ScrollView>
+        <View style={{ height: 80, marginTop: 40 }}>
+          <Text style={{fontSize: 28}}>Olá, <Text style={{fontSize: 28, fontWeight: 'bold'}}>Leandro</Text></Text>
+          <Text>Bem vindo a <Text style={{fontSize: 16}}>Esmeralda Studio</Text></Text>
+        </View>
+        <View style={{ height: 200, alignItems: "center"}}>
+          <Image
+            style={{width: 340 , 
+                height: 180,
+                borderRadius: 10,
+                }}
+            source={require('../../../assets/img1.png')}
+          />
+        </View>
+        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', position: 'relative', height: 220, flexWrap: 'wrap'}}>
+          
+          <View style={{backgroundColor: '#fff', height: 100, width: 80, borderRadius: 10, alignItems: 'center' }}>
+            <TouchableOpacity
+              style={{ 
+                borderRadius: 10, 
+                margin: 5, 
+                backgroundColor: '#eaeceb', 
+                width: 60, height: 60, 
+                marginTop: 12, 
+                alignItems: 'center',
+                justifyContent: 'center' }}>
+              <Corte width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={{color: "#92a494", fontSize: 12}}>Corte</Text>
+          </View>
+
+          <View style={{backgroundColor: '#fff', height: 100, width: 80, borderRadius: 10, alignItems: 'center' }}>
+            <TouchableOpacity
+              style={{ 
+                borderRadius: 10, 
+                margin: 5, 
+                backgroundColor: '#eaeceb', 
+                width: 60, height: 60, 
+                marginTop: 12, 
+                alignItems: 'center',
+                justifyContent: 'center' }}>
+              <Alisamento width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={{color: "#92a494", fontSize: 12}}>Corte</Text>
+          </View>
+          
+          <View style={{backgroundColor: '#fff', height: 100, width: 80, borderRadius: 10, alignItems: 'center' }}>
+            <TouchableOpacity
+              style={{ 
+                borderRadius: 10, 
+                margin: 5, 
+                backgroundColor: '#eaeceb', 
+                width: 60, height: 60, 
+                marginTop: 12, 
+                alignItems: 'center',
+                justifyContent: 'center' }}>
+              <Corte width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={{color: "#92a494", fontSize: 12}}>Corte</Text>
+          </View>
+          
+          <View style={{backgroundColor: '#fff', height: 100, width: 80, borderRadius: 10, alignItems: 'center' }}>
+            <TouchableOpacity
+              style={{ 
+                borderRadius: 10, 
+                margin: 5, 
+                backgroundColor: '#eaeceb', 
+                width: 60, height: 60, 
+                marginTop: 12, 
+                alignItems: 'center',
+                justifyContent: 'center' }}>
+              <Alisamento width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={{color: "#92a494", fontSize: 12}}>Corte</Text>
+          </View>
+          
+
+        </View>
+        
+        
+        <View style={{ height: 300, backgroundColor: "green"}}>
+          <Text> Aqui </Text>
+        </View>
+        <View style={{ height: 100, backgroundColor: "blue"}}>
+          <Text> Aqui </Text>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+
+    </>
   );
 }
 
