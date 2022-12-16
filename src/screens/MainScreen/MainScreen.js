@@ -1,27 +1,34 @@
 import * as React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, View, Dimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getHeaderTitle } from '@react-navigation/elements';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import {LinearGradient} from 'expo-linear-gradient'
+import { LinearGradient } from 'expo-linear-gradient'
 import styles from './styles';
 import { firebase } from '../../firebase/config'
 
+
 function Feed() {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ flex: 1,  marginTop: 25, marginLeft: 20 }}>
+      <Text style={{fontSize: 28}}>Olá, <Text style={{fontSize: 28, fontWeight: 'bold'}}>Leandro</Text></Text>
+      <Text>Bem vindo a <Text style={{fontSize: 16}}>Esmeralda Studio</Text></Text>
+      <Text></Text>
       <Image
-            style={{width: 400 , 
-                height: 500,
-                marginLeft: -30}}
-            source={require('../../../assets/img1.png')}
-        />
+        style={{width: 320 , 
+            height: 180,
+            borderRadius: 10,
+            }}
+        source={require('../../../assets/img1.png')}
+      />
+     
     </View>
+    
   );
 }
 
-function Profile() {
+function Agendar() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Profile!</Text>
@@ -29,7 +36,15 @@ function Profile() {
   );
 }
 
-function Notifications() {
+function Horarios() {
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Notifications!</Text>
+    </View>
+  );
+}
+
+function Perfil() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Notifications!</Text>
@@ -41,21 +56,23 @@ function LogoTitle() {
     return (
         <LinearGradient
             // Button Linear Gradient
-            colors={['#21816d', '#3dab93', '#3debc5']}
-            start={[0, 0]}
-            end={[1, 1]}
-            location={[0.25, 0.4, 1]}
-            style={{borderRadius: 30,
-                    height: 200 
+            colors={['#117C6F', '#2FC4B2']}
+
+            style={{height: 100,
+                    width: 400,
+                    flex: 1,
+                    marginLeft: -30,
+                    marginTop: -30
+
             }}>
         <Image
         style={{ 
-            width: 222, 
-            height: 65,
-            marginTop: 50,
+            width: 130, 
+            height: 45,
+            marginTop: 35,
             alignSelf: "center"
         }}
-        source={require('../../../assets/logobw.png')}
+        source={require('../../../assets/logobwb.png')}
       />
       </LinearGradient>
      
@@ -70,18 +87,13 @@ function MyTabs() {
       initialRouteName="Feed"
       
       screenOptions={{
-        tabBarActiveTintColor: 'white',
-        headerShown: false,
-        tabBarShowLabel: false,
-
-        tabBarStyle: { 
-            height: 250,
-            backgroundColor: '#21816d'
-        },
+        tabBarActiveTintColor: '#1d817e',
+        //headerTitle: (props) => <LogoTitle {...props} />
+        headerShown: false
       }}
     >
       <Tab.Screen
-        name="Feed"
+        name="Home"
         component={Feed}
         options={{
           tabBarLabel: 'Home',
@@ -91,20 +103,30 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Notifications"
-        component={Notifications}
+        name="Agendar"
+        component={Agendar}
         options={{
-          tabBarLabel: 'Updates',
+          tabBarLabel: 'Agendar',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="bell" color={color} size={size} />
+            <MaterialCommunityIcons name="calendar-clock" color={color} size={size} />
           ),
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={Profile}
+        name="Horarios"
+        component={Horarios}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'Horários',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="book-account-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Perfil"
+        component={Perfil}
+        options={{
+          tabBarLabel: 'Perfil',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="account" color={color} size={size} />
           ),
@@ -115,6 +137,12 @@ function MyTabs() {
 }
 
 export default function MainScreen({navigation}) {
+
+  const onLogoutPress = () =>{
+    firebase.auth().signOut();
+    navigation.navigate("Login");
+  }
+
   return (
       <MyTabs />
   );
