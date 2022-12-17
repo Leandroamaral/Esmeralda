@@ -6,14 +6,13 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { Tile } from 'react-native-elements';
 import styles from './styles';
 import { firebase } from '../../firebase/config';
-import  {Corte, Alisamento} from './icons';
+import { Corte, Hidratacao, Manicure, Tintura, Maquiagem, Alisamento, Cilios, Pedicure } from './icons';
 
 
 
 
 function Feed() {
   return (
-    <>
     <SafeAreaView style={{flex: 1, padding: 10, flexDirection: "column"}}>
       <ScrollView>
         <View style={{ height: 80, marginTop: 40 }}>
@@ -31,7 +30,7 @@ function Feed() {
         </View>
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', position: 'relative', height: 220, flexWrap: 'wrap'}}>
           
-          <View style={{backgroundColor: '#fff', height: 100, width: 80, borderRadius: 10, alignItems: 'center' }}>
+          <View style={{backgroundColor: '#fff', height: 100, width: 80, borderRadius: 10, alignItems: 'center', marginBottom: 5 }}>
             <TouchableOpacity
               style={{ 
                 borderRadius: 10, 
@@ -58,7 +57,22 @@ function Feed() {
                 justifyContent: 'center' }}>
               <Alisamento width={45} height={45} fill="#92a494" />
             </TouchableOpacity>
-            <Text style={{color: "#92a494", fontSize: 12}}>Corte</Text>
+            <Text style={{color: "#92a494", fontSize: 12}}>Alisamento</Text>
+          </View>
+
+          <View style={{backgroundColor: '#fff', height: 100, width: 80, borderRadius: 10, alignItems: 'center' }}>
+            <TouchableOpacity
+              style={{ 
+                borderRadius: 10, 
+                margin: 5, 
+                backgroundColor: '#eaeceb', 
+                width: 60, height: 60, 
+                marginTop: 12, 
+                alignItems: 'center',
+                justifyContent: 'center' }}>
+              <Tintura width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={{color: "#92a494", fontSize: 12}}>Tintura</Text>
           </View>
           
           <View style={{backgroundColor: '#fff', height: 100, width: 80, borderRadius: 10, alignItems: 'center' }}>
@@ -71,9 +85,39 @@ function Feed() {
                 marginTop: 12, 
                 alignItems: 'center',
                 justifyContent: 'center' }}>
-              <Corte width={45} height={45} fill="#92a494" />
+              <Manicure width={45} height={45} fill="#92a494" />
             </TouchableOpacity>
-            <Text style={{color: "#92a494", fontSize: 12}}>Corte</Text>
+            <Text style={{color: "#92a494", fontSize: 12}}>Manicure</Text>
+          </View>
+
+          <View style={{backgroundColor: '#fff', height: 100, width: 80, borderRadius: 10, alignItems: 'center' }}>
+            <TouchableOpacity
+              style={{ 
+                borderRadius: 10, 
+                margin: 5, 
+                backgroundColor: '#eaeceb', 
+                width: 60, height: 60, 
+                marginTop: 12, 
+                alignItems: 'center',
+                justifyContent: 'center' }}>
+              <Hidratacao width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={{color: "#92a494", fontSize: 12}}>Hidratacao</Text>
+          </View>
+
+          <View style={{backgroundColor: '#fff', height: 100, width: 80, borderRadius: 10, alignItems: 'center' }}>
+            <TouchableOpacity
+              style={{ 
+                borderRadius: 10, 
+                margin: 5, 
+                backgroundColor: '#eaeceb', 
+                width: 60, height: 60, 
+                marginTop: 12, 
+                alignItems: 'center',
+                justifyContent: 'center' }}>
+              <Maquiagem width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={{color: "#92a494", fontSize: 12}}>Maquiagem</Text>
           </View>
           
           <View style={{backgroundColor: '#fff', height: 100, width: 80, borderRadius: 10, alignItems: 'center' }}>
@@ -86,11 +130,25 @@ function Feed() {
                 marginTop: 12, 
                 alignItems: 'center',
                 justifyContent: 'center' }}>
-              <Alisamento width={45} height={45} fill="#92a494" />
+              <Pedicure width={45} height={45} fill="#92a494" />
             </TouchableOpacity>
-            <Text style={{color: "#92a494", fontSize: 12}}>Corte</Text>
+            <Text style={{color: "#92a494", fontSize: 12}}>Pedicure</Text>
           </View>
-          
+
+          <View style={{backgroundColor: '#fff', height: 100, width: 80, borderRadius: 10, alignItems: 'center' }}>
+            <TouchableOpacity
+              style={{ 
+                borderRadius: 10, 
+                margin: 5, 
+                backgroundColor: '#eaeceb', 
+                width: 60, height: 60, 
+                marginTop: 12, 
+                alignItems: 'center',
+                justifyContent: 'center' }}>
+              <Cilios width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={{color: "#92a494", fontSize: 12}}>Cilios</Text>
+          </View>
 
         </View>
         
@@ -104,7 +162,7 @@ function Feed() {
       </ScrollView>
     </SafeAreaView>
 
-    </>
+
   );
 }
 
