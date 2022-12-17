@@ -7,6 +7,7 @@ import { Tile } from 'react-native-elements';
 import styles from './styles';
 import { firebase } from '../../firebase/config';
 import { Corte, Hidratacao, Manicure, Tintura, Maquiagem, Alisamento, Cilios, Pedicure } from './icons';
+import { SocialIcon } from 'react-native-elements'
 
 
 
@@ -156,8 +157,14 @@ function Feed() {
         <View style={{ height: 300, backgroundColor: "green"}}>
           <Text> Aqui </Text>
         </View>
-        <View style={{ height: 100, backgroundColor: "blue"}}>
-          <Text> Aqui </Text>
+        <View style={{ height: 100, alignItems: 'center'}}>
+          <Text> Siga em Nossas Redes sociais</Text>
+          <View style={{ height: 100, alignItems: 'center', flex: 1, flexDirection: 'row'}}>
+            <SocialIcon type='instagram'  />
+            <SocialIcon type='youtube'  />
+            <SocialIcon type='facebook'  />
+            <SocialIcon type='pinterest'  />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
