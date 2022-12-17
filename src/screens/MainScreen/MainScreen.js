@@ -8,8 +8,14 @@ import styles from './styles';
 import { firebase } from '../../firebase/config';
 import { Corte, Hidratacao, Manicure, Tintura, Maquiagem, Alisamento, Cilios, Pedicure } from './icons';
 import { SocialIcon } from 'react-native-elements'
+import MapView from 'react-native-maps';
 
-
+const Region = {
+  latitude: -15.916248,
+  longitude: -48.099713,
+  latitudeDelta: 0.0622,
+  longitudeDelta: 0.0121,
+}
 
 
 function Feed() {
@@ -154,10 +160,18 @@ function Feed() {
         </View>
         
         
-        <View style={{ height: 300, backgroundColor: "green"}}>
-          <Text> Aqui </Text>
+        <View style={{ height: 200, backgroundColor: "white", borderRadius: 10, alignItems: 'center', justifyContent: 'center' }}>
+          <MapView 
+            style={{width: '95%', height: 180,   }} 
+            showsUserLocation = {true}
+            initialRegion = {Region}
+            minZoomLevel = {15}
+            />
         </View>
+
+
         <View style={{ height: 100, alignItems: 'center'}}>
+          <Text></Text>
           <Text> Siga em Nossas Redes sociais</Text>
           <View style={{ height: 100, alignItems: 'center', flex: 1, flexDirection: 'row'}}>
             <SocialIcon type='instagram'  />
