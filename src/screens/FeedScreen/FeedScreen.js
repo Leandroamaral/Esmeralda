@@ -22,15 +22,27 @@ export default function Feed({navigation}) {
             <Text style={{fontSize: 28}}>Olá, <Text style={{fontSize: 28, fontWeight: 'bold'}}>Leandro</Text></Text>
             <Text>Bem vindo a <Text style={{fontSize: 16}}>Esmeralda Studio</Text></Text>
           </View>
-          <View style={{ height: 200, alignItems: "center"}}>
-            <Image
-              style={{width: 340 , 
-                  height: 180,
-                  borderRadius: 10,
-                  }}
-              source={require('../../../assets/img1.png')}
-            />
-          </View>
+
+          <ScrollView horizontal={true}>
+            <View style={{ height: 200, alignItems: "center"}}>
+              <Image
+                style={{width: 340 , 
+                    height: 180,
+                    borderRadius: 10,
+                    }}
+                source={require('../../../assets/img1.png')}
+              />
+            </View>
+            <View style={{ height: 200, alignItems: "center"}}>
+              <Image
+                style={{width: 340 , 
+                    height: 180,
+                    borderRadius: 10,
+                    }}
+                source={require('../../../assets/img2.png')}
+              />
+            </View>
+          </ScrollView>
           <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', position: 'relative', height: 220, flexWrap: 'wrap'}}>
             
             <View style={{backgroundColor: '#fff', height: 100, width: 80, borderRadius: 10, alignItems: 'center', marginBottom: 5 }}>
