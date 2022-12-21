@@ -1,15 +1,11 @@
 import * as React from 'react';
 import { Text, View} from 'react-native';
-import { Rating } from 'react-native-elements';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { firebase } from '../../firebase/config';
-import {LinearGradient} from 'expo-linear-gradient'
 import Feed from '../FeedScreen/FeedScreen';
 import Agendar from '../AgendarScreen/AgendarScreen';
-import WeeklyCalendar from 'react-native-weekly-calendar';
 import styles from './styles';
-import { color } from 'react-native-elements/dist/helpers';
 
 
 function Horarios() {
