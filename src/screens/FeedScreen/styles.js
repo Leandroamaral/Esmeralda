@@ -1,65 +1,101 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 70,
-        alignItems: 'center'
-        
-
+    safeareaview: {
+        flex: 1, 
+        padding: 10, 
+        flexDirection: "column"
     },
-    title: {
-
+    viewtitle: {
+        height: 80, 
+        marginTop: 40
     },
-    logo: {
-        flex: 1,
-        height: 200,
-        width: 260,
-        alignSelf: "center",
-        margin: 30
+    texto28: {
+        fontSize: 28
     },
-    input: {
-        height: 48,
-        borderRadius: 5,
-        overflow: 'hidden',
-        backgroundColor: 'white',
-        marginTop: 10,
-        marginBottom: 10,
-        marginLeft: 30,
-        marginRight: 30,
-        paddingLeft: 16
+    nome: {
+        fontSize: 28, 
+        fontWeight: 'bold'
     },
-    button: {
-        marginLeft: 30,
-        marginRight: 30,
-        marginTop: 20,
-        height: 48,
-     
-        borderRadius: 30,
+    nomeEstudio: {
+        fontSize: 16
+    },
+    viewcampanha: {
+        height: 200, 
+        alignItems: "center"
+    },
+    imagemCampanha: {
+        width: 340 , 
+        height: 180,
+        borderRadius: 10,
+    },
+    servicos: {
+        flex: 1, 
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        position: 'relative', 
+        height: 220, 
+        flexWrap: 'wrap'
+    },
+    botaoServico: {
+        backgroundColor: '#fff', 
+        height: 100, 
+        width: 80, 
+        borderRadius: 10, 
+        alignItems: 'center', 
+        marginBottom: 5 
+    },
+    iconeServico: {
+        borderRadius: 10, 
+        margin: 5, 
+        backgroundColor: '#eaeceb', 
+        width: 60, height: 60, 
+        marginTop: 12, 
         alignItems: 'center',
         justifyContent: 'center'
     },
-    orangeButton:{
-        backgroundColor:'#1d6167'
+    textoServico: {
+        color: "#92a494", 
+        fontSize: 12
     },
-    buttonTitle: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: "bold"
+    mapaView: {
+        height: 300, 
+        backgroundColor: "white", 
+        borderRadius: 10, 
+        alignItems: 'center' 
     },
-    footerView: {
-        flex: 1,
-        alignItems: "center",
-        marginTop: 20
+    mapa: {
+        width: '95%', 
+        height: 180,
+        marginTop: 10  
     },
-    footerText: {
-        fontSize: 16,
-        color: '#2e2e2d'
+    mapaTitulo: {
+        alignSelf: 'flex-start', 
+        padding: 10, 
+        fontSize: 16, 
+        color: '#1d817e', 
+        fontWeight: 'bold'
     },
-    footerLink: {
-        color: "#0086ad",
-        fontWeight: "bold",
-        fontSize: 16
+    mapaEndereco: {
+        alignSelf: 'flex-start', 
+        marginLeft: 40
+    },
+    mapaZap: {
+        height: 50, 
+        position: 'absolute', 
+        top:700, 
+        left: 265
+    },
+    rsMainView: {
+        height: 100, 
+        alignItems: 'center'
+    },
+    rsView: {
+        height: 100, 
+        alignItems: 'center', 
+        flex: 1, 
+        flexDirection: 'row'
     }
+
 
 })

@@ -8,10 +8,6 @@ import Horarios from '../HorariosScreen/HorariosScreen';
 import Perfil from '../PerfilScreen/PerfilScreen';
 import styles from './styles';
 
-
-
-
-
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
@@ -70,11 +66,6 @@ function MyTabs() {
 }
 
 export default function MainScreen({navigation}) {
-
-
-  
-
-
 
   return (
       <MyTabs />

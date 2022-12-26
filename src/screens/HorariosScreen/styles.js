@@ -1,65 +1,67 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: 70,
-        alignItems: 'center'
-        
-
+    tituloView: {
+        padding:10,
+        height: 80, 
+        alignItems:'center'
     },
-    title: {
-
+    tituloTexto: {
+        top:40, 
+        fontSize: 28, 
+        color: '#92a494', 
+        fontWeight: 'bold'
     },
-    logo: {
-        flex: 1,
-        height: 200,
-        width: 260,
-        alignSelf: "center",
-        margin: 30
+    mesTexto: {
+        top:30,
+        fontSize: 25
     },
-    input: {
-        height: 48,
-        borderRadius: 5,
-        overflow: 'hidden',
-        backgroundColor: 'white',
-        marginTop: 10,
-        marginBottom: 10,
-        marginLeft: 30,
-        marginRight: 30,
-        paddingLeft: 16
+    dataView: {
+        padding:10, 
+        alignItems:'center',
+        top: 10,
     },
-    button: {
-        marginLeft: 30,
-        marginRight: 30,
-        marginTop: 20,
-        height: 48,
-     
-        borderRadius: 30,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    orangeButton:{
-        backgroundColor:'#1d6167'
-    },
-    buttonTitle: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: "bold"
-    },
-    footerView: {
-        flex: 1,
-        alignItems: "center",
-        marginTop: 20
-    },
-    footerText: {
-        fontSize: 16,
-        color: '#2e2e2d'
-    },
-    footerLink: {
-        color: "#0086ad",
-        fontWeight: "bold",
+    texto16: {
         fontSize: 16
+    },
+    flexrow: {
+        flexDirection: 'row',
+    },
+    horarioMainView: {
+        backgroundColor: '#fff',
+        borderRadius: 20,
+    },
+    horarioAView: {
+        borderRightWidth: 1, 
+        borderColor: '#92a494', 
+        borderStyle:'dotted', 
+        padding: 20, 
+        width: 130, 
+        alignItems:'center',
+        top: 10,
+        
+    },
+    horarioATexto: {
+       fontSize: 25, 
+       color:"#1d817e",
+
+    },
+    padding10: {
+       padding: 10 
+    },
+    horarioAImage: {
+        width: 30, 
+        height: 30, 
+        top: 10, 
+        borderRadius: 100
+    },
+    left20: {
+        left: 20 
+    },
+    horarioSubView: {
+        left: 20, 
+        top: 10
     }
+
 
 })
