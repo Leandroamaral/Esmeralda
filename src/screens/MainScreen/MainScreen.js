@@ -1,20 +1,16 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { firebase } from '../../firebase/config';
 import Feed from '../FeedScreen/FeedScreen';
 import Agendar from '../AgendarScreen/AgendarScreen';
 import Horarios from '../HorariosScreen/HorariosScreen';
+import Perfil from '../PerfilScreen/PerfilScreen';
 import styles from './styles';
 
-function Perfil() {
-  return (
-      
 
 
-  );
-}
+
 
 const Tab = createBottomTabNavigator();
 
@@ -75,10 +71,10 @@ function MyTabs() {
 
 export default function MainScreen({navigation}) {
 
-  const onLogoutPress = () =>{
-    firebase.auth().signOut();
-    navigation.navigate("Login");
-  }
+
+  
+
+
 
   return (
       <MyTabs />

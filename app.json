@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-native-firebase",
-    "slug": "esmeralda",
+    "name": "esmeralda",
+    "slug": "esmeraldav2",
     "scheme": "com.esmeralda",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -33,11 +33,11 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "owner": "leobsb",
     "extra": {
       "eas": {
-        "projectId": "bf9d631a-d0c8-4d26-a18e-c8a4f38b706e"
+        "projectId": "84a98b4f-c835-4a65-b099-972b6058b68b"
       }
-    },
-    "owner": "leobsb"
+    }
   }
 }
