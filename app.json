@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "react-native-firebase",
-    "slug": "react-native-firebase",
-    "scheme":"com.esmeralda",
+    "slug": "esmeralda",
+    "scheme": "com.esmeralda",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,18 +19,25 @@
       "**/*"
     ],
     "ios": {
-      "googleServicesFile":"./GoogleService-info.plist",
+      "googleServicesFile": "./GoogleService-info.plist",
       "supportsTablet": true
     },
     "android": {
-      "googleServicesFile":"./google-services.json",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.leobsb.esmeralda"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "bf9d631a-d0c8-4d26-a18e-c8a4f38b706e"
+      }
+    },
+    "owner": "leobsb"
   }
 }

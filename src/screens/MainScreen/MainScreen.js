@@ -6,39 +6,13 @@ import { firebase } from '../../firebase/config';
 import Feed from '../FeedScreen/FeedScreen';
 import Agendar from '../AgendarScreen/AgendarScreen';
 import Horarios from '../HorariosScreen/HorariosScreen';
-import { createStackNavigator } from '@react-navigation/stack';
 import styles from './styles';
-
-const Stack = createStackNavigator();
 
 function Perfil() {
   return (
-    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-      <Stack.Navigator
-      initialRouteName="Feed"
-      screenOptions={{
-        headerMode: 'screen',
-        headerTintColor: 'white',
-        headerStyle: { backgroundColor: 'tomato' },
-      }}
-    >
-      <Stack.Screen
-        name="Agendar"
-        component={Agendar}
-        options={{
-          title: 'Awesome app',
-        }}
-      />
-      <Stack.Screen
-        name="Horarios"
-        component={Horarios}
-        options={{
-          title: 'My profile',
-        }}
-      />
       
-    </Stack.Navigator>
-    </View>
+
+
   );
 }
 
