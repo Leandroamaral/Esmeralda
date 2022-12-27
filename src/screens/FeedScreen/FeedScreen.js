@@ -1,7 +1,7 @@
-import * as React from 'react';
+import React, { useEffect, useState, setState  } from 'react'
 import { Image, Text, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import styles from './styles';
-import { firebase } from '../../firebase/config';
+import { firebase, db, auth } from '../../firebase/config';
 import { Entypo } from '@expo/vector-icons';
 import { Corte, Hidratacao, Manicure, Tintura, Maquiagem, Alisamento, Cilios, Pedicure, WhatsappIcon } from './icons';
 import { SocialIcon } from 'react-native-elements'
@@ -14,121 +14,143 @@ const Region = {
     longitudeDelta: 0.0121,
   }
 
+
 export default function Feed() {
-    return (
-      <SafeAreaView style={styles.safeareaview}>
-        <ScrollView>
 
-          <View style={styles.viewtitle}>
-            <Text style={styles.texto28}>Olá, <Text style={styles.nome}>Leandro</Text></Text>
-            <Text>Bem vindo a <Text style={styles.nomeEstudio}>Esmeralda Studio</Text></Text>
-          </View>
+  const [userx, setUser] = useState("")
 
-          <ScrollView horizontal={true}>
-            <View style={styles.viewcampanha}>
-              <Image
-                style={styles.imagemCampanha}
-                source={require('../../../assets/img1.png')}
-              />
-            </View>
-            <View style={styles.viewcampanha}>
-              <Image
-                style={styles.imagemCampanha}
-                source={require('../../../assets/img2.png')}
-              />
-            </View>
-          </ScrollView>
-
-          <View style={styles.servicos}>
-            <View style={styles.botaoServico}>
-              <TouchableOpacity style={styles.iconeServico}>
-                <Corte width={45} height={45} fill="#92a494" />
-              </TouchableOpacity>
-              <Text style={styles.textoServico}>Corte</Text>
-            </View>
-  
-            <View style={styles.botaoServico}>
-              <TouchableOpacity style={styles.iconeServico}>
-                <Alisamento width={45} height={45} fill="#92a494" />
-              </TouchableOpacity>
-              <Text style={styles.textoServico}>Alisamento</Text>
-            </View>
-  
-            <View style={styles.botaoServico}>
-              <TouchableOpacity style={styles.iconeServico}>
-                <Tintura width={45} height={45} fill="#92a494" />
-              </TouchableOpacity>
-              <Text style={styles.textoServico}>Tintura</Text>
-            </View>
-            
-            <View style={styles.botaoServico}>
-              <TouchableOpacity style={styles.iconeServico}>
-                <Manicure width={45} height={45} fill="#92a494" />
-              </TouchableOpacity>
-              <Text style={styles.textoServico}>Manicure</Text>
-            </View>
-  
-            <View style={styles.botaoServico}>
-              <TouchableOpacity style={styles.iconeServico}>
-                <Hidratacao width={45} height={45} fill="#92a494" />
-              </TouchableOpacity>
-              <Text style={styles.textoServico}>Hidratacao</Text>
-            </View>
-  
-            <View style={styles.botaoServico}>
-              <TouchableOpacity style={styles.iconeServico}>
-                <Maquiagem width={45} height={45} fill="#92a494" />
-              </TouchableOpacity>
-              <Text style={styles.textoServico}>Maquiagem</Text>
-            </View>
-            
-            <View style={styles.botaoServico}>
-              <TouchableOpacity style={styles.iconeServico}>
-                <Pedicure width={45} height={45} fill="#92a494" />
-              </TouchableOpacity>
-              <Text style={styles.textoServico}>Pedicure</Text>
-            </View>
-  
-            <View style={styles.botaoServico}>
-              <TouchableOpacity style={styles.iconeServico}>
-                <Cilios width={45} height={45} fill="#92a494" />
-              </TouchableOpacity>
-              <Text style={styles.textoServico}>Cilios</Text>
-            </View>
-  
-          </View>
+  auth.onAuthStateChanged((user) => {
+    if (!userx) {
+      db
+        .collection('users')
+        .doc(user.uid)
+        .get()
+        .then(querySnapshot => {
           
-          
-          <View style={styles.mapaView}>
-            <MapView 
-              style={styles.mapa} 
-              showsUserLocation = {true}
-              initialRegion = {Region}
-              minZoomLevel = {15}
-              />
-             <Text style={styles.mapaTitulo}> <Entypo name="location-pin" size={24} color="#1d817e" /> Esmeralda Studio de Beleza</Text>
-             <Text style={styles.mapaEndereco}>Endereço completo </Text>
-             <Text style={styles.mapaEndereco}>Riacho Fundo 2 - DF </Text>
-          </View>
-          <View style={styles.mapaZap}>
-            <TouchableOpacity>
-              <WhatsappIcon width={60} height={60}/>
-            </TouchableOpacity>
-          </View>
+          setUser(querySnapshot.data());
+          //console.log(userx);
+        })
+        .catch((error) => {
+          console.error(error)
+        });
+    }
+  });
+  //console.log(userx.fullName)
   
-          <View style={styles.rsMainView}>
-            <Text></Text>
-            <Text> Siga em nossas redes sociais</Text>
-            <View style={styles.rsView}>
-              <SocialIcon type='instagram'  />
-              <SocialIcon type='youtube'  />
-              <SocialIcon type='facebook'  />
-              <SocialIcon type='pinterest'  />
-            </View>
+  return (
+    <SafeAreaView style={styles.safeareaview}>
+      <ScrollView>
+
+        <View style={styles.viewtitle}>
+          <Text style={styles.texto28}>Olá, <Text style={styles.nome}>{userx.fullName}</Text></Text>
+          <Text>Bem vindo a <Text style={styles.nomeEstudio}>Esmeralda Studio</Text></Text>
+        </View>
+
+        <ScrollView horizontal={true}>
+          <View style={styles.viewcampanha}>
+            <Image
+              style={styles.imagemCampanha}
+              source={require('../../../assets/img1.png')}
+            />
+          </View>
+          <View style={styles.viewcampanha}>
+            <Image
+              style={styles.imagemCampanha}
+              source={require('../../../assets/img2.png')}
+            />
           </View>
         </ScrollView>
-      </SafeAreaView>
+
+        <View style={styles.servicos}>
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Corte width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Corte</Text>
+          </View>
+
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Alisamento width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Alisamento</Text>
+          </View>
+
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Tintura width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Tintura</Text>
+          </View>
+          
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Manicure width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Manicure</Text>
+          </View>
+
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Hidratacao width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Hidratacao</Text>
+          </View>
+
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Maquiagem width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Maquiagem</Text>
+          </View>
+          
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Pedicure width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Pedicure</Text>
+          </View>
+
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Cilios width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Cilios</Text>
+          </View>
+
+        </View>
+        
+        
+        <View style={styles.mapaView}>
+          <MapView 
+            style={styles.mapa} 
+            showsUserLocation = {true}
+            initialRegion = {Region}
+            minZoomLevel = {15}
+            />
+            <Text style={styles.mapaTitulo}> <Entypo name="location-pin" size={24} color="#1d817e" /> Esmeralda Studio de Beleza</Text>
+            <Text style={styles.mapaEndereco}>Endereço completo </Text>
+            <Text style={styles.mapaEndereco}>Riacho Fundo 2 - DF </Text>
+        </View>
+        <View style={styles.mapaZap}>
+          <TouchableOpacity>
+            <WhatsappIcon width={60} height={60}/>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.rsMainView}>
+          <Text></Text>
+          <Text> Siga em nossas redes sociais</Text>
+          <View style={styles.rsView}>
+            <SocialIcon type='instagram'  />
+            <SocialIcon type='youtube'  />
+            <SocialIcon type='facebook'  />
+            <SocialIcon type='pinterest'  />
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+
   
-  
-    );
-  }
+  );
+}

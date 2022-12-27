@@ -16,7 +16,6 @@ export default function App() {
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
  
-
   useEffect(() => {
     const usersRef = firebase.firestore().collection('users');
     firebase.auth().onAuthStateChanged(user => {
@@ -53,7 +52,6 @@ export default function App() {
         { user ? (
           <>
           <Stack.Screen name="Home" component={MainScreen} />
-           <Stack.Screen name="Login" component={LoginScreen} />
          </>
         ) : (
           <>
