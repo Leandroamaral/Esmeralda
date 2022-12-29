@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { firebase } from '../../firebase/config';
 import Feed from '../FeedScreen/FeedScreen';
 import Agendar from '../AgendarScreen/AgendarScreen';
@@ -65,8 +66,18 @@ function MyTabs() {
   );
 }
 
-export default function MainScreen({navigation}) {
+const saveUser = async (params) => {
+  try {
+    await AsyncStorage.setItem('@user', JSON.stringify(params))
+  } catch (e) {
+    console.error(e)
+  }
+}
 
+export default function MainScreen({route, navigation}) {
+
+  saveUser(route.params);
+    
   return (
       <MyTabs />
   );

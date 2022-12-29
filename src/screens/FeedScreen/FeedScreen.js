@@ -1,5 +1,6 @@
 import React, { useEffect, useState, setState  } from 'react'
 import { Image, Text, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './styles';
 import { firebase, db, auth } from '../../firebase/config';
 import { Entypo } from '@expo/vector-icons';
@@ -15,36 +16,44 @@ const Region = {
   }
 
 
-export default function Feed() {
+function Titulo() {
 
-  const [userx, setUser] = useState("")
+  const [userName, setUserName] = useState("");
 
-  auth.onAuthStateChanged((user) => {
-    if (!userx) {
-      db
-        .collection('users')
-        .doc(user.uid)
-        .get()
-        .then(querySnapshot => {
-          
-          setUser(querySnapshot.data());
-          //console.log(userx);
-        })
-        .catch((error) => {
-          console.error(error)
-        });
+  const load = async () => {
+    try {
+      const name = await AsyncStorage.getItem('@user')
+      if (name !== null) {
+        const user = JSON.parse(name);
+        const firstname = user.fullName.split(' ');
+        setUserName(firstname);
+      }
+    } catch (e) {
+      console.error(e)
     }
-  });
-  //console.log(userx.fullName)
+  }
+
+  if (!userName) {
+    load();
+  }
+
+  return (
+    <View style={styles.viewtitle}>
+      <Text style={styles.texto28}>Olá, <Text style={styles.nome}>{userName}</Text></Text>
+      <Text>Bem vindo a <Text style={styles.nomeEstudio}>Esmeralda Studio</Text></Text>
+    </View>
+  )
+
+
+}  
+
+export default function Feed() {
   
   return (
     <SafeAreaView style={styles.safeareaview}>
       <ScrollView>
 
-        <View style={styles.viewtitle}>
-          <Text style={styles.texto28}>Olá, <Text style={styles.nome}>{userx.fullName}</Text></Text>
-          <Text>Bem vindo a <Text style={styles.nomeEstudio}>Esmeralda Studio</Text></Text>
-        </View>
+        <Titulo />
 
         <ScrollView horizontal={true}>
           <View style={styles.viewcampanha}>
