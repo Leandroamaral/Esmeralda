@@ -1,8 +1,8 @@
-import React, { useEffect, useState, setState  } from 'react'
+import React, { useState } from 'react'
 import { Image, Text, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './styles';
-import { firebase, db, auth } from '../../firebase/config';
+import { firebase } from '../../firebase/config';
 import { Entypo } from '@expo/vector-icons';
 import { Corte, Hidratacao, Manicure, Tintura, Maquiagem, Alisamento, Cilios, Pedicure, WhatsappIcon } from './icons';
 import { SocialIcon } from 'react-native-elements'
