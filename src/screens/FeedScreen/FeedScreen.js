@@ -8,6 +8,8 @@ import { Corte, Hidratacao, Manicure, Tintura, Maquiagem, Alisamento, Cilios, Pe
 import { SocialIcon } from 'react-native-elements'
 import MapView from 'react-native-maps';
 
+//teste
+
 const Region = {
     latitude: -15.916248,
     longitude: -48.099713,
