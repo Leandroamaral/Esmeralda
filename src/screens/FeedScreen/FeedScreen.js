@@ -26,7 +26,7 @@ function Titulo() {
       if (name !== null) {
         const user = JSON.parse(name);
         const firstname = user.fullName.split(' ');
-        setUserName(firstname);
+        setUserName(firstname[0]);
       }
     } catch (e) {
       console.error(e)
