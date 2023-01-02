@@ -8,13 +8,26 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Dialog from "react-native-dialog";
 import styles from './styles';
-import { getAuth, deleteUser } from "firebase/auth";
+import { getAuth, deleteUser, reauthenticateWithCredential } from "firebase/auth";
+import * as Updates from 'expo-updates';
 
 
 function PerfilMain ({ navigation }) {
 
   const onLogoutPress = () =>{
-    firebase.auth().signOut();
+    firebase.auth().signOut()
+    .then(() => {
+      AsyncStorage.removeItem('@user')
+        .catch ((error) => {
+          console.error(error);
+        });
+      })
+    .catch ((error) => {
+      console.error(error);
+    })
+    .finally(() => {
+      Updates.reloadAsync();
+    })
   }
 
   const [userName, setUserName] = useState("");
@@ -115,8 +128,10 @@ function EditarPerfil({ navigation }) {
   const [fullName, setFullName] = useState();
   const [telefone, setTelefone] = useState();
   const [email, setEmail] = useState();
+  const [oldpass, setOldPass] = useState('');
   const [id, setID] = useState();
   const [visibleDL, setvisibleDL] = useState(false);
+  const [visibleDL2, setvisibleDL2] = useState(false);
   const [titulo, setTitulo] = useState('');
   const [mensagem, setMensagem] = useState('');
 
@@ -177,17 +192,29 @@ function EditarPerfil({ navigation }) {
   };
 
   function onDeleteUser() {
+    setTitulo('Excluir Minha Conta');
+    setMensagem('Digite sua senha para excluir permanentemente sua conta')
+    setvisibleDL2(true);
+  }
+
+  function OKDeleteUser() {
+    console.log('aqui' + oldpass);
     const auth = getAuth();
     const user = auth.currentUser;
-    deleteUser(user).then(() => {
+    const emailCred  = firebase.auth.EmailAuthProvider.credential(email, oldpass);
+    firebase.auth().currentUser.reauthenticateWithCredential(emailCred)
+    .then (() => {
+      db.collection('users').doc(id).delete()
+      deleteUser(user)
       AsyncStorage.removeItem('@user')
-      .catch ((error) => {
-        console.error(error);
-    });
-    }).catch((error) => {
+      setvisibleDL2(false)
+    })
+    .catch((error) => {
       console.error(error);
-    });
-
+    })
+    .finally(() => {
+      Updates.reloadAsync();
+    })
 
   }
 
@@ -204,6 +231,14 @@ function EditarPerfil({ navigation }) {
       <Dialog.Title>{titulo}</Dialog.Title>
       <Dialog.Description>{mensagem}</Dialog.Description>
       <Dialog.Button label="OK" onPress={OKDL}/>
+    </Dialog.Container>
+
+    <Dialog.Container visible={visibleDL2}>
+      <Dialog.Title>{titulo}</Dialog.Title>
+      <Dialog.Description>{mensagem}</Dialog.Description>
+      <Dialog.Input onChangeText={(texto) => setOldPass(texto)}/>
+      <Dialog.Button label="Cancelar" onPress={() => setvisibleDL2(false) }/>
+      <Dialog.Button label="Confirmar" onPress={OKDeleteUser}/>
     </Dialog.Container>
 
     <AntDesign name="user" size={80} color="#92a494" style={{alignSelf: 'center', padding: 20}} />
