@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { firebase, auth } from '../../firebase/config';
+import { firebase, auth, db } from '../../firebase/config';
 import { AntDesign } from '@expo/vector-icons';
 import { createStackNavigator } from '@react-navigation/stack'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -114,28 +114,10 @@ function EditarPerfil({ navigation }) {
   const [fullName, setFullName] = useState();
   const [telefone, setTelefone] = useState();
   const [email, setEmail] = useState();
-  const [oldPass, setOldPass] = useState('');
-  const [newPass1, setnewPass1] = useState('');
-  const [newPass2, setnewPass2] = useState('');
-  const [visiblePassDL, setVisiblePassDL] = useState(false);
-  const [visiblePassDL2, setVisiblePassDL2] = useState(false);
-  const [visiblePassDL3, setVisiblePassDL3] = useState(false);
-
-  
-
-  function onChangePassword() {
-    setVisiblePassDL(true);
-
-  };
-
-  function handleCancel() {
-    setVisiblePassDL(false);
-    setVisiblePassDL2(false);
-    setVisiblePassDL3(false);
-
-  };
-
- 
+  const [id, setID] = useState();
+  const [visibleDL, setvisibleDL] = useState(false);
+  const [titulo, setTitulo] = useState('');
+  const [mensagem, setMensagem] = useState('');
 
   const load = async () => {
     try {
@@ -146,41 +128,70 @@ function EditarPerfil({ navigation }) {
         setFullName(parser.fullName);
         setTelefone(parser.telefone);
         setEmail(parser.email);
+        setID(parser.id);
       }
     } catch (e) {
       console.error(e)
     }
   }
-
+  
   if (!userName) {
     load();
   }
 
-  function OKOldPass(){
-    
-    const emailCred  = firebase.auth.EmailAuthProvider.credential(email, oldPass);
-    firebase.auth().currentUser.reauthenticateWithCredential(emailCred)
+  function onChangeUserData() {
+    db
+    .collection('users')
+    .doc(id)
+    .update({
+      fullName: fullName,
+      telefone: telefone
+    })
     .then(() => {
-      setVisiblePassDL(false);
-      setVisiblePassDL2(true);
+      setTitulo('Editar Perfil');
+      setMensagem('Perfil atualizado com sucesso');
+      setvisibleDL(true);
     })
     .catch(error => {
-      console.error(error)
+      setTitulo('Error: ');
+      setMensagem(error);
+      setvisibleDL(true);
+      console.error(error);
     });
+    };
 
+
+  function onChangePassword() {
+    firebase.auth().sendPasswordResetEmail(email)
+      .then(() => {
+        setTitulo('Alterar a senha');
+        setMensagem('Um link para troca de senha foi encaminhada para o email ' + email);
+        setvisibleDL(true);
+      })
+      .catch(error => {
+        setTitulo('Error: ');
+        setMensagem(error);
+        console.error(error);
+      });
+  };
+
+  function onDeleteUser() {
+    
   }
+
+  function OKDL() {
+    setvisibleDL(false);
+  };
+
+ 
 
   return (
     <View>
 
-    <Dialog.Container visible={visiblePassDL}>
-      <Dialog.Title>Alterar Senha</Dialog.Title>
-      <Dialog.Description>
-        Digite sua senha atual
-      </Dialog.Description>
-      <Dialog.Input onChangeText={(texto) => setOldPass(texto)}/>
-      <Dialog.Button label="Cancelar" onPress={handleCancel} />
-      <Dialog.Button label="OK" onPress={OKOldPass}/>
+    <Dialog.Container visible={visibleDL}>
+      <Dialog.Title>{titulo}</Dialog.Title>
+      <Dialog.Description>{mensagem}</Dialog.Description>
+      <Dialog.Button label="OK" onPress={OKDL}/>
     </Dialog.Container>
 
     <AntDesign name="user" size={80} color="#92a494" style={{alignSelf: 'center', padding: 20}} />
@@ -203,7 +214,7 @@ function EditarPerfil({ navigation }) {
               underlineColorAndroid="transparent"
               autoCapitalize="none"
           />
-          <TouchableOpacity onClick={() => setCount(count + 2)}>
+          <TouchableOpacity onPress={onChangeUserData}>
               <LinearGradient
                   // Button Linear Gradient
                   colors={['#1d817e', '#2fa192', '#50c8cc']}
