@@ -8,6 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Dialog from "react-native-dialog";
 import styles from './styles';
+import { getAuth, deleteUser } from "firebase/auth";
 
 
 function PerfilMain ({ navigation }) {
@@ -176,7 +177,18 @@ function EditarPerfil({ navigation }) {
   };
 
   function onDeleteUser() {
-    
+    const auth = getAuth();
+    const user = auth.currentUser;
+    deleteUser(user).then(() => {
+      AsyncStorage.removeItem('@user')
+      .catch ((error) => {
+        console.error(error);
+    });
+    }).catch((error) => {
+      console.error(error);
+    });
+
+
   }
 
   function OKDL() {
@@ -236,7 +248,7 @@ function EditarPerfil({ navigation }) {
                   <Text style={styles.buttonTitle}>Alterar Senha</Text>
               </LinearGradient>
           </TouchableOpacity>
-          <TouchableOpacity onClick={() => setCount(count + 2)}>
+          <TouchableOpacity onPress={onDeleteUser}>
               <LinearGradient
                   // Button Linear Gradient
                   colors={['#1d817e', '#2fa192', '#50c8cc']}
