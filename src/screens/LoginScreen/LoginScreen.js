@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Dialog from "react-native-dialog";
 
 import { LinearGradient } from 'expo-linear-gradient'
 import { firebase } from '../../firebase/config'
@@ -17,6 +18,9 @@ import styles from './styles';
 export default function LoginScreen({navigation}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [visibleDL, setvisibleDL] = useState(false);
+    const [titulo, setTitulo] = useState('');
+    const [mensagem, setMensagem] = useState('');
 
 
     //Auth with google
@@ -70,9 +74,36 @@ export default function LoginScreen({navigation}) {
         })
 
     }
+
+    function onChangePassword(){
+        setTitulo('Esqueci minha Senha');
+        setMensagem('Digite seu email para o envio de uma nova senha ');
+        setvisibleDL(true);
+    }
+
+    function okChangePassword() {
+        firebase.auth().sendPasswordResetEmail(email)
+          .then(() => {
+            setvisibleDL(false);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+    };
+
   
     return (
+
         <View style={styles.container}>
+
+            <Dialog.Container visible={visibleDL}>
+                <Dialog.Title>{titulo}</Dialog.Title>
+                <Dialog.Description>{mensagem}</Dialog.Description>
+                <Dialog.Input onChangeText={(texto) => setEmail(texto)}/>
+                <Dialog.Button label="Cancelar" onPress={() => setvisibleDL(false) }/>
+                <Dialog.Button label="Confirmar" onPress={okChangePassword}/>
+            </Dialog.Container>
+
             <KeyboardAwareScrollView
                 style={{ flex: 1, width: '100%' }}
                 keyboardShouldPersistTaps="always">
@@ -130,6 +161,10 @@ export default function LoginScreen({navigation}) {
                 
                 <View style={styles.footerView}>
                     <Text style={styles.footerText}>Não tem uma conta? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Registre-se</Text></Text>
+                </View>
+
+                <View style={styles.footerView}>
+                    <Text style={styles.footerText}><Text onPress={onChangePassword} style={styles.footerLink}>Esqueceu a senha</Text></Text>
                 </View>
             </KeyboardAwareScrollView>
         </View>

@@ -92,6 +92,11 @@ export default StyleSheet.create({
     container: {
         alignItems: 'center',
         
-    }
+    },
+    buttonTitleEx: {
+        color: 'black',
+        fontSize: 16,
+        fontWeight: "bold"
+    },
 
 })

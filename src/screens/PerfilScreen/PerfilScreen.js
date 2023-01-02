@@ -63,7 +63,7 @@ function PerfilMain ({ navigation }) {
                   location={[0.25, 0.4, 1]}
                   style={styles.botao}>
                   
-                  <Text style={styles.botaoTexto}>Editar Perfil</Text>
+                  <Text style={styles.botaoTexto}>Editar Minha Conta</Text>
               
               </LinearGradient>
             </TouchableOpacity>
@@ -275,7 +275,7 @@ function EditarPerfil({ navigation }) {
           <TouchableOpacity onPress={onChangePassword}>
               <LinearGradient
                   // Button Linear Gradient
-                  colors={['#1d817e', '#2fa192', '#50c8cc']}
+                  colors={['#005582', '#0086ad', '#00c2c7']}
                   start={[0, 0]}
                   end={[1, 1]}
                   location={[0.25, 0.4, 1]}
@@ -286,12 +286,12 @@ function EditarPerfil({ navigation }) {
           <TouchableOpacity onPress={onDeleteUser}>
               <LinearGradient
                   // Button Linear Gradient
-                  colors={['#1d817e', '#2fa192', '#50c8cc']}
+                  colors={['#BBB', '#DDD', '#EEE']}
                   start={[0, 0]}
                   end={[1, 1]}
                   location={[0.25, 0.4, 1]}
                   style={styles.button}>
-                  <Text style={styles.buttonTitle}>Excluir Minha Conta</Text>
+                  <Text style={styles.buttonTitleEx}>Excluir Minha Conta</Text>
               </LinearGradient>
           </TouchableOpacity>
       </KeyboardAwareScrollView>
@@ -309,7 +309,11 @@ export default function Perfil() {
         <RootStack.Screen name="PerfilMain" component={PerfilMain} />
       </RootStack.Group>
       <RootStack.Group screenOptions={{ presentation: 'modal' }}>
-        <RootStack.Screen name="Editar Perfil" component={EditarPerfil} />
+        <RootStack.Screen 
+          name="Editar Perfil" 
+          component={EditarPerfil}
+          options={{headerTitle: 'Editar Minha Conta'}}  
+        />
       </RootStack.Group>
     </RootStack.Navigator>
       
