@@ -2,12 +2,10 @@ import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { firebase } from '../../firebase/config';
 import Feed from '../FeedScreen/FeedScreen';
 import Agendar from '../AgendarScreen/AgendarScreen';
 import Horarios from '../HorariosScreen/HorariosScreen';
-import Perfil from '../PerfilScreen/PerfilScreen';
-import styles from './styles';
+import PerfilMain from '../PerfilScreen/PerfilMainScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -53,8 +51,8 @@ function MyTabs() {
         }}
       />
       <Tab.Screen
-        name="Perfil"
-        component={Perfil}
+        name="PerfilMain"
+        component={PerfilMain}
         options={{
           tabBarLabel: 'Perfil',
           tabBarIcon: ({ color, size }) => (

@@ -22,7 +22,7 @@ export default StyleSheet.create({
     },
     botao: {
         height:40,
-        width: 150,
+        width: 180,
         borderRadius: 30,
         alignItems: 'center',
         justifyContent: 'center'
@@ -68,7 +68,7 @@ export default StyleSheet.create({
         height: 48,
         borderRadius: 5,
         overflow: 'hidden',
-        backgroundColor: 'white',
+        backgroundColor: '#FFF',
         marginTop: 10,
         marginBottom: 10,
         marginLeft: 30,
@@ -82,7 +82,8 @@ export default StyleSheet.create({
         height: 48,
         borderRadius: 30,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+
     },
     buttonTitle: {
         color: 'white',
@@ -97,6 +98,25 @@ export default StyleSheet.create({
         color: 'black',
         fontSize: 16,
         fontWeight: "bold"
+    },
+    viewcampanha: {
+        height: 280, 
+        alignItems: "center",
+        flex: 1, 
+        padding: 10, 
+        
+    },
+    imagemCampanha: {
+        width: 340 , 
+        height: 180,
+        borderRadius: 10,
+    },
+    subTituloView: {
+        padding:10
+    },
+    subTituloTexto: {
+        fontSize: 20, 
+        fontWeight: 'bold'
     },
 
 })
