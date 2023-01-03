@@ -16,7 +16,7 @@ WebBrowser.maybeCompleteAuthSession();
 import styles from './styles';
 
 export default function LoginScreen({navigation}) {
-    const [isDisabled, setIsDisabled] = useState('');
+    const [isDisabled, setIsDisabled] = useState(false);
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [visibleDL, setvisibleDL] = useState(false);

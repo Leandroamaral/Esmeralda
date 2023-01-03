@@ -50,7 +50,6 @@ function Titulo() {
 }  
 
 export default function Feed() {
-  
   return (
     <SafeAreaView style={styles.safeareaview}>
       <ScrollView>

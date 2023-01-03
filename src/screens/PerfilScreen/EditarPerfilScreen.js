@@ -22,6 +22,7 @@ export default function EditarPerfil({ navigation }) {
     const [visibleDL2, setvisibleDL2] = useState(false);
     const [titulo, setTitulo] = useState('');
     const [mensagem, setMensagem] = useState('');
+    const [isDisabled, setIsDisabled] = useState(true);
   
     const load = async () => {
       try {
@@ -55,11 +56,13 @@ export default function EditarPerfil({ navigation }) {
         setTitulo('Editar Perfil');
         setMensagem('Perfil atualizado com sucesso');
         setvisibleDL(true);
+        setIsDisabled(true);
       })
       .catch(error => {
         setTitulo('Error: ');
         setMensagem(error);
         setvisibleDL(true);
+        setIsDisabled(false);
         console.error(error);
       });
       };
@@ -129,13 +132,16 @@ export default function EditarPerfil({ navigation }) {
         <Dialog.Button label="Confirmar" onPress={OKDeleteUser}/>
       </Dialog.Container>
   
-      <AntDesign name="user" size={80} color="#92a494" style={{alignSelf: 'center', padding: 20}} />
         <KeyboardAwareScrollView
             keyboardShouldPersistTaps="always">
+            <AntDesign name="user" size={80} color="#92a494" style={{alignSelf: 'center', padding: 20}} />
             <TextInput
                 style={styles.input}
                 placeholder={fullName}
-                onChangeText={(text) => setFullName(text)}
+                onChangeText={(text) => {
+                    setFullName(text);
+                    setIsDisabled(false);
+                }}
                 value={fullName}
                 underlineColorAndroid="transparent"
                 autoCapitalize="none"
@@ -144,12 +150,17 @@ export default function EditarPerfil({ navigation }) {
                 style={styles.input}
                 placeholder={telefone}
                 placeholderTextColor="#aaaaaa"
-                onChangeText={(text) => setTelefone(text)}
+                onChangeText={(text) => {
+                    setTelefone(text);
+                    setIsDisabled(false);
+                }}
                 value={telefone}
                 underlineColorAndroid="transparent"
                 autoCapitalize="none"
             />
-            <TouchableOpacity onPress={onChangeUserData}>
+            <TouchableOpacity 
+                disabled={isDisabled}
+                onPress={onChangeUserData}>
                 <LinearGradient
                     // Button Linear Gradient
                     colors={['#1d817e', '#2fa192', '#50c8cc']}
