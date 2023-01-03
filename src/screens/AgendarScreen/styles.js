@@ -90,9 +90,28 @@ export default StyleSheet.create({
         alignItems:'center', 
         justifyContent:'center'
     },
+    horarioBotaoChecked:{
+        marginRight: 10, 
+        marginBottom: 10, 
+        width: 100, 
+        height: 35, 
+        borderRadius: 10, 
+        backgroundColor: '#fff', 
+        alignItems:'center', 
+        justifyContent:'center',
+        borderWidth:1,
+        borderColor:"#000"
+    },
     horariosTexto: {
         fontWeight: 'bold', 
         fontSize:15
+    },
+    serviceView:{
+        marginTop:30,
+        marginBottom:30
+    },
+    botaoServico:{
+        marginLeft:10
     },
     reservarView: {
         alignItems:'center'

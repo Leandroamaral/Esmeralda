@@ -3,6 +3,7 @@ import { Image, Text, View, SafeAreaView, ScrollView, TouchableOpacity } from 'r
 import { RadioButton } from 'react-native-paper';
 import WeeklyCalendar from 'react-native-weekly-calendar';
 import { Rating } from 'react-native-elements';
+import { Corte, Hidratacao, Manicure, Tintura, Maquiagem, Alisamento, Cilios, Pedicure, WhatsappIcon } from '../FeedScreen/icons';
 import styles from './styles';
 import { firebase } from '../../firebase/config';
 
@@ -10,25 +11,33 @@ export default function Agendar({navigation}) {
 
   //toview 
   const [specialists,setSpecialists] = useState([])
+  const [times,setTimes] = useState([])
   const [visibilityTime,setVisibilityTime] = useState()
   const [disabledSend,setDisabledSend] = useState()
   // to form
   const [specialist,setSpecialist] = useState('')
   const [date,setDate] = useState('')
-  const [times,setTimes] = useState([])
-  
+  const [time,setTime] = useState('');
+
   function updateDate(date){
     setDate(date)
     updateSpecialists()
   }
   
   function updateSpecialists(){
-    setSpecialists([{name:"Regina Caze",timeAvailable:["08:00","09:00","10:00","18:00","19:00","20:00"]},{name:"Julio Alberto",timeAvailable:["12:00","13:00","14:00"]}])
+    setSpecialists([
+      {name:"Regina Caze",timeAvailable:
+      ["08:00","09:00","10:00","18:00","19:00","20:00"]},
+      {name:"Julio Alberto",timeAvailable:["12:00","13:00","14:00"]
+    }])
   }
   function updateSpecialist(key){
     setSpecialist(key)
     const specialist = specialists[key]
     setTimes(specialist.timeAvailable)
+  }
+  function updateTime(key){
+    setTime(key)
   }
   React.useEffect(()=>{
     updateSpecialists();
@@ -78,13 +87,80 @@ export default function Agendar({navigation}) {
 
       <View style={styles.horarioView}>
         {times.map((item,key) => (
-          <TouchableOpacity style={styles.horarioBotao}>
+          <TouchableOpacity 
+          key={key} 
+          style={key === time ? styles.horarioBotaoChecked : styles.horarioBotao}
+          onPress= {() => updateTime(key)}
+          >
            <Text style={styles.horariosTexto}>{item}</Text>
         </TouchableOpacity>
         ))}
         
       </View>
-      
+
+      <View style={styles.serviceView}>
+        <View style={styles.subTituloView} enable>
+          <Text style={styles.subTituloTexto}>Selecione o Serviço</Text>
+        </View>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator="false">
+        <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Corte width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Corte</Text>
+          </View>
+
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Alisamento width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Alisamento</Text>
+          </View>
+
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Tintura width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Tintura</Text>
+          </View>
+          
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Manicure width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Manicure</Text>
+          </View>
+
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Hidratacao width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Hidratacao</Text>
+          </View>
+
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Maquiagem width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Maquiagem</Text>
+          </View>
+          
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Pedicure width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Pedicure</Text>
+          </View>
+
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Cilios width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Cilios</Text>
+          </View>
+        </ScrollView>
+        
+      </View>
       <View 
         style={styles.reservarView}
       >
@@ -93,7 +169,6 @@ export default function Agendar({navigation}) {
         style={styles.reservarBotao}>
               <Text style={styles.reservarTexto}>Reservar Horário</Text>
         </TouchableOpacity>
-      
       </View>
     </View>
   );
