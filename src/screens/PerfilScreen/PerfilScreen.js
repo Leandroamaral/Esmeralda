@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput } from 'react-native';
+import { Text, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { firebase } from '../../firebase/config';
 import { AntDesign } from '@expo/vector-icons';
@@ -92,7 +92,7 @@ export default function Perfil ({ navigation }) {
                 <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Criar Campanha')}>
               <View style={styles.menuView}>
                 <AntDesign name="staro" size={26} color="#92a494" style={styles.padding10}/>
                 <Text style={styles.menuTexto}>Criar Campanhas</Text>
