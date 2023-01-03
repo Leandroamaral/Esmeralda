@@ -16,6 +16,7 @@ WebBrowser.maybeCompleteAuthSession();
 import styles from './styles';
 
 export default function LoginScreen({navigation}) {
+    const [isDisabled, setIsDisabled] = useState('');
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [visibleDL, setvisibleDL] = useState(false);
@@ -48,6 +49,7 @@ export default function LoginScreen({navigation}) {
     }
 
     const onLoginPress = () => {
+        setIsDisabled(true)
         firebase
         .auth()
         .signInWithEmailAndPassword(email, password)
@@ -70,6 +72,7 @@ export default function LoginScreen({navigation}) {
                 });
         })
         .catch(error => {
+            setIsDisabled(false)
             alert(error)
         })
 
@@ -95,7 +98,6 @@ export default function LoginScreen({navigation}) {
     return (
 
         <View style={styles.container}>
-
             <Dialog.Container visible={visibleDL}>
                 <Dialog.Title>{titulo}</Dialog.Title>
                 <Dialog.Description>{mensagem}</Dialog.Description>
@@ -106,20 +108,20 @@ export default function LoginScreen({navigation}) {
 
             <KeyboardAwareScrollView
                 style={{ flex: 1, width: '100%' }}
-                keyboardShouldPersistTaps="always">
+                keyboardShouldPersistTaps="none">
                 <Image
                     style={styles.logo}
                     source={require('../../../assets/logo.png')}
                 />
-                    <TextInput
-                        style={styles.input}
-                        placeholder='E-mail'
-                        placeholderTextColor="#aaaaaa"
-                        onChangeText={(text) => setEmail(text)}
-                        value={email}
-                        underlineColorAndroid="transparent"
-                        autoCapitalize="none"
-                    />
+                <TextInput
+                    style={styles.input}
+                    placeholder='E-mail'
+                    placeholderTextColor="#aaaaaa"
+                    onChangeText={(text) => setEmail(text)}
+                    value={email}
+                    underlineColorAndroid="transparent"
+                    autoCapitalize="none"
+                />
                 
                 <TextInput
                     style={styles.input}
@@ -132,6 +134,7 @@ export default function LoginScreen({navigation}) {
                     autoCapitalize="none"
                 />
                 <TouchableOpacity
+                    disabled={isDisabled}
                     onPress={() => onLoginPress()}>
                     <LinearGradient
                         // Button Linear Gradient
@@ -140,9 +143,7 @@ export default function LoginScreen({navigation}) {
                         end={[1, 1]}
                         location={[0.25, 0.4, 1]}
                         style={styles.button}>
-                        
                         <Text style={styles.buttonTitle}>Entrar</Text>
-                   
                     </LinearGradient>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -154,7 +155,6 @@ export default function LoginScreen({navigation}) {
                         end={[1, 1]}
                         location={[0.25, 0.4, 1]}
                         style={styles.button} >
-
                         <Text style={styles.buttonTitle}>Entrar com Google</Text>
                     </LinearGradient>
                 </TouchableOpacity>

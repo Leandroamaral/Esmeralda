@@ -3,9 +3,11 @@ import { auth, db } from '../../firebase/config'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { LinearGradient } from 'expo-linear-gradient'
+import  { MaskedTextInput } from 'react-native-mask-text'
 import styles from './styles';
 
 export default function RegistrationScreen({navigation}) {
+    const [isDisabled, setIsDisabled] = useState('');
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -17,9 +19,11 @@ export default function RegistrationScreen({navigation}) {
     }
 
     const onRegisterPress = () => {
+        setIsDisabled(true)
         if (password !== confirmPassword) {
             //Need change to UI designer
             alert("As senhas não combinam!")
+            setIsDisabled(false)
             return
         }
         auth.createUserWithEmailAndPassword(email, password).then((response) => {
@@ -43,6 +47,7 @@ export default function RegistrationScreen({navigation}) {
                 });
         }).catch((error) => {
             //Need Change to UI deisgner
+            setIsDisabled(false)
             alert(error)
         });
     }
@@ -61,9 +66,9 @@ export default function RegistrationScreen({navigation}) {
                     placeholder='Nome Completo'
                     placeholderTextColor="#aaaaaa"
                     onChangeText={(text) => setFullName(text)}
+                    autoCapitalize="words"
                     value={fullName}
                     underlineColorAndroid="transparent"
-                    autoCapitalize="none"
                 />
                 <TextInput
                     style={styles.input}
@@ -71,17 +76,18 @@ export default function RegistrationScreen({navigation}) {
                     placeholderTextColor="#aaaaaa"
                     onChangeText={(text) => setEmail(text)}
                     value={email}
-                    underlineColorAndroid="transparent"
                     autoCapitalize="none"
+                    underlineColorAndroid="transparent"
                 />
-                  <TextInput
+                <MaskedTextInput
                     style={styles.input}
                     placeholder='Telefone'
+                    mask="(99) 99999-9999"
                     placeholderTextColor="#aaaaaa"
                     onChangeText={(text) => setTelefone(text)}
                     value={telefone}
                     underlineColorAndroid="transparent"
-                    autoCapitalize="none"
+                    keyboardType="numeric"
                 />
                 <TextInput
                     style={styles.input}
@@ -91,7 +97,6 @@ export default function RegistrationScreen({navigation}) {
                     onChangeText={(text) => setPassword(text)}
                     value={password}
                     underlineColorAndroid="transparent"
-                    autoCapitalize="none"
                 />
                 <TextInput
                     style={styles.input}
@@ -101,9 +106,9 @@ export default function RegistrationScreen({navigation}) {
                     onChangeText={(text) => setConfirmPassword(text)}
                     value={confirmPassword}
                     underlineColorAndroid="transparent"
-                    autoCapitalize="none"
                 />
                 <TouchableOpacity
+                    disabled={isDisabled}
                     onPress={() => onRegisterPress()}>
                     <LinearGradient
                         // Button Linear Gradient

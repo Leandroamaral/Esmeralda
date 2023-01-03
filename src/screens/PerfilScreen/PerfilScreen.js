@@ -134,6 +134,7 @@ function EditarPerfil({ navigation }) {
   const [visibleDL2, setvisibleDL2] = useState(false);
   const [titulo, setTitulo] = useState('');
   const [mensagem, setMensagem] = useState('');
+  const [isDisabled, setIsDisabled] = useState('');
 
   const load = async () => {
     try {
@@ -156,6 +157,7 @@ function EditarPerfil({ navigation }) {
   }
 
   function onChangeUserData() {
+    setIsDisabled(true);
     db
     .collection('users')
     .doc(id)
@@ -167,11 +169,14 @@ function EditarPerfil({ navigation }) {
       setTitulo('Editar Perfil');
       setMensagem('Perfil atualizado com sucesso');
       setvisibleDL(true);
+      setIsDisabled(false);
+
     })
     .catch(error => {
       setTitulo('Error: ');
       setMensagem(error);
       setvisibleDL(true);
+      setIsDisabled(false);
       console.error(error);
     });
     };
@@ -241,9 +246,9 @@ function EditarPerfil({ navigation }) {
       <Dialog.Button label="Confirmar" onPress={OKDeleteUser}/>
     </Dialog.Container>
 
-    <AntDesign name="user" size={80} color="#92a494" style={{alignSelf: 'center', padding: 20}} />
       <KeyboardAwareScrollView
           keyboardShouldPersistTaps="always">
+          <AntDesign name="user" size={80} color="#92a494" style={{alignSelf: 'center', padding: 20}} />
           <TextInput
               style={styles.input}
               placeholder={fullName}
@@ -261,7 +266,9 @@ function EditarPerfil({ navigation }) {
               underlineColorAndroid="transparent"
               autoCapitalize="none"
           />
-          <TouchableOpacity onPress={onChangeUserData}>
+          <TouchableOpacity 
+          disabled={isDisabled}
+          onPress={onChangeUserData}>
               <LinearGradient
                   // Button Linear Gradient
                   colors={['#1d817e', '#2fa192', '#50c8cc']}
@@ -306,7 +313,7 @@ export default function Perfil() {
     return (
       <RootStack.Navigator>
       <RootStack.Group screenOptions={{ headerShown: false }}>
-        <RootStack.Screen name="PerfilMain" component={PerfilMain} />
+        <RootStack.Screen name="Perfil" component={PerfilMain} />
       </RootStack.Group>
       <RootStack.Group screenOptions={{ presentation: 'modal' }}>
         <RootStack.Screen 
