@@ -62,7 +62,7 @@ export default function Agendar({navigation}) {
       <View style={styles.subTituloView}>
         <Text style={styles.subTituloTexto}>Selecione a especialista</Text>
         <SafeAreaView>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator="false">
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View style={styles.espMainView}>
               {specialists.map((item, key) => (
                  <View key={key} style={specialist === key ? styles.espViewChecked : styles.espView}>
@@ -102,7 +102,7 @@ export default function Agendar({navigation}) {
         <View style={styles.subTituloView} enable>
           <Text style={styles.subTituloTexto}>Selecione o Serviço</Text>
         </View>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator="false">
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         <View style={styles.botaoServico}>
             <TouchableOpacity style={styles.iconeServico}>
               <Corte width={45} height={45} fill="#92a494" />
