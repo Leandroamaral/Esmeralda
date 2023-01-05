@@ -4,12 +4,16 @@ import { LinearGradient } from 'expo-linear-gradient'
 import * as ImagePicker from 'expo-image-picker';
 import { AntDesign } from '@expo/vector-icons';
 import styles from './styles';
+import { firebase } from '../../firebase/config';
+import { getStorage, ref,  } from "firebase/storage";
+import * as FileSystem from 'expo-file-system';
 
 
 export default function EditarCampanha(){
 
     const [nomeCampanha, setNomeCampanha] = useState("");
     const [image, setImage] = useState(null);
+    const [imageenc, setImageenc] = useState('');
   
     const pickImage = async () => {
       // No permissions request is necessary for launching the image library
@@ -22,8 +26,33 @@ export default function EditarCampanha(){
   
       if (!result.canceled) {
         setImage(result.assets[0].uri);
+        
       }
     };
+
+    function onAddCampanha() {
+      const imagemStr = async () => {
+        let base64 = await FileSystem.readAsStringAsync(image, {encoding: 'base64'})
+        setImageenc('data:image/png;base64,' + base64);
+        //console.log(base64);
+      }
+      imagemStr();
+      /*const storage = getStorage();
+      const reference = ref(storage, 'teste.jpg');
+      console.log(image);
+      (reference, image)
+        .then((snapshot) => {
+          console.log('aqui');
+        }) 
+      firebase
+          .storage()
+          .ref(nomeCampanha)
+          .putFile(image)
+          .then(() => console.log('ok'))
+          .catch((e) => {
+            console.error(e);
+          });*/
+    }
   
   
     return (
@@ -37,7 +66,7 @@ export default function EditarCampanha(){
               <Text style={{height: 40, padding: 5, fontSize: 16 }}>Campanha de Lançamento</Text>
               <Image
                 style={styles.imagemCampanha}
-                source={require('../../../assets/img1.png')}
+                source={{uri: imageenc }}
               />
               <View style={{flexDirection: 'row', alignSelf:'flex-end'}}>
                 <AntDesign name="star" size={25} color="#1d817e" style={styles.padding10} />
@@ -79,7 +108,7 @@ export default function EditarCampanha(){
           <Text style={{position:'absolute', alignSelf:'center', top: 60}}>Clique para carregar uma imagem</Text>
         </View>
         <View style={{alignSelf:'center', padding: 10}}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onAddCampanha}>
             <LinearGradient
                 // Button Linear Gradient
                 colors={['#1d817e', '#2fa192', '#50c8cc']}
