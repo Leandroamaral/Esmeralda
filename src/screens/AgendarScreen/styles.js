@@ -48,21 +48,29 @@ export default StyleSheet.create({
         marginBottom: 5, 
         marginRight: 10 
     },
+    espViewChecked :{
+        backgroundColor: '#fff', 
+        height: 150, 
+        width: 130, 
+        borderRadius: 10, 
+        borderColor:"#000",
+        borderWidth:1,
+        borderSize:10,
+        alignItems: 'center', 
+        marginBottom: 5, 
+        marginRight: 10 
+    },
     espImg : {
         width: 100, 
-        height: 90, 
+        height: 100, 
         top: 10, 
-        borderRadius: 10
+        borderRadius: 50
     },
+    
     espTexto: {
         fontSize: 13, 
         fontWeight: 'bold', 
         top: 15
-    },
-    espRating: {
-        color: '1d817e',
-        padding: 5, 
-        top: 10
     },
     horarioView: {
         padding: 10, 
@@ -82,9 +90,28 @@ export default StyleSheet.create({
         alignItems:'center', 
         justifyContent:'center'
     },
+    horarioBotaoChecked:{
+        marginRight: 10, 
+        marginBottom: 10, 
+        width: 100, 
+        height: 35, 
+        borderRadius: 10, 
+        backgroundColor: '#fff', 
+        alignItems:'center', 
+        justifyContent:'center',
+        borderWidth:1,
+        borderColor:"#000"
+    },
     horariosTexto: {
         fontWeight: 'bold', 
         fontSize:15
+    },
+    serviceView:{
+        marginTop:30,
+        marginBottom:30
+    },
+    botaoServico:{
+        marginLeft:10
     },
     reservarView: {
         alignItems:'center'

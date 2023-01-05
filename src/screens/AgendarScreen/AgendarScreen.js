@@ -1,132 +1,175 @@
-import * as React from 'react';
+import React, { useState } from 'react'
 import { Image, Text, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
+import { RadioButton } from 'react-native-paper';
 import WeeklyCalendar from 'react-native-weekly-calendar';
 import { Rating } from 'react-native-elements';
+import { Corte, Hidratacao, Manicure, Tintura, Maquiagem, Alisamento, Cilios, Pedicure, WhatsappIcon } from '../FeedScreen/icons';
 import styles from './styles';
 import { firebase } from '../../firebase/config';
 
 export default function Agendar({navigation}) {
-  return (
 
+  //toview 
+  const [specialists,setSpecialists] = useState([])
+  const [times,setTimes] = useState([])
+  const [visibilityTime,setVisibilityTime] = useState()
+  const [disabledSend,setDisabledSend] = useState()
+  // to form
+  const [specialist,setSpecialist] = useState('')
+  const [date,setDate] = useState('')
+  const [time,setTime] = useState('');
+
+  function updateDate(date){
+    setDate(date)
+    updateSpecialists()
+  }
+  
+  function updateSpecialists(){
+    setSpecialists([
+      {name:"Regina Caze",timeAvailable:
+      ["08:00","09:00","10:00","18:00","19:00","20:00"]},
+      {name:"Julio Alberto",timeAvailable:["12:00","13:00","14:00"]
+    }])
+  }
+  function updateSpecialist(key){
+    setSpecialist(key)
+    const specialist = specialists[key]
+    setTimes(specialist.timeAvailable)
+  }
+  function updateTime(key){
+    setTime(key)
+  }
+  React.useEffect(()=>{
+    updateSpecialists();
+    setDisabledSend(true)
+	}, [])
+
+  return (
     <View>
       <View style={styles.tituloView}>
-        <Text style={styles.tituloTexto}>Agendar </Text>
+        <Text style={styles.tituloTexto}>Agendar</Text>
       </View>
-      
       <View>
         <WeeklyCalendar style={styles.calendario}
           startWeekday={7}
           locale = 'pt-br'
           titleStyle = {styles.calendarioTitulo}
           dayLabelStyle = {styles.calendarioLabel}
+          onDayPress = { (date) => updateDate(date)}
          />
       </View>
       
       <View style={styles.subTituloView}>
         <Text style={styles.subTituloTexto}>Selecione a especialista</Text>
+        <SafeAreaView>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator="false">
+            <View style={styles.espMainView}>
+              {specialists.map((item, key) => (
+                 <View key={key} style={specialist === key ? styles.espViewChecked : styles.espView}>
+                 <TouchableOpacity
+                     onPress={() => updateSpecialist(key)}
+                     >
+                   <Image
+                     source={require('../../../assets/esp1.png')}
+                     style={styles.espImg}
+                       />
+                   <Text style={styles.espTexto}>{item.name}</Text>
+                 </TouchableOpacity>
+               </View>
+              ))}
+            </View>
+          </ScrollView>
+        </SafeAreaView>
       </View>
-
-      <SafeAreaView>
-        <ScrollView horizontal={true}>
-      
-          <View style={styles.espMainView}>
-            <View style={styles.espView}>
-              <TouchableOpacity>
-                <Image
-                  source={require('../../../assets/esp1.png')}
-                  style={styles.espImg}
-                    />
-              </TouchableOpacity>
-              
-              <Text style={styles.espTexto}>Regiane Liberato</Text>
-              <Rating
-                imageSize={13}
-                readonly
-                startingValue={4.5}
-                style={styles.espRating}
-              />
-            </View>
-            <View style={styles.espView}>
-              <TouchableOpacity>
-                <Image
-                  source={require('../../../assets/esp2.png')}
-                  style={styles.espImg}
-                    />
-              </TouchableOpacity>
-              
-              <Text style={styles.espTexto}>Nome Especialista</Text>
-              <Rating
-                imageSize={13}
-                readonly
-                startingValue={3}
-                style={styles.espRating}
-              />
-            </View>
-            <View style={styles.espView}>
-              <TouchableOpacity>
-                <Image
-                  source={require('../../../assets/esp3.png')}
-                  style={styles.espImg}
-                    />
-              </TouchableOpacity>
-              
-              <Text style={styles.espImg}>Nome Especialista</Text>
-              <Rating
-                imageSize={13}
-                readonly
-                startingValue={4}
-                style={styles.espRating}
-              />
-            </View>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-
-      <View style={styles.subTituloView}>
+      <View style={styles.subTituloView} enable>
         <Text style={styles.subTituloTexto}>Selecione o horário</Text>
       </View>
 
       <View style={styles.horarioView}>
-        <TouchableOpacity style={styles.horarioBotao}>
-           <Text style={styles.horariosTexto}>09:00</Text>
+        {times.map((item,key) => (
+          <TouchableOpacity 
+          key={key} 
+          style={key === time ? styles.horarioBotaoChecked : styles.horarioBotao}
+          onPress= {() => updateTime(key)}
+          >
+           <Text style={styles.horariosTexto}>{item}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.horarioBotao}>
-           <Text style={styles.horariosTexto}>10:00</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.horarioBotao}>
-           <Text style={styles.horariosTexto}>11:00</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.horarioBotao}>
-           <Text style={styles.horariosTexto}>13:00</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.horarioBotao}>
-           <Text style={styles.horariosTexto}>14:00</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.horarioBotao}>
-           <Text style={styles.horariosTexto}>15:00</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.horarioBotao}>
-           <Text style={styles.horariosTexto}>16:00</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.horarioBotao}>
-           <Text style={styles.horariosTexto}>17:00</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.horarioBotao}>
-           <Text style={styles.horariosTexto}>18:00</Text>
-        </TouchableOpacity>
+        ))}
+        
       </View>
-      
-      <View style={styles.reservarView}>
-        <TouchableOpacity style={styles.reservarBotao}>
+
+      <View style={styles.serviceView}>
+        <View style={styles.subTituloView} enable>
+          <Text style={styles.subTituloTexto}>Selecione o Serviço</Text>
+        </View>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator="false">
+        <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Corte width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Corte</Text>
+          </View>
+
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Alisamento width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Alisamento</Text>
+          </View>
+
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Tintura width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Tintura</Text>
+          </View>
+          
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Manicure width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Manicure</Text>
+          </View>
+
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Hidratacao width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Hidratacao</Text>
+          </View>
+
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Maquiagem width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Maquiagem</Text>
+          </View>
+          
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Pedicure width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Pedicure</Text>
+          </View>
+
+          <View style={styles.botaoServico}>
+            <TouchableOpacity style={styles.iconeServico}>
+              <Cilios width={45} height={45} fill="#92a494" />
+            </TouchableOpacity>
+            <Text style={styles.textoServico}>Cilios</Text>
+          </View>
+        </ScrollView>
+        
+      </View>
+      <View 
+        style={styles.reservarView}
+      >
+        <TouchableOpacity 
+        disabled={disabledSend}
+        style={styles.reservarBotao}>
               <Text style={styles.reservarTexto}>Reservar Horário</Text>
         </TouchableOpacity>
-      
       </View>
-
-
-
     </View>
-
-
   );
 }
