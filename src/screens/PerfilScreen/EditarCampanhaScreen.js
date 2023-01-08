@@ -4,54 +4,60 @@ import { LinearGradient } from 'expo-linear-gradient'
 import * as ImagePicker from 'expo-image-picker';
 import { AntDesign } from '@expo/vector-icons';
 import styles from './styles';
-import { firebase } from '../../firebase/config';
+import { firebase, db } from '../../firebase/config';
 import { getStorage, ref,  } from "firebase/storage";
 import * as FileSystem from 'expo-file-system';
+import uuid from 'react-native-uuid';
 
 
 export default function EditarCampanha(){
 
-    const [nomeCampanha, setNomeCampanha] = useState("");
-    const [image, setImage] = useState(null);
-    const [imageenc, setImageenc] = useState('');
+    const [nomeCampanha, setNomeCampanha] = useState('');
+    const [imageUri, setImageUri] = useState('../../../assets/notfound.png');
+    const [image64, setImage64] = useState('../../../assets/notfound.png');
   
     const pickImage = async () => {
       // No permissions request is necessary for launching the image library
       let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
+        allowsMultipleSelection: false,
         aspect: [4, 2.5],
         quality: 1,
+        base64: true
       });
-  
       if (!result.canceled) {
-        setImage(result.assets[0].uri);
-        
+        console.log (result.assets[0].width)
+        if (result.assets[0].width > 740) {
+          alert('Imagem deve ter largura máxima de 740px')
+        } else {
+          setImage64('data:image/png;base64,' + result.assets[0].base64);
+          setImageUri(result.assets[0].uri);
+        }
+
       }
     };
 
+          
+
     function onAddCampanha() {
-      const imagemStr = async () => {
-        let base64 = await FileSystem.readAsStringAsync(image, {encoding: 'base64'})
-        setImageenc('data:image/png;base64,' + base64);
-        //console.log(base64);
-      }
-      imagemStr();
-      /*const storage = getStorage();
-      const reference = ref(storage, 'teste.jpg');
-      console.log(image);
-      (reference, image)
-        .then((snapshot) => {
-          console.log('aqui');
-        }) 
-      firebase
-          .storage()
-          .ref(nomeCampanha)
-          .putFile(image)
-          .then(() => console.log('ok'))
-          .catch((e) => {
-            console.error(e);
-          });*/
+
+      db
+        .collection('Campanha')
+        .doc(uuid.v4())
+        .set({
+          nomeCampanha: nomeCampanha,
+          image: image64,
+
+
+        })
+        .then(() => {
+          console.log('aqui OK')  
+        })
+        .catch((e) => {
+          console.error(e)
+        });
+
     }
   
   
@@ -66,7 +72,7 @@ export default function EditarCampanha(){
               <Text style={{height: 40, padding: 5, fontSize: 16 }}>Campanha de Lançamento</Text>
               <Image
                 style={styles.imagemCampanha}
-                source={{uri: imageenc }}
+                source={{uri: imageUri }}
               />
               <View style={{flexDirection: 'row', alignSelf:'flex-end'}}>
                 <AntDesign name="star" size={25} color="#1d817e" style={styles.padding10} />
@@ -102,8 +108,10 @@ export default function EditarCampanha(){
           />
         </View>
         <View  style={{alignSelf:'center'}}>
-          <TouchableOpacity onPress={pickImage}   style={{ width: 300, height:150, backgroundColor:'#BBBBBB', padding: 10 }}>
-                <Image source={{ uri: image }} />
+          <TouchableOpacity onPress={pickImage}   style={{ width: 300, height:150, backgroundColor:'#BBBBBB' }}>
+                <Image 
+                  style={{width: 300, height:150}}
+                  source={{uri: imageUri}} />
           </TouchableOpacity>
           <Text style={{position:'absolute', alignSelf:'center', top: 60}}>Clique para carregar uma imagem</Text>
         </View>
