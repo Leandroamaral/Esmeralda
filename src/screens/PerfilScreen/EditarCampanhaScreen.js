@@ -15,6 +15,7 @@ export default function EditarCampanha(){
     const [nomeCampanha, setNomeCampanha] = useState('');
     const [imageUri, setImageUri] = useState('../../../assets/notfound.png');
     const [image64, setImage64] = useState('../../../assets/notfound.png');
+    const [dataCampanha, setDataCampanha] = useState('');
   
     const pickImage = async () => {
       // No permissions request is necessary for launching the image library
@@ -41,28 +42,42 @@ export default function EditarCampanha(){
           
 
     function onAddCampanha() {
-
-      db
+      if ( !nomeCampanha || !imageUri ) {
+        alert('Necessário o nome da campanha e uma imagem')
+      } else {
+        db
         .collection('Campanha')
         .doc(uuid.v4())
         .set({
           nomeCampanha: nomeCampanha,
           image: image64,
-
-
         })
         .then(() => {
-          console.log('aqui OK')  
+          alert('Campanha Adicionada com Sucesso')  
         })
         .catch((e) => {
           console.error(e)
         });
-
+      }
+      
     }
   
-  
+    function Campanha() {
+      db
+        .collection('Campanha')
+        .get()
+        .then(snapshot => {
+          setDataCampanha (snapshot.docs.map(doc => doc.data()))
+        })
+        console.log(dataCampanha.map(arr => {arr.nomeCampanha}))
+      
+      
+
+    }
+    
     return (
       <SafeAreaView>
+        <Text>Aqui</Text>
       <ScrollView>
         <ScrollView 
           horizontal={true} 
@@ -116,7 +131,7 @@ export default function EditarCampanha(){
           <Text style={{position:'absolute', alignSelf:'center', top: 60}}>Clique para carregar uma imagem</Text>
         </View>
         <View style={{alignSelf:'center', padding: 10}}>
-          <TouchableOpacity onPress={onAddCampanha}>
+          <TouchableOpacity onPress={Campanha}>
             <LinearGradient
                 // Button Linear Gradient
                 colors={['#1d817e', '#2fa192', '#50c8cc']}
