@@ -1,12 +1,10 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { View, Text, SafeAreaView, ScrollView, TextInput, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient'
 import * as ImagePicker from 'expo-image-picker';
 import { AntDesign } from '@expo/vector-icons';
 import styles from './styles';
-import { firebase, db } from '../../firebase/config';
-import { getStorage, ref,  } from "firebase/storage";
-import * as FileSystem from 'expo-file-system';
+import { db } from '../../firebase/config';
 import uuid from 'react-native-uuid';
 
 
@@ -16,6 +14,7 @@ export default function EditarCampanha(){
     const [imageUri, setImageUri] = useState('../../../assets/notfound.png');
     const [image64, setImage64] = useState('../../../assets/notfound.png');
     const [dataCampanha, setDataCampanha] = useState('');
+    const [tempKey, setTempKey] = useState(0);
   
     const pickImage = async () => {
       // No permissions request is necessary for launching the image library
@@ -29,7 +28,7 @@ export default function EditarCampanha(){
       });
       if (!result.canceled) {
         console.log (result.assets[0].width)
-        if (result.assets[0].width > 740) {
+        if (result.assets[0].width > 1080) {
           alert('Imagem deve ter largura máxima de 740px')
         } else {
           setImage64('data:image/png;base64,' + result.assets[0].base64);
@@ -51,9 +50,14 @@ export default function EditarCampanha(){
         .set({
           nomeCampanha: nomeCampanha,
           image: image64,
+          star: false
         })
         .then(() => {
-          alert('Campanha Adicionada com Sucesso')  
+          alert('Campanha Adicionada com Sucesso') 
+          setTempKey(tempKey+1); 
+          setNomeCampanha('');
+          setImageUri('../../../assets/notfound.png')
+
         })
         .catch((e) => {
           console.error(e)
@@ -61,51 +65,87 @@ export default function EditarCampanha(){
       }
       
     }
-  
-    function Campanha() {
+
+    function deleteCampanha(id) {
+      setTempKey(tempKey+1);
+      db 
+        .collection('Campanha')
+        .doc(id)
+        .delete()
+        .then( () => {          
+          setTempKey(tempKey+1);
+          alert('Campanha apagada')})
+        .catch( (e) => console.error(e));
+    }
+
+    function putStar(id,estado){
+      setTempKey(tempKey+1);
       db
+        .collection('Campanha')
+        .doc(id)
+        .update ({
+          star: !estado
+        })
+        .then(() => {
+          setTempKey(tempKey+1);
+          alert('Star atualizado')
+        })
+        .catch((e) => console.error(e))
+    }
+  
+    function NovaCampanha() {
+
+      const [shotdata, setshotdata] = useState([]);
+      
+      useEffect(() => {
+        db
         .collection('Campanha')
         .get()
         .then(snapshot => {
-          setDataCampanha (snapshot.docs.map(doc => doc.data()))
+          setshotdata (snapshot.docs.map(doc => {
+            const data = doc.data();
+            const id = doc.id;
+            return { id, ...data }
+          }))
         })
-        console.log(dataCampanha.map(arr => {arr.nomeCampanha}))
-      
-      
+      }, []);
 
-    }
-    
-    return (
-      <SafeAreaView>
-        <Text>Aqui</Text>
-      <ScrollView>
+      return (
         <ScrollView 
           horizontal={true} 
           style={{backgroundColor: '#FFF'}}
         >
-            <View style={styles.viewcampanha}>
-              <Text style={{height: 40, padding: 5, fontSize: 16 }}>Campanha de Lançamento</Text>
-              <Image
-                style={styles.imagemCampanha}
-                source={{uri: imageUri }}
-              />
-              <View style={{flexDirection: 'row', alignSelf:'flex-end'}}>
-                <AntDesign name="star" size={25} color="#1d817e" style={styles.padding10} />
-                <AntDesign name="delete" size={25} color="#1d817e" style={styles.padding10} />
-              </View>
+          {shotdata.map( (a, index) => {
+           
+            return (
+            
+              <View style={styles.viewcampanha}>
+                <Text style={{height: 40, padding: 5, fontSize: 16 }}>{a.nomeCampanha}</Text>
+                <Image
+                  style={styles.imagemCampanha}
+                  source={{uri: a.image }}
+                />
+                <View style={{flexDirection: 'row', alignSelf:'flex-end'}}>
+                  <AntDesign name={ (a.star) ? 'star' : 'staro'} size={25} color="#1d817e" style={styles.padding10} onPress={() => {putStar(a.id, a.star)}} key={tempKey.toString()}/>
+                  <AntDesign name="delete" size={25} color="#1d817e" style={styles.padding10} onPress={() => deleteCampanha(a.id) } />
+                </View>
             </View>
-            <View style={styles.viewcampanha}>
-              <Text style={{height: 40, padding: 5, fontSize: 16 }}>Cílios mais 10</Text>
-              <Image
-                style={styles.imagemCampanha}
-                source={require('../../../assets/img2.png')}
-              />
-              <View style={{flexDirection: 'row', alignSelf:'flex-end'}}>
-                <AntDesign name="star" size={25} color="#1d817e" style={styles.padding10} />
-                <AntDesign name="delete" size={25} color="#1d817e" style={styles.padding10} />
-              </View>
-            </View>
-          </ScrollView>
+
+            )
+          })}
+        </ScrollView>
+
+      )
+    
+    }
+    
+    return (
+      <SafeAreaView>
+
+      <ScrollView>
+       
+        <NovaCampanha/>
+            
         
         <View style={styles.subTituloView}>
           <Text style={styles.subTituloTexto}>Criar nova Campanha</Text>
@@ -131,7 +171,7 @@ export default function EditarCampanha(){
           <Text style={{position:'absolute', alignSelf:'center', top: 60}}>Clique para carregar uma imagem</Text>
         </View>
         <View style={{alignSelf:'center', padding: 10}}>
-          <TouchableOpacity onPress={Campanha}>
+          <TouchableOpacity onPress={onAddCampanha}>
             <LinearGradient
                 // Button Linear Gradient
                 colors={['#1d817e', '#2fa192', '#50c8cc']}

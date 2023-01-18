@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Image, Text, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './styles';
-import { firebase } from '../../firebase/config';
+import { db } from '../../firebase/config';
 import { Entypo } from '@expo/vector-icons';
 import { Corte, Hidratacao, Manicure, Tintura, Maquiagem, Alisamento, Cilios, Pedicure, WhatsappIcon } from './icons';
 import { SocialIcon } from 'react-native-elements'
@@ -49,6 +49,40 @@ function Titulo() {
 
 }  
 
+function Campanha() {
+  const [shotdata, setshotdata] = useState([]);
+      
+  useEffect(() => {
+    db
+    .collection('Campanha')
+    .get()
+    .then(snapshot => {
+      setshotdata (snapshot.docs.map(doc => {
+        const data = doc.data();
+        const id = doc.id;
+        return { id, ...data }
+      }))
+    })
+  }, []);
+
+  return (
+    <ScrollView horizontal={true}>
+
+    {shotdata.map( (a, index) => {
+
+      return(
+        <View style={styles.viewcampanha} key={index}>
+              <Image
+                style={styles.imagemCampanha}
+                source={{uri: a.image }}
+              />
+            </View>
+      )
+    })}
+    </ScrollView>
+  );
+}
+
 export default function Feed() {
   return (
     <SafeAreaView style={styles.safeareaview}>
@@ -56,20 +90,7 @@ export default function Feed() {
 
         <Titulo />
 
-        <ScrollView horizontal={true}>
-          <View style={styles.viewcampanha}>
-            <Image
-              style={styles.imagemCampanha}
-              source={require('../../../assets/img1.png')}
-            />
-          </View>
-          <View style={styles.viewcampanha}>
-            <Image
-              style={styles.imagemCampanha}
-              source={require('../../../assets/img2.png')}
-            />
-          </View>
-        </ScrollView>
+        <Campanha />
 
         <View style={styles.servicos}>
           <View style={styles.botaoServico}>
