@@ -3,6 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import EditarPerfil from './EditarPerfilScreen';
 import Perfil from './PerfilScreen';
 import EditarCampanha from './EditarCampanhaScreen';
+import EditarServicoView from './EditarServicosViewScreen';
+import EditarServico2 from './EditarServicosScreen2';
 
 export default function PerfilMain() {
 
@@ -23,6 +25,16 @@ export default function PerfilMain() {
           name="Editar Perfil" 
           component={EditarPerfil}
           options={{headerTitle: 'Editar Minha Conta'}}  
+        />
+        <RootStack.Screen 
+          name="Editar Servico" 
+          component={EditarServicoView}
+          options={{headerTitle: 'Editar Serviço'}}  
+        />
+        <RootStack.Screen 
+          name="Editar Servico2" 
+          component={EditarServico2}
+          options={{headerTitle: 'Editar Serviço2'}}  
         />
       </RootStack.Group>
     </RootStack.Navigator>

@@ -118,5 +118,34 @@ export default StyleSheet.create({
         fontSize: 20, 
         fontWeight: 'bold'
     },
+    botaoServico: {
+        backgroundColor: '#fff', 
+        height: 100, 
+        width: 80, 
+        borderRadius: 10, 
+        alignItems: 'center', 
+        marginBottom: 5 
+    },
+    iconeServico: {
+        borderRadius: 10, 
+        margin: 5, 
+        backgroundColor: '#eaeceb', 
+        width: 60, height: 60, 
+        marginTop: 12, 
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    textoServico: {
+        color: "#92a494", 
+        fontSize: 12
+    },
+    servicos: {
+        flex: 1, 
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        position: 'relative', 
+        flexWrap: 'wrap',
+        padding: 5
+    }
 
 })
