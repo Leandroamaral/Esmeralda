@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './styles';
 import { db } from '../../firebase/config';
 import { Entypo } from '@expo/vector-icons';
-import { Corte, Hidratacao, Manicure, Tintura, Maquiagem, Alisamento, Cilios, Pedicure, WhatsappIcon } from './icons';
+import { Icones, WhatsappIcon } from './icons';
 import { SocialIcon } from 'react-native-elements'
 import MapView from 'react-native-maps';
 
@@ -92,64 +92,6 @@ export default function Feed() {
 
         <Campanha />
 
-        <View style={styles.servicos}>
-          <View style={styles.botaoServico}>
-            <TouchableOpacity style={styles.iconeServico}>
-              <Corte width={45} height={45} fill="#92a494" />
-            </TouchableOpacity>
-            <Text style={styles.textoServico}>Corte</Text>
-          </View>
-
-          <View style={styles.botaoServico}>
-            <TouchableOpacity style={styles.iconeServico}>
-              <Alisamento width={45} height={45} fill="#92a494" />
-            </TouchableOpacity>
-            <Text style={styles.textoServico}>Alisamento</Text>
-          </View>
-
-          <View style={styles.botaoServico}>
-            <TouchableOpacity style={styles.iconeServico}>
-              <Tintura width={45} height={45} fill="#92a494" />
-            </TouchableOpacity>
-            <Text style={styles.textoServico}>Tintura</Text>
-          </View>
-          
-          <View style={styles.botaoServico}>
-            <TouchableOpacity style={styles.iconeServico}>
-              <Manicure width={45} height={45} fill="#92a494" />
-            </TouchableOpacity>
-            <Text style={styles.textoServico}>Manicure</Text>
-          </View>
-
-          <View style={styles.botaoServico}>
-            <TouchableOpacity style={styles.iconeServico}>
-              <Hidratacao width={45} height={45} fill="#92a494" />
-            </TouchableOpacity>
-            <Text style={styles.textoServico}>Hidratacao</Text>
-          </View>
-
-          <View style={styles.botaoServico}>
-            <TouchableOpacity style={styles.iconeServico}>
-              <Maquiagem width={45} height={45} fill="#92a494" />
-            </TouchableOpacity>
-            <Text style={styles.textoServico}>Maquiagem</Text>
-          </View>
-          
-          <View style={styles.botaoServico}>
-            <TouchableOpacity style={styles.iconeServico}>
-              <Pedicure width={45} height={45} fill="#92a494" />
-            </TouchableOpacity>
-            <Text style={styles.textoServico}>Pedicure</Text>
-          </View>
-
-          <View style={styles.botaoServico}>
-            <TouchableOpacity style={styles.iconeServico}>
-              <Cilios width={45} height={45} fill="#92a494" />
-            </TouchableOpacity>
-            <Text style={styles.textoServico}>Cilios</Text>
-          </View>
-
-        </View>
         
         
         <View style={styles.mapaView}>

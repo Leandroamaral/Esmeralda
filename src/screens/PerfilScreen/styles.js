@@ -124,7 +124,8 @@ export default StyleSheet.create({
         width: 80, 
         borderRadius: 10, 
         alignItems: 'center', 
-        marginBottom: 5 
+        marginBottom: 5, 
+       
     },
     iconeServico: {
         borderRadius: 10, 
@@ -133,7 +134,7 @@ export default StyleSheet.create({
         width: 60, height: 60, 
         marginTop: 12, 
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     textoServico: {
         color: "#92a494", 
@@ -142,7 +143,7 @@ export default StyleSheet.create({
     servicos: {
         flex: 1, 
         flexDirection: 'row', 
-        justifyContent: 'space-between', 
+        justifyContent: 'flex-start', 
         position: 'relative', 
         flexWrap: 'wrap',
         padding: 5
