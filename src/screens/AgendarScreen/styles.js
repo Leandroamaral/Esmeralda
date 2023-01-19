@@ -70,6 +70,7 @@ export default StyleSheet.create({
     espTexto: {
         fontSize: 13, 
         fontWeight: 'bold', 
+        textAlign:'center',
         top: 15
     },
     horarioView: {
