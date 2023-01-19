@@ -78,7 +78,7 @@ export default function Perfil ({ navigation }) {
                 <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Visualizar Usuarios')}>
               <View style={styles.menuView}>
                 <AntDesign name="addusergroup" size={26} color="#92a494" style={styles.padding10}/>
                 <Text style={styles.menuTexto}>Visualizar Usuários</Text>

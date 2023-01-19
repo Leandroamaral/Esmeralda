@@ -4,6 +4,7 @@ import EditarPerfil from './EditarPerfilScreen';
 import Perfil from './PerfilScreen';
 import EditarCampanha from './EditarCampanhaScreen';
 import EditarServicoView from './EditarServicosViewScreen';
+import VisualizarUsuarioView from './VisualizarUsuariosViewScreen';
 import EditarServico2 from './EditarServicosScreen2';
 
 export default function PerfilMain() {
@@ -25,6 +26,11 @@ export default function PerfilMain() {
           name="Editar Perfil" 
           component={EditarPerfil}
           options={{headerTitle: 'Editar Minha Conta'}}  
+        />
+         <RootStack.Screen 
+          name="Visualizar Usuarios" 
+          component={VisualizarUsuarioView}
+          options={{headerTitle: 'Visualizar Usuarios'}}  
         />
         <RootStack.Screen 
           name="Editar Servico" 
