@@ -147,6 +147,13 @@ export default StyleSheet.create({
         position: 'relative', 
         flexWrap: 'wrap',
         padding: 5
+    },
+    userCard:{
+        backgroundColor:"#fff",
+        color:"#000",
+        width:'100%',
+        marginBottom:5,
+        borderRadius:10,
+        padding:20
     }
-
 })
