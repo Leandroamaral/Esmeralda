@@ -9,12 +9,14 @@ import { firebase } from '../../firebase/config';
 
 export default function Agendar({navigation}) {
 
-  //toview 
+  //Setting type of states 
+  //arrays
   const [specialists,setSpecialists] = useState([])
   const [times,setTimes] = useState([])
+  //Visibility boolean
   const [visibilityTime,setVisibilityTime] = useState()
   const [disabledSend,setDisabledSend] = useState()
-  // to form
+  //Text
   const [specialist,setSpecialist] = useState('')
   const [date,setDate] = useState('')
   const [time,setTime] = useState('');
@@ -26,9 +28,17 @@ export default function Agendar({navigation}) {
   
   function updateSpecialists(){
     setSpecialists([
-      {name:"Regina Caze",timeAvailable:
-      ["08:00","09:00","10:00","18:00","19:00","20:00"]},
-      {name:"Julio Alberto",timeAvailable:["12:00","13:00","14:00"]
+      {
+        name:"Regina Caze",
+        dayAvailable:["monday","thursday"],
+        services:[{title:"corte",icon:"icon-name"},{title:"alisamento",icon:"icon-name"}],
+        timeAvailable:["08:00","09:00","10:00","18:00","19:00","20:00"]},
+      
+      {
+        name:"Julio Alberto",
+        dayAvailable:["monday","thursday"],
+        services:[{title:"corte",icon:"icon-name"},{title:"alisamento",icon:"icon-name"}],
+        timeAvailable:["12:00","13:00","14:00"]
     }])
   }
   function updateSpecialist(key){
@@ -39,6 +49,8 @@ export default function Agendar({navigation}) {
   function updateTime(key){
     setTime(key)
   }
+
+  //On Init Update selected date specialists
   React.useEffect(()=>{
     updateSpecialists();
     setDisabledSend(true)
