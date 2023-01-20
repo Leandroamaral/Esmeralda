@@ -165,7 +165,8 @@ export default StyleSheet.create({
         marginBottom: 10,
         marginLeft: 30,
         marginRight: 30,
-        paddingLeft: 16
+        paddingLeft: 16,
+        fontSize: 15
     },
     inputbig: {
         height: 200,
@@ -176,6 +177,8 @@ export default StyleSheet.create({
         marginBottom: 10,
         marginLeft: 30,
         marginRight: 30,
-        paddingLeft: 16
+        paddingLeft: 16,
+        textAlignVertical: 'top',
+        fontSize: 15
     },
 })

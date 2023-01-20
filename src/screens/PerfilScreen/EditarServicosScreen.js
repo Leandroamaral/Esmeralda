@@ -1,18 +1,47 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput, Image } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import * as ImagePicker from 'expo-image-picker';
+import uuid from 'react-native-uuid';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { firebase } from '../../firebase/config';
-import { AntDesign } from '@expo/vector-icons';
+import { firebase, db } from '../../firebase/config';
 import { LinearGradient } from 'expo-linear-gradient'
 import styles from './styles';
-import * as Updates from 'expo-updates';
+import { AntDesign } from '@expo/vector-icons';
 
 
-export default function EditarServico ({ navigation }) {
+export default function EditarServico ({ route, navigation }) {
 
   const [imageUri, setImageUri] = useState('../../../assets/notfound.png');
-  const [image64, setImage64] = useState('../../../assets/notfound.png');
+  const [image64, setImage64] = useState('');
+  const [nome, setNome] = useState('');
+  const [descricao, setDescricao] = useState('');
+  const [icone, setIcone] = useState('');
+  const [parametros, setParametros] = useState(route.params);
+ 
+  if (parametros.itemId) {
+    useEffect(() => {
+      db
+      .collection('Servico')
+      .doc(parametros.itemId)
+      .get()
+      .then(snapshot => {
+        const shotdata = snapshot.data()
+        setNome(shotdata.Nome)
+        setDescricao(shotdata.Descricao)
+        setIcone(shotdata.Icone)
+        setImage64(shotdata.Imagem)
+        if (shotdata.Imagem) {
+          setImageUri(shotdata.Imagem) 
+        } else {
+          setImageUri('../../../assets/notfound.png')
+        }
+        
+        })
+      
+    }, []);
+  };
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -36,10 +65,65 @@ export default function EditarServico ({ navigation }) {
     }
   };
   
-  const [nome, setNome] = useState('')
-  const [descricao, setDescricao] = useState('')
+  function onEditarServicos() {
 
-    return(
+    if (nome && image64 && descricao && icone ) {
+      if (parametros.itemId) {
+        db
+        .collection('Servico')
+        .doc(parametros.itemId)
+        .update({
+          Nome: nome,
+          Imagem: image64,
+          Descricao: descricao,
+          Icone: icone
+        })
+        .then(() => {
+          alert('Atualização Efetuada');
+        })
+        .catch(() => {
+          console.error(e);
+        })
+      } else {
+        db
+        .collection('Servico')
+        .doc(uuid.v4())
+        .set({
+          Nome: nome,
+          Imagem: image64,
+          Descricao: descricao,
+          Icone: icone
+        })
+        .then(() => {
+          alert('Servico Incluído');
+        })
+        .catch(() => {
+          console.error(e);
+        })
+      }
+    } else {
+      alert ('Todos os campos são obrigatórios');
+    }
+  }
+
+  function onDeleteServico () {
+    db 
+      .collection('Servico')
+      .doc(parametros.itemId)
+      .delete()
+      .then( () => {          
+        alert('Campanha apagada')})
+      .catch( (e) => console.error(e))
+      .finally ( () => navigation.navigate('EditarServicoView'))
+    
+  }
+
+  
+
+
+
+
+  return(
     <SafeAreaView>
         <ScrollView>
           <View>
@@ -74,8 +158,48 @@ export default function EditarServico ({ navigation }) {
                 value={descricao}
                 underlineColorAndroid="transparent"
                 autoCapitalize="none"
+                multiline
+                
               />
+              <Picker 
+                style={styles.input} 
+                selectedValue={icone}
+                onValueChange={(itemValue, itemIndex) => {
+                  setIcone(itemValue)
+                }}
+              >
+                <Picker.Item label='Selecione um Icone' style={{color: "#AAA", fontSize: 15}} />
+                <Picker.Item label="Pedicure" value="Pedicure" />
+                <Picker.Item label="Cilios" value="Cilios" />
+                <Picker.Item label="Alisamento" value="Alisamento" />
+                <Picker.Item label="Maquiagem" value="Maquiagem" />
+                <Picker.Item label="Tintura" value="Tintura" />
+                <Picker.Item label="Manicure" value="Manicure" />
+                <Picker.Item label="Hidratacao" value="Hidratacao" />
+                <Picker.Item label="Corte" value="Corte" />
+              </Picker>
 
+              <View style={{alignSelf:'center', padding: 10, flexDirection: 'row',}}>
+                <TouchableOpacity onPress={onEditarServicos}>
+                  <LinearGradient
+                      // Button Linear Gradient
+                      colors={['#1d817e', '#2fa192', '#50c8cc']}
+                      start={[0, 0]}
+                      end={[1, 1]}
+                      location={[0.25, 0.4, 1]}
+                      style={styles.botao}>
+                      
+                      <Text style={styles.botaoTexto}>{(parametros.itemId) ?  'Salvar' : 'Adicionar Serviço'} </Text>
+                  
+                  </LinearGradient>
+                </TouchableOpacity>
+                {(parametros.itemId) ? 
+                  <TouchableOpacity onPress={onDeleteServico}>
+                    <AntDesign name="delete" size={30} color="#92a494" style={{marginLeft: 30, marginTop: 3}}/> 
+                  </TouchableOpacity>
+                : '' }
+    
+              </View>
 
             </KeyboardAwareScrollView>
           </View>

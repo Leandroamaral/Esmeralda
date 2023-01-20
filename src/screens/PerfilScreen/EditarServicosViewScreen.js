@@ -29,7 +29,10 @@ export default function EditarServicoView ({ navigation }) {
         return(
           <View style={{padding:3}} key={index}>
             <View style={styles.botaoServico}>
-              <TouchableOpacity style={styles.iconeServico}>
+              <TouchableOpacity 
+                style={styles.iconeServico}
+                onPress={() => navigation.navigate('EditarServico', {itemId: a.id})}
+                >
                 <Icones tipo={a.Icone} width={45} height={45} fill="#92a494" />
               </TouchableOpacity>
               <Text style={styles.textoServico}>{a.Nome}</Text>
@@ -54,7 +57,7 @@ export default function EditarServicoView ({ navigation }) {
         <ScrollView>
           <ViewServicos />
           <View style={styles.sairView}>
-            <TouchableOpacity onPress={() => navigation.navigate('EditarServico')}>
+            <TouchableOpacity onPress={() => navigation.navigate('EditarServico', {itemId: null})}>
               <View style={styles.menuView}>
                 <Text style={styles.sairTexto}>Adicionar Novo Serviço</Text>
                 <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
