@@ -54,7 +54,7 @@ export default function EditarServicoView ({ navigation }) {
         <ScrollView>
           <ViewServicos />
           <View style={styles.sairView}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('EditarServico')}>
               <View style={styles.menuView}>
                 <Text style={styles.sairTexto}>Adicionar Novo Serviço</Text>
                 <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />

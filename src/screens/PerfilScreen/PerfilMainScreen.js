@@ -5,7 +5,7 @@ import Perfil from './PerfilScreen';
 import EditarCampanha from './EditarCampanhaScreen';
 import EditarServicoView from './EditarServicosViewScreen';
 import VisualizarUsuarioView from './VisualizarUsuariosViewScreen';
-import EditarServico2 from './EditarServicosScreen2';
+import EditarServico from './EditarServicosScreen';
 
 export default function PerfilMain() {
 
@@ -33,14 +33,14 @@ export default function PerfilMain() {
           options={{headerTitle: 'Visualizar Usuarios'}}  
         />
         <RootStack.Screen 
-          name="Editar Servico" 
+          name="EditarServicoView" 
           component={EditarServicoView}
           options={{headerTitle: 'Editar Serviço'}}  
         />
         <RootStack.Screen 
-          name="Editar Servico2" 
-          component={EditarServico2}
-          options={{headerTitle: 'Editar Serviço2'}}  
+          name="EditarServico" 
+          component={EditarServico}
+          options={{headerTitle: 'Editar Serviço'}}  
         />
       </RootStack.Group>
     </RootStack.Navigator>
