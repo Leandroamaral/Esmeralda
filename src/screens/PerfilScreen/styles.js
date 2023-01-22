@@ -150,12 +150,28 @@ export default StyleSheet.create({
     },
     userCard:{
         backgroundColor:"#fff",
+        flexDirection: 'row', 
+        alignItems: 'center',
         color:"#000",
-        width:'100%',
-        marginBottom:5,
+        width:'90%',
+        alignSelf:'center',
+        marginTop:5,
         borderRadius:10,
         padding:20
     },
+    userActions:{
+        flexDirection:'row',
+        marginLeft:10,
+        marginTop:5,
+        alignItems:'center',
+    }, 
+    editButton:{
+        padding:10,
+        backgroundColor:'#ccc',
+        color:'#ccc',
+        borderRadius:10,
+    },
+  
     input: {
         height: 48,
         borderRadius: 5,
