@@ -63,6 +63,7 @@ export default function Perfil ({ navigation }) {
               </LinearGradient>
             </TouchableOpacity>
           </View>
+        
           <View style={styles.userView}>
             <TouchableOpacity onPress={() => navigation.navigate('EditarServicoView') }>
               <View style={styles.menuView}>

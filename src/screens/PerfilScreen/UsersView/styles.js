@@ -11,7 +11,9 @@ export default StyleSheet.create({
         alignSelf:'center',
         marginTop:5,
         borderRadius:10,
-        padding:20
+    },
+    userCardDescription:{
+        paddingVertical:5,
     },
     userActions:{
         flexDirection:'row',
@@ -38,6 +40,10 @@ export default StyleSheet.create({
         overflow: 'hidden',
         backgroundColor: 'white',
         paddingLeft: 16,
-        fontSize: 15
+        fontSize: 15,
+        placeholderTextColor:"#aaaaaa",
+        underlineColorAndroid:"transparent",
+
     },
+    
 })
