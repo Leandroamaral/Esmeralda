@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Image, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Modal, Pressable } from 'react-native';
+import { Image, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './styles';
 import { db } from '../../firebase/config';
@@ -10,12 +10,6 @@ import MapView from 'react-native-maps';
 import { createStackNavigator } from '@react-navigation/stack'
 import DetailServico from './DetailServico';
 
-const Region = {
-  latitude: -15.916248,
-  longitude: -48.099713,
-  latitudeDelta: 0.0622,
-  longitudeDelta: 0.0121,
-}
 
 function ViewServicos({ navigation }) {
 
@@ -63,6 +57,19 @@ function ViewServicos({ navigation }) {
 function Titulo() {
 
   const [userName, setUserName] = useState("");
+  const [nomeEmp, setNomeEmp] = useState('');
+
+  useEffect(() => {
+    db
+    .collection('Empresa')
+    .doc('Main')
+    .get()
+    .then(snapshot => {
+      const shotdata = snapshot.data();
+      setNomeEmp(shotdata.NomeEmp);
+
+    })
+  });
 
   const load = async () => {
     try {
@@ -84,7 +91,7 @@ function Titulo() {
   return (
     <View style={styles.viewtitle}>
       <Text style={styles.texto28}>Olá, <Text style={styles.nome}>{userName}</Text></Text>
-      <Text>Bem vindo a <Text style={styles.nomeEstudio}>Esmeralda Studio</Text></Text>
+      <Text>Bem vindo a <Text style={styles.nomeEstudio}>{nomeEmp}</Text></Text>
     </View>
   )
 
@@ -126,21 +133,85 @@ function Campanha() {
 }
 
 function Mapa() {
+
+  const [latitude, setLatitude] = useState(-15.916248);
+  const [longitude, setLongitude] = useState(-48.099713);
+  const [latitudeDelta, setLatitudeDelta] = useState(0.0622);
+  const [longitudeDelta, setLongitudeDelta] = useState(0.0121);
+  const [nomeEmp, setNomeEmp] = useState('');
+  const [endL1, setEndL1] = useState('');
+  const [endL2, setEndL2] = useState('');
+  const [whatsapp, setWhatsapp] = useState('');
+  const [YofMap, setYofMap] = useState(100);
+
+  useEffect(() => {
+    db
+    .collection('Empresa')
+    .doc('Main')
+    .get()
+    .then(snapshot => {
+      const shotdata = snapshot.data();
+      setNomeEmp(shotdata.NomeEmp);
+      setEndL1(shotdata.EndL1);
+      setEndL2(shotdata.EndL2);
+      setLatitude(Number(shotdata.Latitude));
+      setLongitude(Number(shotdata.Longitude));
+      setLatitudeDelta(Number(shotdata.LatitudeDelta));
+      setLongitudeDelta(Number(shotdata.LongitudeDelta));
+      setWhatsapp(shotdata.Whatsapp);
+
+    })
+  });
+
+  const sendWhatsAppMessage = () => {
+    const link = `https://api.whatsapp.com/send?phone=${whatsapp}`;
+    Linking.canOpenURL(link)
+    .then(supported => {
+      if (!supported) {
+        Alert.alert(
+          'Please install whats app to send direct message to students via whats app'
+        );
+      } else {
+        return Linking.openURL(link);
+      }
+    })
+    .catch(err => console.error('An error occurred', err));
+};
+
+
+  const Region = {
+    latitude: latitude,
+    longitude: longitude,
+    latitudeDelta: latitudeDelta,
+    longitudeDelta: longitudeDelta,
+  }
+
   return (
     <>
-    <View style={styles.mapaView}>
+    <View 
+      style={styles.mapaView}
+      onLayout={(event) => {
+        const layout = event.nativeEvent.layout;
+        setYofMap(layout.y + 160)
+      }}
+    >
         <MapView 
           style={styles.mapa} 
           showsUserLocation = {true}
           initialRegion = {Region}
           minZoomLevel = {15}
           />
-          <Text style={styles.mapaTitulo}> <Entypo name="location-pin" size={24} color="#1d817e" /> Esmeralda Studio de Beleza</Text>
-          <Text style={styles.mapaEndereco}>Endereço completo </Text>
-          <Text style={styles.mapaEndereco}>Riacho Fundo 2 - DF </Text>
+          <Text style={styles.mapaTitulo}> <Entypo name="location-pin" size={24} color="#1d817e" />{nomeEmp}</Text>
+          <Text style={styles.mapaEndereco}>{endL1} </Text>
+          <Text style={styles.mapaEndereco}>{endL2}</Text>
       </View>
-      <View style={styles.mapaZap}>
-        <TouchableOpacity>
+      <View style={{ 
+          height: 50, 
+          position: 'absolute', 
+          top: YofMap, 
+          left: 265
+      }}>
+        <TouchableOpacity onPress={sendWhatsAppMessage}>
           <WhatsappIcon width={60} height={60}/>
         </TouchableOpacity>
       </View>
@@ -150,15 +221,82 @@ function Mapa() {
 }
 
 function RedesSociais() {
+
+  const [facebook, setFacebook] = useState('');
+  const [flicker, setFlicker] = useState('');
+  const [foursquare, setFoursquare] = useState('');
+  const [instagram, setInstagram] = useState('');
+  const [pinterest, setPinterest] = useState('');
+  const [linkedin, setLinkedin] = useState('');
+  const [reddit, setReddit] = useState('');
+  const [twitch, setTwitch] = useState('');
+  const [twitter, setTwitter] = useState('');
+  const [google, setGoogle] = useState('');
+  const [youtube, setYoutube] = useState('');
+  const [facebookA, setFacebookA] = useState('');
+  const [flickerA, setFlickerA] = useState('');
+  const [foursquareA, setFoursquareA] = useState('');
+  const [instagramA, setInstagramA] = useState('');
+  const [pinterestA, setPinterestA] = useState('');
+  const [linkedinA, setLinkedinA] = useState('');
+  const [redditA, setRedditA] = useState('');
+  const [twitchA, setTwitchA] = useState('');
+  const [twitterA, setTwitterA] = useState('');
+  const [googleA, setGoogleA] = useState('');
+  const [youtubeA, setYoutubeA] = useState('');
+
+  useEffect(() => {
+    db
+    .collection('Empresa')
+    .doc('Main')
+    .get()
+    .then(snapshot => {
+      const shotdata = snapshot.data();
+      setFacebook(shotdata.Facebook.End)
+      setFlicker(shotdata.Flicker.End)
+      setFoursquare(shotdata.Foursquare.End)
+      setInstagram(shotdata.Instagram.End)
+      setPinterest(shotdata.Pinterest.End)
+      setLinkedin(shotdata.Linkedin.End)
+      setReddit(shotdata.Reddit.End)
+      setTwitch(shotdata.Twitch.End)
+      setTwitter(shotdata.Twitter.End)
+      setGoogle(shotdata.Google.End)
+      setYoutube(shotdata.Youtube.End)
+      setFacebookA(shotdata.Facebook.Ativo)
+      setFlickerA(shotdata.Flicker.Ativo)
+      setFoursquareA(shotdata.Foursquare.Ativo)
+      setInstagramA(shotdata.Instagram.Ativo)
+      setPinterestA(shotdata.Pinterest.Ativo)
+      setLinkedinA(shotdata.Linkedin.Ativo)
+      setRedditA(shotdata.Reddit.Ativo)
+      setTwitchA(shotdata.Twitch.Ativo)
+      setTwitterA(shotdata.Twitter.Ativo)
+      setGoogleA(shotdata.Google.Ativo)
+      setYoutubeA(shotdata.Youtube.Ativo)
+
+
+    })
+  });
+
   return(
     <View style={styles.rsMainView}>
       <Text></Text>
       <Text> Siga em nossas redes sociais</Text>
       <View style={styles.rsView}>
-        <SocialIcon type='instagram'  />
-        <SocialIcon type='youtube'  />
-        <SocialIcon type='facebook'  />
-        <SocialIcon type='pinterest'  />
+        {instagramA ? <SocialIcon type='instagram' onPress={() => Linking.openURL(instagram)} /> : null }
+        {facebookA ? <SocialIcon type='facebook' onPress={() => Linking.openURL(facebook)} /> : null }
+        {flickerA ? <SocialIcon type='flicker' onPress={() => Linking.openURL(flicker)} /> : null }
+        {foursquareA ? <SocialIcon type='foursquare' onPress={() => Linking.openURL(foursquare)} /> : null }
+        {pinterestA ? <SocialIcon type='pinterest' onPress={() => Linking.openURL(pinterest)} /> : null }
+        {linkedinA ? <SocialIcon type='linkedin' onPress={() => Linking.openURL(linkedin)} /> : null }
+        {redditA ? <SocialIcon type='reddit-alien' onPress={() => Linking.openURL(reddit)} /> : null }
+        {twitchA ? <SocialIcon type='twitch' onPress={() => Linking.openURL(twitch)} /> : null }
+        {twitterA ? <SocialIcon type='twitter' onPress={() => Linking.openURL(twitter)} /> : null }
+        {googleA ? <SocialIcon type='google' onPress={() => Linking.openURL(google)} /> : null }
+        {youtubeA ? <SocialIcon type='youtube' onPress={() => Linking.openURL(youtube)} /> : null }
+ 
+
       </View>
     </View>
   )
