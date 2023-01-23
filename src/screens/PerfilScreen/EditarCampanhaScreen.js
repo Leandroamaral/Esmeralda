@@ -119,7 +119,7 @@ export default function EditarCampanha(){
            
             return (
             
-              <View style={styles.viewcampanha}>
+              <View style={styles.viewcampanha} key={index}>
                 <Text style={{height: 40, padding: 5, fontSize: 16 }}>{a.nomeCampanha}</Text>
                 <Image
                   style={styles.imagemCampanha}
