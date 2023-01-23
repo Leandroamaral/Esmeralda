@@ -196,4 +196,16 @@ export default StyleSheet.create({
         textAlignVertical: 'top',
         fontSize: 15
     },
+    inputRS: {
+        height: 48,
+        width: 200,
+        borderRadius: 5,
+        overflow: 'hidden',
+        backgroundColor: '#FFF',
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 30,
+        marginRight: 30,
+        paddingLeft: 16
+    },
 })

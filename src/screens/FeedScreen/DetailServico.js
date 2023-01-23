@@ -9,7 +9,6 @@ export default function DetailServico({route, navigation}){
     const [image64, setImage64] = useState('');
     const [nome, setNome] = useState('');
     const [descricao, setDescricao] = useState('');
-    const [icone, setIcone] = useState('');
 
     const parametros = route.params
 
@@ -24,7 +23,6 @@ export default function DetailServico({route, navigation}){
             const shotdata = snapshot.data()
             setNome(shotdata.Nome)
             setDescricao(shotdata.Descricao)
-            setIcone(shotdata.Icone)
             setImage64(shotdata.Imagem)
             if (shotdata.Imagem) {
               setImageUri(shotdata.Imagem) 
@@ -42,9 +40,9 @@ export default function DetailServico({route, navigation}){
         <SafeAreaView>
             <ScrollView >
             <View>
-                <View style={{height: 380, backgroundColor: '#FFF' }}>
+                <View style={{height: 350, backgroundColor: '#FFF' }}>
                     <Image 
-                        style={{height: 380, borderTopLeftRadius: 30, borderTopRightRadius: 30}}
+                        style={{height: 350}}
                         source={{uri: imageUri}} 
                         resizeMode='stretch'/>
                 </View>

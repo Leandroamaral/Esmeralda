@@ -86,7 +86,7 @@ export default function Perfil ({ navigation }) {
                 <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity  onPress={() => navigation.navigate('InfEmpresa')}>
               <View style={styles.menuView}>
                 <AntDesign name="earth" size={26} color="#92a494" style={styles.padding10}/>
                 <Text style={styles.menuTexto}>Editar Informações Empresariais</Text>

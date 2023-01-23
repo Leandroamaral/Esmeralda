@@ -6,6 +6,7 @@ import EditarCampanha from './EditarCampanhaScreen';
 import EditarServicoView from './EditarServicosViewScreen';
 import VisualizarUsuarioView from './UsersView/VisualizarUsuariosViewScreen';
 import EditarServico from './EditarServicosScreen';
+import InfEmpresa from './EditarInfEmpresaScreen';
 
 export default function PerfilMain() {
 
@@ -41,6 +42,11 @@ export default function PerfilMain() {
           name="EditarServico" 
           component={EditarServico}
           options={{headerTitle: 'Editar Serviço'}}  
+        />
+        <RootStack.Screen 
+          name="InfEmpresa" 
+          component={InfEmpresa}
+          options={{headerTitle: 'Informações da Empresa '}}  
         />
       </RootStack.Group>
     </RootStack.Navigator>
