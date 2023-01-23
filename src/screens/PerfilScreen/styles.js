@@ -171,7 +171,6 @@ export default StyleSheet.create({
         color:'#ccc',
         borderRadius:10,
     },
-  
     input: {
         height: 48,
         borderRadius: 5,

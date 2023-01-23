@@ -1,16 +1,32 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, SafeAreaView, ScrollView,Image , TouchableOpacity } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { db } from '../../firebase/config';
-import { AntDesign } from '@expo/vector-icons';
+import { Text, View, SafeAreaView, ScrollView,Image,TextInput , TouchableOpacity } from 'react-native';
 import styles from './styles';
-import { Icones } from '../FeedScreen/icons';
 
+export default function VisualizarUsuariosViewScreen ({ navigation }) {
 
-export default function EditarServicoView ({ navigation }) {
+  const [page, setPage] = useState(1);
 
+  const handleNext = () => {
+    setPage(page + 1);
+  };
+
+  const handlePrevious = () => {
+    setPage(page - 1);
+  };
+  
   return(
     <SafeAreaView>
+      <Text style={{fontSize:18,marginLeft:20,marginTop:10,paddingHorizontal:10}}>Pesquisar:</Text>
+      <View style={styles.searchBar}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder='Nome'
+          placeholderTextColor="#aaaaaa"
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+        ></TextInput>
+      </View>
+    
       <ScrollView>
         <View style={styles.userCard}>
           <Image

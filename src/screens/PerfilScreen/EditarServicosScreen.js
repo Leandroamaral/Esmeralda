@@ -141,7 +141,7 @@ export default function EditarServico ({ route, navigation }) {
               </View>
               
               <TextInput
-                style={styles.input}
+                style={styles.searchInput}
                 placeholder='Nome'
                 placeholderTextColor="#aaaaaa"
                 onChangeText={(text) => setNome(text)}

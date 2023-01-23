@@ -4,7 +4,7 @@ import EditarPerfil from './EditarPerfilScreen';
 import Perfil from './PerfilScreen';
 import EditarCampanha from './EditarCampanhaScreen';
 import EditarServicoView from './EditarServicosViewScreen';
-import VisualizarUsuarioView from './VisualizarUsuariosViewScreen';
+import VisualizarUsuarioView from './UsersView/VisualizarUsuariosViewScreen';
 import EditarServico from './EditarServicosScreen';
 
 export default function PerfilMain() {
