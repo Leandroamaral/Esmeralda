@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Image, Text, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
+import { Image, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Modal, Pressable } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './styles';
 import { db } from '../../firebase/config';
@@ -7,6 +7,8 @@ import { Entypo } from '@expo/vector-icons';
 import { Icones, WhatsappIcon } from './icons';
 import { SocialIcon } from 'react-native-elements'
 import MapView from 'react-native-maps';
+import { createStackNavigator } from '@react-navigation/stack'
+import DetailServico from './DetailServico';
 
 const Region = {
   latitude: -15.916248,
@@ -15,7 +17,8 @@ const Region = {
   longitudeDelta: 0.0121,
 }
 
-function ViewServicos() {
+function ViewServicos({ navigation }) {
+
   const [shotdata, setshotdata] = useState([]);
     
   useEffect(() => {
@@ -37,23 +40,25 @@ function ViewServicos() {
         <View style={styles.botaoServico}>
           <TouchableOpacity 
             style={styles.iconeServico}
+            onPress={() => navigation.navigate('DetailServico', {itemId: a.id})}
             >
             <Icones tipo={a.Icone} width={45} height={45} fill="#92a494" />
           </TouchableOpacity>
           <Text style={styles.textoServico}>{a.Nome}</Text>
         </View>
       </View>
-    )
+     )
     });
     
   return (
+    <>
     <View style={styles.servicos}>
       {listitens}
     </View>
+    </>
+
   )
-  }
-
-
+}
 
 function Titulo() {
 
@@ -144,34 +149,61 @@ function Mapa() {
 
 }
 
-export default function Feed() {
+function RedesSociais() {
+  return(
+    <View style={styles.rsMainView}>
+      <Text></Text>
+      <Text> Siga em nossas redes sociais</Text>
+      <View style={styles.rsView}>
+        <SocialIcon type='instagram'  />
+        <SocialIcon type='youtube'  />
+        <SocialIcon type='facebook'  />
+        <SocialIcon type='pinterest'  />
+      </View>
+    </View>
+  )
+  
+
+}
+
+function DetailFeed ({navigation}) {
+  
   return (
     <SafeAreaView style={styles.safeareaview}>
-      <ScrollView>
+          <ScrollView>
 
-        <Titulo />
+            <Titulo />
 
-        <Campanha />
+            <Campanha />
 
-        <ViewServicos />
+            <ViewServicos navigation={navigation}/>
 
-        <Mapa />
-        
-        
+            <Mapa />
 
-        <View style={styles.rsMainView}>
-          <Text></Text>
-          <Text> Siga em nossas redes sociais</Text>
-          <View style={styles.rsView}>
-            <SocialIcon type='instagram'  />
-            <SocialIcon type='youtube'  />
-            <SocialIcon type='facebook'  />
-            <SocialIcon type='pinterest'  />
-          </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+            <RedesSociais />
 
-  
+          </ScrollView>
+        </SafeAreaView>
+  )
+}
+
+export default function Feed({navigation}) {
+  const RootStack = createStackNavigator();
+
+  return (
+    <>
+    <RootStack.Navigator>
+      <RootStack.Group screenOptions={{ headerShown: false }}>
+        <RootStack.Screen name="DetailFeed" component={DetailFeed} />
+      </RootStack.Group>
+      <RootStack.Group  screenOptions={{ presentation: 'modal' }}>
+        <RootStack.Screen name="DetailServico" component={DetailServico} options={{headerTitle: 'Especialidades'}}  />
+      </RootStack.Group>
+    </RootStack.Navigator>
+
+
+    
+    </>
+
   );
 }

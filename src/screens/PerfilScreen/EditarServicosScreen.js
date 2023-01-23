@@ -49,7 +49,7 @@ export default function EditarServico ({ route, navigation }) {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       allowsMultipleSelection: false,
-      aspect: [4, 2.5],
+      aspect: [4, 4],
       quality: 1,
       base64: true
     });
@@ -132,16 +132,16 @@ export default function EditarServico ({ route, navigation }) {
                 keyboardShouldPersistTaps="none">
               
               <View style={{alignSelf:'center', marginTop: 10}}>
-                <TouchableOpacity onPress={pickImage}   style={{ width: 300, height:150, backgroundColor:'#BBBBBB' }}>
+                <TouchableOpacity onPress={pickImage}   style={{ width: 300, height:380, backgroundColor:'#BBBBBB' }}>
                   <Image 
-                    style={{width: 300, height:150}}
+                    style={{width: 300, height:380}}
                     source={{uri: imageUri}} />
                 </TouchableOpacity>
                 <Text style={{position:'absolute', alignSelf:'center', top: 60}}>Clique para carregar uma imagem</Text>
               </View>
               
               <TextInput
-                style={styles.searchInput}
+                style={styles.input}
                 placeholder='Nome'
                 placeholderTextColor="#aaaaaa"
                 onChangeText={(text) => setNome(text)}

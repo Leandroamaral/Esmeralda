@@ -77,7 +77,7 @@ export default function MainScreen({route, navigation}) {
   saveUser(route.params);
     
   return (
-      <MyTabs />
+    <MyTabs />
   );
 }
 
