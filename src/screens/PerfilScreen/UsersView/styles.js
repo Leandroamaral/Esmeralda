@@ -11,6 +11,7 @@ export default StyleSheet.create({
         alignSelf:'center',
         marginTop:5,
         borderRadius:10,
+        padding:10
     },
     userCardDescription:{
         paddingVertical:5,
