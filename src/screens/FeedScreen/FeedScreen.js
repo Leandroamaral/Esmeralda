@@ -8,14 +8,51 @@ import { Icones, WhatsappIcon } from './icons';
 import { SocialIcon } from 'react-native-elements'
 import MapView from 'react-native-maps';
 
-//teste
-
 const Region = {
-    latitude: -15.916248,
-    longitude: -48.099713,
-    latitudeDelta: 0.0622,
-    longitudeDelta: 0.0121,
+  latitude: -15.916248,
+  longitude: -48.099713,
+  latitudeDelta: 0.0622,
+  longitudeDelta: 0.0121,
+}
+
+function ViewServicos() {
+  const [shotdata, setshotdata] = useState([]);
+    
+  useEffect(() => {
+    db
+    .collection('Servico')
+    .get()
+    .then(snapshot => {
+      setshotdata (snapshot.docs.map(doc => {
+        const data = doc.data();
+        const id = doc.id;
+        return { id, ...data }
+      }))
+    })
+  }, []);
+
+  const listitens = shotdata.map( (a, index) => { 
+    return(
+      <View style={{padding:3}} key={index}>
+        <View style={styles.botaoServico}>
+          <TouchableOpacity 
+            style={styles.iconeServico}
+            >
+            <Icones tipo={a.Icone} width={45} height={45} fill="#92a494" />
+          </TouchableOpacity>
+          <Text style={styles.textoServico}>{a.Nome}</Text>
+        </View>
+      </View>
+    )
+    });
+    
+  return (
+    <View style={styles.servicos}>
+      {listitens}
+    </View>
+  )
   }
+
 
 
 function Titulo() {
@@ -83,6 +120,30 @@ function Campanha() {
   );
 }
 
+function Mapa() {
+  return (
+    <>
+    <View style={styles.mapaView}>
+        <MapView 
+          style={styles.mapa} 
+          showsUserLocation = {true}
+          initialRegion = {Region}
+          minZoomLevel = {15}
+          />
+          <Text style={styles.mapaTitulo}> <Entypo name="location-pin" size={24} color="#1d817e" /> Esmeralda Studio de Beleza</Text>
+          <Text style={styles.mapaEndereco}>Endereço completo </Text>
+          <Text style={styles.mapaEndereco}>Riacho Fundo 2 - DF </Text>
+      </View>
+      <View style={styles.mapaZap}>
+        <TouchableOpacity>
+          <WhatsappIcon width={60} height={60}/>
+        </TouchableOpacity>
+      </View>
+    </>
+  )
+
+}
+
 export default function Feed() {
   return (
     <SafeAreaView style={styles.safeareaview}>
@@ -92,24 +153,11 @@ export default function Feed() {
 
         <Campanha />
 
+        <ViewServicos />
+
+        <Mapa />
         
         
-        <View style={styles.mapaView}>
-          <MapView 
-            style={styles.mapa} 
-            showsUserLocation = {true}
-            initialRegion = {Region}
-            minZoomLevel = {15}
-            />
-            <Text style={styles.mapaTitulo}> <Entypo name="location-pin" size={24} color="#1d817e" /> Esmeralda Studio de Beleza</Text>
-            <Text style={styles.mapaEndereco}>Endereço completo </Text>
-            <Text style={styles.mapaEndereco}>Riacho Fundo 2 - DF </Text>
-        </View>
-        <View style={styles.mapaZap}>
-          <TouchableOpacity>
-            <WhatsappIcon width={60} height={60}/>
-          </TouchableOpacity>
-        </View>
 
         <View style={styles.rsMainView}>
           <Text></Text>

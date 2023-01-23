@@ -34,13 +34,12 @@ export default StyleSheet.create({
         flexDirection: 'row', 
         justifyContent: 'space-between', 
         position: 'relative', 
-        height: 220, 
         flexWrap: 'wrap'
     },
     botaoServico: {
         backgroundColor: '#fff', 
         height: 100, 
-        width: 80, 
+        width: 75, 
         borderRadius: 10, 
         alignItems: 'center', 
         marginBottom: 5 
