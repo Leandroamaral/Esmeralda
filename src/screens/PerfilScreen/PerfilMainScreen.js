@@ -7,6 +7,8 @@ import EditarServicoView from './EditarServicosViewScreen';
 import VisualizarUsuarioView from './UsersView/VisualizarUsuariosViewScreen';
 import EditarServico from './EditarServicosScreen';
 import InfEmpresa from './EditarInfEmpresaScreen';
+import EspecialistasViewScreen from './EspecialistasView/EspecialistaViewScreen';
+import EspecialistasEditScreen from './EspecialistasView/EspecialistaEditScreen';
 
 export default function PerfilMain() {
 
@@ -28,6 +30,11 @@ export default function PerfilMain() {
           component={EditarPerfil}
           options={{headerTitle: 'Editar Minha Conta'}}  
         />
+        <RootStack.Screen 
+          name="EditarEspecialistas" 
+          component={EspecialistasViewScreen}
+          options={{headerTitle: 'Especialistas '}}  
+        />
          <RootStack.Screen 
           name="Visualizar Usuarios" 
           component={VisualizarUsuarioView}
@@ -47,6 +54,11 @@ export default function PerfilMain() {
           name="InfEmpresa" 
           component={InfEmpresa}
           options={{headerTitle: 'Informações da Empresa '}}  
+        />
+        <RootStack.Screen 
+          name="EditarEspecialista" 
+          component={EspecialistasEditScreen}
+          options={{headerTitle: 'Editar Especialista '}}  
         />
       </RootStack.Group>
     </RootStack.Navigator>

@@ -315,20 +315,20 @@ function DetailFeed ({navigation}) {
   
   return (
     <SafeAreaView style={styles.safeareaview}>
-          <ScrollView>
+      <ScrollView>
 
-            <Titulo />
+        <Titulo />
 
-            <Campanha />
+        <Campanha />
 
-            <ViewServicos navigation={navigation}/>
+        <ViewServicos navigation={navigation}/>
 
-            <Mapa />
+        <Mapa />
 
-            <RedesSociais />
+        <RedesSociais />
 
-          </ScrollView>
-        </SafeAreaView>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 
@@ -345,10 +345,6 @@ export default function Feed({navigation}) {
         <RootStack.Screen name="DetailServico" component={DetailServico} options={{headerTitle: 'Especialidades'}}  />
       </RootStack.Group>
     </RootStack.Navigator>
-
-
-    
     </>
-
   );
 }
