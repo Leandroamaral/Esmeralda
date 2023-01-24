@@ -125,11 +125,8 @@ function Campanha() {
   
   return (
     <ScrollView horizontal={true}>
-    
-    
-    {fitradodata.map( (a, index) => {
-      
 
+    {fitradodata.map( (a, index) => {
       return(
         <View style={styles.viewcampanha} key={index}>
               <Image
@@ -139,6 +136,7 @@ function Campanha() {
             </View>
       )
     })}
+
     </ScrollView>
   );
 }
@@ -306,8 +304,6 @@ function RedesSociais() {
         {twitterA ? <SocialIcon type='twitter' onPress={() => Linking.openURL(twitter)} /> : null }
         {googleA ? <SocialIcon type='google' onPress={() => Linking.openURL(google)} /> : null }
         {youtubeA ? <SocialIcon type='youtube' onPress={() => Linking.openURL(youtube)} /> : null }
- 
-
       </View>
     </View>
   )
