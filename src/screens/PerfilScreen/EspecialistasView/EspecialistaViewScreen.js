@@ -73,7 +73,7 @@ export default function EspecialistasViewScreen ({ navigation }) {
 
  useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      console.log('aqui')
+
       db.collection('Especialista')
       .get()
       .then(snapshot => {
