@@ -1,4 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const largura = Dimensions.get('window').width - 25
+const altura = Dimensions.get('window').height/4
 
 export default StyleSheet.create({
     safeareaview: {
@@ -21,13 +24,16 @@ export default StyleSheet.create({
         fontSize: 16
     },
     viewcampanha: {
-        height: 200, 
-        alignItems: "center"
+        height: 190, 
+        alignContent: "center",
+
     },
     imagemCampanha: {
-        width: 340 , 
-        height: 180,
+        width: largura , 
+        height: altura,
         borderRadius: 10,
+        marginRight: 5
+        
     },
     servicos: {
         flex: 1, 
