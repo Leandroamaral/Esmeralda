@@ -113,11 +113,22 @@ function Campanha() {
       }))
     })
   }, []);
+  
+  const fitradodata = shotdata
+    .filter( (item) => {
+      return item.star == true; 
+    })
+    .sort((a,b) => {
+      return (a.indice > b.indice) ? 1 : -1
+    })
 
+  
   return (
     <ScrollView horizontal={true}>
-
-    {shotdata.map( (a, index) => {
+    
+    
+    {fitradodata.map( (a, index) => {
+      
 
       return(
         <View style={styles.viewcampanha} key={index}>
