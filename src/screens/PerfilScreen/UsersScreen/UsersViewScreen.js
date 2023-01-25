@@ -24,7 +24,7 @@ const PersonCard = ({picture,name,email}) => {
     )
 };
 //Tela principal
-export default function VisualizarUsuariosViewScreen ({ navigation }) {
+export default function UsuariosViewScreen ({ navigation }) {
   const [page, setPage] = useState(1);
   const [users,setUsers] = useState([]);
 

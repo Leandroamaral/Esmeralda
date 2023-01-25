@@ -65,14 +65,14 @@ export default function Perfil ({ navigation }) {
           </View>
         
           <View style={styles.userView}>
-            <TouchableOpacity onPress={() => navigation.navigate('EditarServicoView') }>
+            <TouchableOpacity onPress={() => navigation.navigate('ServicoView') }>
               <View style={styles.menuView}>
                 <AntDesign name="carryout" size={26} color="#92a494" style={styles.padding10}/>
                 <Text style={styles.menuTexto}>Editar Serviços</Text>
                 <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('EditarEspecialistas')}>
+            <TouchableOpacity onPress={() => navigation.navigate('EspecialistasMain')}>
               <View style={styles.menuView}>
                 <AntDesign name="smileo" size={26} color="#92a494" style={styles.padding10}/>
                 <Text style={styles.menuTexto}>Editar Especialistas</Text>

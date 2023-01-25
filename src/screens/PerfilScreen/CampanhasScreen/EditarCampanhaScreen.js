@@ -4,8 +4,8 @@ import { LinearGradient } from 'expo-linear-gradient'
 import * as ImagePicker from 'expo-image-picker';
 import { Picker } from '@react-native-picker/picker';
 import { AntDesign } from '@expo/vector-icons';
-import styles from './styles';
-import { db } from '../../firebase/config';
+import styles from '../styles';
+import { db } from '../../../firebase/config';
 import uuid from 'react-native-uuid';
 
 

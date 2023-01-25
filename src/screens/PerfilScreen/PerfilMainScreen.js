@@ -2,13 +2,11 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import EditarPerfil from './EditarPerfilScreen';
 import Perfil from './PerfilScreen';
-import EditarCampanha from './EditarCampanhaScreen';
-import EditarServicoView from './EditarServicosViewScreen';
-import VisualizarUsuarioView from './UsersView/VisualizarUsuariosViewScreen';
-import EditarServico from './EditarServicosScreen';
+import EditarCampanha from './CampanhasScreen/EditarCampanhaScreen';
 import InfEmpresa from './EditarInfEmpresaScreen';
-import EspecialistasViewScreen from './EspecialistasView/EspecialistaViewScreen';
-import EspecialistasEditScreen from './EspecialistasView/EspecialistaEditScreen';
+import EspecialistasMain from './EspecialistasScreen/EspecialistaMain';
+import ServicosMain from './ServicosScreen/ServicosMain';
+import UserMain from './UsersScreen/UsersMain';
 
 export default function PerfilMain() {
 
@@ -19,46 +17,40 @@ export default function PerfilMain() {
       <RootStack.Group screenOptions={{ headerShown: false }}>
         <RootStack.Screen name="Perfil" component={Perfil} />
       </RootStack.Group>
-      <RootStack.Group screenOptions={{ presentation: 'modal' }}>
-        <RootStack.Screen 
-          name="Criar Campanha" 
-          component={EditarCampanha}
-          options={{headerTitle: 'Editar Campanha'}}  
-        />
+      <RootStack.Group screenOptions={{ headerShown: false }}>
         <RootStack.Screen 
           name="Editar Perfil" 
           component={EditarPerfil}
           options={{headerTitle: 'Editar Minha Conta'}}  
         />
         <RootStack.Screen 
-          name="EditarEspecialistas" 
-          component={EspecialistasViewScreen}
-          options={{headerTitle: 'Especialistas '}}  
+          name="EspecialistasMain" 
+          component={EspecialistasMain}
+          options={{headerTitle: 'Especialistas'}}  
+          screenOptions={{ headerShown: false }}
         />
+
          <RootStack.Screen 
           name="Visualizar Usuarios" 
-          component={VisualizarUsuarioView}
+          component={UserMain}
           options={{headerTitle: 'Visualizar Usuarios'}}  
         />
         <RootStack.Screen 
-          name="EditarServicoView" 
-          component={EditarServicoView}
+          name="ServicoView" 
+          component={ServicosMain}
           options={{headerTitle: 'Editar Serviço'}}  
         />
+      </RootStack.Group>
+      <RootStack.Group>
         <RootStack.Screen 
-          name="EditarServico" 
-          component={EditarServico}
-          options={{headerTitle: 'Editar Serviço'}}  
+          name="Criar Campanha" 
+          component={EditarCampanha}
+          options={{headerTitle: 'Editar Campanha'}}  
         />
         <RootStack.Screen 
           name="InfEmpresa" 
           component={InfEmpresa}
           options={{headerTitle: 'Informações da Empresa '}}  
-        />
-        <RootStack.Screen 
-          name="EditarEspecialista" 
-          component={EspecialistasEditScreen}
-          options={{headerTitle: 'Editar Especialista '}}  
         />
       </RootStack.Group>
     </RootStack.Navigator>

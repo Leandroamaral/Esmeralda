@@ -5,13 +5,13 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import * as ImagePicker from 'expo-image-picker';
 import uuid from 'react-native-uuid';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { firebase, db } from '../../firebase/config';
+import { firebase, db } from '../../../firebase/config';
 import { LinearGradient } from 'expo-linear-gradient'
-import styles from './styles';
+import styles from '../styles';
 import { AntDesign } from '@expo/vector-icons';
 
 
-export default function EditarServico ({ route, navigation }) {
+export default function ServicosEdit ({ route, navigation }) {
 
   const [imageUri, setImageUri] = useState('../../../assets/notfound.png');
   const [image64, setImage64] = useState('');
@@ -54,7 +54,6 @@ export default function EditarServico ({ route, navigation }) {
       base64: true
     });
     if (!result.canceled) {
-      console.log (result.assets[0].width)
       if (result.assets[0].width > 1080) {
         alert('Imagem deve ter largura máxima de 1080px')
       } else {
@@ -114,7 +113,7 @@ export default function EditarServico ({ route, navigation }) {
       .then( () => {          
         alert('Campanha apagada')})
       .catch( (e) => console.error(e))
-      .finally ( () => navigation.navigate('EditarServicoView'))
+      .finally ( () => navigation.navigate('ServicosView'))
     
   }
 
