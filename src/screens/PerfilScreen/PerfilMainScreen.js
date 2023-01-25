@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import EditarPerfil from './EditarPerfilScreen';
 import Perfil from './PerfilScreen';
 import EditarCampanha from './CampanhasScreen/EditarCampanhaScreen';
-import InfEmpresa from './EditarInfEmpresaScreen';
+import InfEmpresa from './InfEmpresaScreen/EditarInfEmpresaScreen';
 import EspecialistasMain from './EspecialistasScreen/EspecialistaMain';
 import ServicosMain from './ServicosScreen/ServicosMain';
 import UserMain from './UsersScreen/UsersMain';

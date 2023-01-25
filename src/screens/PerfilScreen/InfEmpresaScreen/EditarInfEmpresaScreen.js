@@ -5,8 +5,8 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import Checkbox from 'expo-checkbox';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { firebase, db } from '../../firebase/config';
-import styles from './styles';
+import { firebase, db } from '../../../firebase/config';
+import styles from '../styles';
 
 export default function InfEmpresa(){
 

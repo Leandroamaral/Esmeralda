@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import ServicosEdit from '../InfEmpresaScreen/ServicosEditScreen';
+import ServicosEdit from './ServicosEditScreen';
 import ServicosView from './ServicosViewScreen';
 
 
