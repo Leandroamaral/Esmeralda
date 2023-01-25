@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, SafeAreaView, ScrollView,Image,TextInput , TouchableOpacity } from 'react-native';
+import { Text, View, SafeAreaView, ScrollView, Image, TouchableOpacity } from 'react-native';
 
 import { AntDesign } from '@expo/vector-icons';
 
@@ -44,7 +44,7 @@ const PersonCard = ({dados, navigation}) => {
           </TouchableOpacity>
           <TouchableOpacity 
             style={styles.editButton}
-            onPress={() => navigation.navigate('EditarEspecialista', {itemId: dados.id})}
+            onPress={() => navigation.navigate('Timetable', {itemId: dados.id})}
           >
             <AntDesign name="clockcircleo" size={26} color='#1d817e' style={styles.padding10}/>
           </TouchableOpacity>

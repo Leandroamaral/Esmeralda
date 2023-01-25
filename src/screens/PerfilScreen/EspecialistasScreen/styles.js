@@ -109,4 +109,18 @@ export default StyleSheet.create({
         width:'95%',
         borderRadius:10,
     },
+    horarioBotao: {
+        marginRight: 10, 
+        marginBottom: 10, 
+        width: 100, 
+        height: 35, 
+        borderRadius: 10, 
+        backgroundColor: '#fff', 
+        alignItems:'center', 
+        justifyContent:'center'
+    },
+    horariosTexto: {
+        fontWeight: 'bold', 
+        fontSize:15
+    },
 })
