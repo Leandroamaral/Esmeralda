@@ -18,11 +18,7 @@ export default function PerfilMain() {
         <RootStack.Screen name="Perfil" component={Perfil} />
       </RootStack.Group>
       <RootStack.Group screenOptions={{ headerShown: false }}>
-        <RootStack.Screen 
-          name="Editar Perfil" 
-          component={EditarPerfil}
-          options={{headerTitle: 'Editar Minha Conta'}}  
-        />
+
         <RootStack.Screen 
           name="EspecialistasMain" 
           component={EspecialistasMain}
@@ -42,6 +38,11 @@ export default function PerfilMain() {
         />
       </RootStack.Group>
       <RootStack.Group>
+        <RootStack.Screen 
+          name="Editar Perfil" 
+          component={EditarPerfil}
+          options={{headerTitle: 'Editar Minha Conta'}}  
+        />
         <RootStack.Screen 
           name="Criar Campanha" 
           component={EditarCampanha}

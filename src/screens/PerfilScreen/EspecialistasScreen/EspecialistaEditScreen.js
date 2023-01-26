@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, SafeAreaView, ScrollView,Image,TextInput , TouchableOpacity  } from 'react-native';
+import { Text, View, Image,TextInput , TouchableOpacity  } from 'react-native';
 import uuid from 'react-native-uuid';
 
 import { LinearGradient } from 'expo-linear-gradient';
+import * as ImagePicker from 'expo-image-picker';
 import { AntDesign } from '@expo/vector-icons';
 
 import styles from './styles';
-import { auth,db } from '../../../firebase/config';
+import { db } from '../../../firebase/config';
 
 export default function EspecialistasEditScreen ({ route, navigation }) {
 
@@ -33,6 +34,27 @@ export default function EspecialistasEditScreen ({ route, navigation }) {
             })
         }, []);
     }
+
+    const pickImage = async () => {
+      // No permissions request is necessary for launching the image library
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        allowsMultipleSelection: false,
+        aspect: [4, 4],
+        quality: 1,
+        base64: true
+      });
+      if (!result.canceled) {
+        console.log (result.assets[0].width)
+        if (result.assets[0].width > 480) {
+          alert('Imagem deve ter largura máxima de 480px')
+        } else {
+          setImagem('data:image/png;base64,' + result.assets[0].base64);
+        }
+
+      }
+    };
 
     function onEditarEspecialista() {
         if (nome && whatsapp && email && contaGoogle) {
@@ -79,14 +101,17 @@ export default function EspecialistasEditScreen ({ route, navigation }) {
 
     return (
     <View style={styles.userCard2}>
+       <TouchableOpacity onPress={pickImage}>
      { (imagem) ? 
-      <Image
-        source={{uri: imagem}}
-        style={{borderRadius:50, width: 80, height:80}}
-      />
+        <Image
+          source={{uri: imagem}}
+          style={{borderRadius:50, width: 80, height:80}}
+        />
      :
      <AntDesign name="user" size={80} color="#92a494" style={styles.padding10} />
      }
+     </TouchableOpacity>
+     
       <View style={styles.userCardDescription}>
         <TextInput
             style={styles.input}
