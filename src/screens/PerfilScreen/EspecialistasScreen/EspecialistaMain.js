@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import EspecialistasViewScreen from './EspecialistaViewScreen';
 import EspecialistasEditScreen from './EspecialistaEditScreen';
 import TimetableScreen from './TimetableScreen';
+import EspecialistaServicos from './EspecialistaServicos';
 
 
 export default function EspecialistasMain ({ navigation }) {
@@ -28,6 +29,11 @@ export default function EspecialistasMain ({ navigation }) {
                     name="Timetable" 
                     component={TimetableScreen}
                     options={{headerTitle: 'Editar Timetable '}}  
+                />
+                <RootStack.Screen 
+                    name="EspecialistaServicos" 
+                    component={EspecialistaServicos}
+                    options={{headerTitle: 'Editar Serviços '}}  
                 />
             </RootStack.Group>
         </RootStack.Navigator>

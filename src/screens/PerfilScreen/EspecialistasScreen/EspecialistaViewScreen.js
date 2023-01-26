@@ -4,74 +4,75 @@ import { Text, View, SafeAreaView, ScrollView, Image, TouchableOpacity } from 'r
 import { AntDesign } from '@expo/vector-icons';
 
 import styles from './styles';
-import { auth,db } from '../../../firebase/config';
+import { db } from '../../../firebase/config';
 
 
-
-function onDeleteEspecialista (itemId,navigation) {
-  db 
-    .collection('Especialista')
-    .doc(itemId)
-    .delete()
-    .then( () => {          
-      alert('Especialista apagado')})
-    .catch( (e) => console.error(e))
-}
-
-//Componente para um card de pessoa
-const PersonCard = ({dados, navigation}) => {
-
-  return (
-    <View style={styles.userCard}>
-      { (dados.Imagem) ? 
-      <Image
-        source={{uri: dados.Imagem }}
-        style={{borderRadius:50, width: 60, height:60}}
-      />
-     :
-     <AntDesign name="user" size={60} color="#92a494" style={styles.padding10} />
-     }
-        <View style={styles.userCardDescription}>
-        <Text style={{ marginLeft: 10, fontWeight: 'bold' }}>{dados.Nome}</Text>
-        <Text style={{ marginLeft: 10}}>{dados.Email}</Text>
-        <Text style={{ marginLeft: 10}}>{dados.Whatsapp}</Text>
-        <View style={styles.userActions}>
-          <TouchableOpacity 
-            style={styles.editButton}
-            onPress={() => navigation.navigate('EditarEspecialista', {itemId: dados.id})}
-          >
-            <AntDesign name="form" size={26} color='#1d817e'style={styles.padding10}/>
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={styles.editButton}
-            onPress={() => navigation.navigate('Timetable', {itemId: dados.id})}
-          >
-            <AntDesign name="clockcircleo" size={26} color='#1d817e' style={styles.padding10}/>
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={styles.editButton}
-            onPress={() => navigation.navigate('EditarEspecialista', {itemId: dados.id})}
-          >
-            <AntDesign name="solution1" size={26} color='#1d817e' style={styles.padding10}/>
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={styles.editButton}
-            onPress={() => onDeleteEspecialista(dados.id,navigation)}
-          >
-            <AntDesign name="delete" size={26} color='#1d817e' style={styles.padding10}/>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>  
-    )
-};
 //Tela principal
 export default function EspecialistasViewScreen ({ navigation }) {
 
-
   const [users,setUsers] = useState([]);
+  const [tempKey, setTempKey] = useState(0);
 
- useEffect(() => {
+  const PersonCard = ({dados, navigation}) => {
+
+    return (
+      <View style={styles.userCard}>
+        { (dados.Imagem) ? 
+        <Image
+          source={{uri: dados.Imagem }}
+          style={{borderRadius:50, width: 60, height:60}}
+        />
+       :
+       <AntDesign name="user" size={60} color="#92a494" style={styles.padding10} />
+       }
+          <View style={styles.userCardDescription}>
+          <Text style={{ marginLeft: 10, fontWeight: 'bold' }}>{dados.Nome}</Text>
+          <Text style={{ marginLeft: 10}}>{dados.Email}</Text>
+          <Text style={{ marginLeft: 10}}>{dados.Whatsapp}</Text>
+          <View style={styles.userActions}>
+            <TouchableOpacity 
+              style={styles.editButton}
+              onPress={() => navigation.navigate('EditarEspecialista', {itemId: dados.id})}
+            >
+              <AntDesign name="form" size={26} color='#1d817e'style={styles.padding10}/>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.editButton}
+              onPress={() => navigation.navigate('Timetable', {itemId: dados.id})}
+            >
+              <AntDesign name="clockcircleo" size={26} color='#1d817e' style={styles.padding10}/>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.editButton}
+              onPress={() => navigation.navigate('EspecialistaServicos', {itemId: dados.id})}
+            >
+              <AntDesign name="solution1" size={26} color='#1d817e' style={styles.padding10}/>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.editButton}
+              onPress={() => onDeleteEspecialista(dados.id,navigation)}
+            >
+              <AntDesign name="delete" size={26} color='#1d817e' style={styles.padding10}/>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>  
+      )
+  };
+
+  function onDeleteEspecialista (itemId,navigation) {
+    db 
+      .collection('Especialista')
+      .doc(itemId)
+      .delete()
+      .then( () => {          
+        alert('Especialista apagado');
+        setTempKey(tempKey+1);
+      })
+      .catch( (e) => console.error(e))
+  }
+
+  useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
 
       db.collection('Especialista')
@@ -92,6 +93,7 @@ export default function EspecialistasViewScreen ({ navigation }) {
   return(
     <SafeAreaView>
       <ScrollView>
+        <View key={tempKey.toString}>
         {users.map((item,key)=>(
             <PersonCard 
               key={key}
@@ -100,6 +102,7 @@ export default function EspecialistasViewScreen ({ navigation }) {
 
             />
         ))}
+        </View>
         <TouchableOpacity onPress={() => navigation.navigate('EditarEspecialista', {itemId: null})}>
           <View style={styles.menuView}>
             <Text style={styles.sairTexto}>Adicionar Novo Especialista</Text>
