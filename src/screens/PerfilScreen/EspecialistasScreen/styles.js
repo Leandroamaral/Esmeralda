@@ -112,13 +112,24 @@ export default StyleSheet.create({
     horarioBotao: {
         marginRight: 10, 
         marginBottom: 10, 
-        width: 100, 
+        width: 75, 
         height: 35, 
         borderRadius: 10, 
         backgroundColor: '#fff', 
         alignItems:'center', 
         justifyContent:'center'
     },
+    horarioBotaoChecked: {
+        marginRight: 10, 
+        marginBottom: 10, 
+        width: 75, 
+        height: 35, 
+        borderRadius: 10, 
+        backgroundColor: '#92a494', 
+        alignItems:'center', 
+        justifyContent:'center'
+    },
+    
     horariosTexto: {
         fontWeight: 'bold', 
         fontSize:15
