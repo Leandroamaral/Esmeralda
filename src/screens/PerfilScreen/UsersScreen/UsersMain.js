@@ -1,6 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import UsuariosViewScreen from './UsersViewScreen';
+import UsuariosViewScreen from './UserViewScreen';
+import UserEditScreen from './UsersEditScreen';
+
 
 
 
@@ -15,6 +17,11 @@ export default function UserMain ({ navigation }) {
                 name="UserView" 
                 component={UsuariosViewScreen}
                 options={{headerTitle: 'Usuários '}}  
+                />
+                  <RootStack.Screen 
+                    name="EditarUsuario" 
+                    component={UserEditScreen}
+                    options={{headerTitle: 'Usuario '}}  
                 />
             </RootStack.Group>
 
