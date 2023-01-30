@@ -55,8 +55,8 @@ export default StyleSheet.create({
         height: 150, 
         width: 130, 
         borderRadius: 10, 
-        borderColor:"#000",
-        borderWidth:1,
+        borderColor:"#357066",
+        borderWidth:2,
         borderSize:10,
         alignItems: 'center', 
         marginBottom: 5, 
@@ -102,8 +102,8 @@ export default StyleSheet.create({
         backgroundColor: '#fff', 
         alignItems:'center', 
         justifyContent:'center',
-        borderWidth:1,
-        borderColor:"#000"
+        borderWidth:2,
+        borderColor:"#357066"
     },
     horariosTexto: {
         fontWeight: 'bold', 
@@ -148,8 +148,8 @@ export default StyleSheet.create({
         borderRadius: 10, 
         alignItems: 'center', 
         marginBottom: 5, 
-        borderWidth:1,
-        borderColor:"#000"
+        borderWidth:2,
+        borderColor:"#357066"
        
     },
     iconeServico: {

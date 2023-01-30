@@ -9,6 +9,7 @@ export default function Agendar({navigation}) {
 
   const diadasemana = ['Domingo','Segunda-Feira','Terça-Feira','Quarta-Feira','Quinta-Feira','Sexta-Feira','Sabado']
   const diadehoje = new Date();
+ 
 
   //Setting type of states 
   //arrays
@@ -19,30 +20,22 @@ export default function Agendar({navigation}) {
   //Visibility boolean
   const [visibilityTime,setVisibilityTime] = useState()
   const [disabledSend,setDisabledSend] = useState()
+
   //Text
   const [specialist,setSpecialist] = useState('')
   const [date,setDate] = useState(diadehoje)
   const [time,setTime] = useState('');
   const [servico, setServico] = useState('');
+
+  
   const [allEspecialistas, setAllEspecialistas] = useState([]);
   const [allServicos, setAllServicos] = useState([]);
-
-
+  const [allTimes,setAllTimes] = useState([]);
 
   useEffect(() => {
     loadEspecialista();
     updateDate()
   }, []);
-
-
-  function updateDate(){
-    setSpecialists(allEspecialistas.filter((itemf) => itemf.Timetable.some((subElement) => subElement.Semana === diadasemana[date.getDay()])))
-    setTimes([]);
-    setServicos([]);
-    setSpecialist('');
-    setServico('');
-  }
-
 
   function loadEspecialista() {
 
@@ -69,37 +62,73 @@ export default function Agendar({navigation}) {
     updateDate(diadehoje,diadehoje.getDay())
   }
 
-  function updateSpecialists(){
-    setSpecialists([
-      {
-        name:"Regina Caze",
-        dayAvailable:["monday","thursday"],
-        services:[{title:"corte",icon:"icon-name"},{title:"alisamento",icon:"icon-name"}],
-        timeAvailable:["08:00","09:00","10:00","18:00","19:00","20:00"]},
-      
-      {
-        name:"Julio Alberto",
-        dayAvailable:["monday","thursday"],
-        services:[{title:"corte",icon:"icon-name"},{title:"alisamento",icon:"icon-name"}],
-        timeAvailable:["12:00","13:00","14:00"],
-    }])
+  function updateDate(){
+    setSpecialists(allEspecialistas.filter((itemf) => itemf.Timetable.some((subElement) => subElement.Semana === diadasemana[date.getDay()])))
+    setTimes([]);
+    setServicos([]);
+    setSpecialist('');
+    setServico('');
+    
   }
 
   function updateSpecialist(key){
     setSpecialist(key)
     const specialist = specialists[key]
     setServicos(specialist.Servicos.map((item) => ({...item, ...allServicos.find(itemf => item.idServicos == itemf.id) })));
-    //setTimes(specialist.Timetable)
-    const times = (specialist.Timetable.filter((itemf) => (itemf.Semana == diadasemana[date.getDay()] )))
-    console.log(times[0].Times);
-    setTimes(times[0].Times)
-    //setServico('');
+    setAllTimes(specialist.Timetable.filter((itemf) => (itemf.Semana == diadasemana[date.getDay()] )))
+    setServico('');
+    setTimes([]);
   }
 
   function updateTime(key){
+
+    let timesarray = [];
+
+    //Setar o serviço (pintar da borda)
     setServico(key)
-    console.log(specialists[key].Timetable)
-    //setTime(specialist[key].Timetable)
+    
+    //clasificar o array de tempo do especialista
+    const timeespecialista = allTimes[0].Times.sort((a,b) => { return(
+      Date.parse("2019-01-01T"+a+":00") - Date.parse("2019-01-01T"+b+":00")
+    )})
+    //console.log(timeespecialista + 'xx')
+    //console.log(JSON.stringify(servicos[key].Tempo) + 'yy')
+    
+    //verificar quantos blocos de 30 minutos o serviço possui
+    var timeParts = servicos[key].Tempo.split(":");
+    const convertido =  ((Number(timeParts[0]) * 60 + Number(timeParts[1]))/30) -1 ;
+    //console.log(convertido + 'zzz')
+
+    //Verificar se existe espaço de tempo disponível (matemática braba)
+    if (convertido > 0) {
+      let z = 1;
+      let ok = false;
+      for (let i = 0; i < timeespecialista.length;i++){
+        let x = Date.parse("2019-01-01T"+timeespecialista[i]+":00");
+        let cont = 1
+        for (let ii = i+1; ii <= convertido+i; ii++){
+          let y = Date.parse("2019-01-01T"+timeespecialista[ii]+":00");
+          let dif1 = y-x;
+          if (dif1 == (1800000*cont)) {
+            ok = true;
+            //console.log(dif1 + 'true')
+          } else {
+            ok = false
+            //console.log(dif1 + 'false')
+          }
+          cont = cont + 1;
+        }
+        if (ok) {
+          timesarray.push(timeespecialista[i]);
+        }
+      } 
+    } else {
+      timesarray = allTimes[0].Times
+    }
+
+    //setar os horários disponíveis 
+    setTimes(timesarray)
+    //console.log(JSON.stringify(times) + 'kkk')
   }
 
   return (
