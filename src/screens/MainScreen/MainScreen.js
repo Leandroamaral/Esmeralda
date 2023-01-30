@@ -15,7 +15,7 @@ function MyTabs() {
       initialRouteName="Feed"
       
       screenOptions={{
-        tabBarActiveTintColor: '#1d817e',
+        tabBarActiveTintColor: '#357066',
         //headerTitle: (props) => <LogoTitle {...props} />
         headerShown: false
       }}

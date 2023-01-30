@@ -4,36 +4,38 @@ export default StyleSheet.create({
     tituloView: {
         padding:10, 
         height: 90, 
-        backgroundColor:'#1d817e', 
-        alignItems:'center'
+        alignItems:'center',
+        backgroundColor: '#fff'
     },
     tituloTexto: {
         top:30, 
         fontSize: 28, 
-        color: '#fff', 
+        color: '#000', 
         fontWeight: 'bold'
     },
     calendario: {
         height: 105, 
-        backgroundColor:'#1d817e' 
+        backgroundColor:'#FFF', 
+        borderColor: '#fff'
     },
     calendarioTitulo: {
-        color:'#fff', 
+        color:'#000', 
         fontSize: 16, 
         fontWeight: 'normal' 
     },
     calendarioLabel: {
-        color:'#fff'
+        color:'#000'
     },
     subTituloView: {
         padding:10
     },
     subTituloTexto: {
         fontSize: 20, 
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        alignSelf: 'center'
     },
     espMainView : {
-        padding: 10, 
+        padding: 5, 
         flexDirection: 'row', 
         justifyContent: 'space-between', 
         position: 'relative', 
@@ -84,7 +86,7 @@ export default StyleSheet.create({
     horarioBotao: {
         marginRight: 10, 
         marginBottom: 10, 
-        width: 100, 
+        width: 90, 
         height: 35, 
         borderRadius: 10, 
         backgroundColor: '#fff', 
@@ -94,7 +96,7 @@ export default StyleSheet.create({
     horarioBotaoChecked:{
         marginRight: 10, 
         marginBottom: 10, 
-        width: 100, 
+        width: 90, 
         height: 35, 
         borderRadius: 10, 
         backgroundColor: '#fff', 
@@ -112,7 +114,7 @@ export default StyleSheet.create({
         marginBottom:30
     },
     botaoServico:{
-        marginLeft:10
+        marginLeft:1
     },
     reservarView: {
         alignItems:'center'
@@ -129,7 +131,40 @@ export default StyleSheet.create({
         color:'#fff', 
         fontWeight: 'bold',
         fontSize: 15
-    }
+    },
+    botaoServico: {
+        backgroundColor: '#fff', 
+        height: 100, 
+        width: 80, 
+        borderRadius: 10, 
+        alignItems: 'center', 
+        marginBottom: 5, 
+       
+    },
+    botaoServicoChecked: {
+        backgroundColor: '#fff', 
+        height: 100, 
+        width: 80, 
+        borderRadius: 10, 
+        alignItems: 'center', 
+        marginBottom: 5, 
+        borderWidth:1,
+        borderColor:"#000"
+       
+    },
+    iconeServico: {
+        borderRadius: 10, 
+        margin: 5, 
+        backgroundColor: '#eaeceb', 
+        width: 60, height: 60, 
+        marginTop: 12, 
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    textoServico: {
+        color: "#92a494", 
+        fontSize: 12
+    },
 
 
 

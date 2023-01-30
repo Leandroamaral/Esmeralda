@@ -36,7 +36,9 @@ export default function EspecialistaServicos ({ route, navigation }) {
         const id = doc.id;
         return { id, ...data }
       }))
-
+    })
+    .finally(() => {
+      console.log('aqui');
     })
 
     if (parametros.itemId) {
@@ -52,10 +54,6 @@ export default function EspecialistaServicos ({ route, navigation }) {
         })
         .catch((e) => console.error)
     }
-
-
-
-
   }
 
 
@@ -89,7 +87,6 @@ export default function EspecialistaServicos ({ route, navigation }) {
     setValor(selectservico.Valor);
     
     scrollViewRef.current.scrollToEnd();
-    //setComboServicos(comboServicos.concat(addcombo));
  
   }
  
@@ -165,7 +162,7 @@ export default function EspecialistaServicos ({ route, navigation }) {
   };
   
   const listaservicos = dbservicos.map((item) => ({...item, ...allServicos.find(itemf => item.idServicos == itemf.id) }));
-  const comboServicos = allServicos.filter((item) => {return(!dbservicos.find((x) => {return(x.idServicos == item.id)}))});
+  const comboServicos = allServicos.filter((item) => {return(!dbservicos.find((itemf) => {return(itemf.idServicos == item.id)}))});
   const scrollViewRef = useRef();
     
   return(

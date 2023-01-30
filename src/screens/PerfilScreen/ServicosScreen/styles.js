@@ -112,7 +112,7 @@ export default StyleSheet.create({
         borderRadius: 10,
     },
     subTituloView: {
-        padding:10
+        padding:5
     },
     subTituloTexto: {
         fontSize: 20, 
