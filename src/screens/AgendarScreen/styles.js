@@ -38,8 +38,8 @@ export default StyleSheet.create({
         fontSize: 20, 
         alignSelf: 'center',
         textAlign: 'center',
-        marginTop: 50,
-        marginBottom: 50
+        marginTop: 30,
+        marginBottom: 30
     },
     espMainView : {
         padding: 5, 

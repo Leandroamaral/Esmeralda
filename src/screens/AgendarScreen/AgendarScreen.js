@@ -234,6 +234,96 @@ export default function Agendar({navigation}) {
     loadEspecialista()
   }
 
+  function Especialista() {
+     const tempEsp = specialists.map((item, key) => (
+        <View key={key} style={specialist === key ? styles.espViewChecked : styles.espView}>
+        <TouchableOpacity
+            onPress={() => updateServico(key)}
+            >
+          <Image
+            source={{uri: item.Imagem }}
+            style={styles.espImg}
+              />
+          <Text style={styles.espTexto}>{item.Nome}</Text>
+        </TouchableOpacity>
+      </View>
+      ))
+
+    return(
+
+      <View style={styles.subTituloView}>
+        <Text style={styles.subTituloTexto}>Selecione a especialista</Text>
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> 
+            <View style={styles.espMainView}>
+              {tempEsp}
+            </View>
+          </ScrollView>
+      </View>
+
+    )
+  }
+
+  function Servico() {
+
+    const mapServico = servicos.map((item,key) => (
+      <View style={{padding:5}} key={key}>
+        <View  style={key === servico ? styles.botaoServicoChecked : styles.botaoServico}>
+          <TouchableOpacity 
+            
+            style={styles.iconeServico}
+            onPress={() => updateTime(key)}
+                >
+            <Icones tipo={item.Icone} width={45} height={45} fill="#92a494" />
+          </TouchableOpacity>
+          <Text style={styles.textoServico}>{item.Nome}</Text>
+        </View>
+      </View>
+    ))
+
+    const tempServico = (
+      <View style={styles.subTituloView}>
+        <Text style={styles.subTituloTexto}>Selecione o serviço</Text>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> 
+        {mapServico}  
+        </ScrollView>
+      </View>
+    )
+
+    return((servicos.length > 0) ? tempServico : null)
+  }
+
+  function Horarios() {
+
+    const mapHorario = times.map((item,key) => (
+      <TouchableOpacity 
+        key={key} 
+        style={key === time ? styles.horarioBotaoChecked : styles.horarioBotao}
+        onPress= {() => selectTime(key)}
+        >
+        <Text style={styles.horariosTexto}>{item}</Text>
+      </TouchableOpacity>
+      ))
+
+    const comHorario = (
+      <View style={styles.subTituloView}>
+        <Text style={styles.subTituloTexto}>Selecione o horário</Text>
+        <View style={styles.horarioView}>
+          {mapHorario}
+        </View>
+      </View>
+    )
+
+    const semHorario = (
+      <View style={styles.subTituloView}>
+        <Text style={styles.subTituloTexto}>Selecione o horário</Text>
+        <Text style={styles.alertaTexto}>Não existe horário disponível para o serviço</Text> 
+      </View>
+    )
+
+    return((servico != null && times.length <= 0) ? semHorario : comHorario)
+
+  }
+
   return (
     <SafeAreaView>
       
@@ -248,6 +338,7 @@ export default function Agendar({navigation}) {
         <View style={styles.tituloView}>
           <Text style={styles.tituloTexto}>Agendar</Text>
         </View>
+
         <View>
           <WeeklyCalendar style={styles.calendario}
             startWeekday={7}
@@ -259,88 +350,32 @@ export default function Agendar({navigation}) {
           
           />
         </View>
+
         {(date >= diadehoje && specialists.length > 0) ? 
-        <View>
-          <View style={styles.subTituloView}>
-            <Text style={styles.subTituloTexto}>Selecione a especialista</Text>
-              <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> 
-                <View style={styles.espMainView}>
-                  {specialists.map((item, key) => (
-                    <View key={key} style={specialist === key ? styles.espViewChecked : styles.espView}>
-                    <TouchableOpacity
-                        onPress={() => updateServico(key)}
-                        >
-                      <Image
-                        source={{uri: item.Imagem }}
-                        style={styles.espImg}
-                          />
-                      <Text style={styles.espTexto}>{item.Nome}</Text>
-                    </TouchableOpacity>
-                  </View>
-                  ))}
-                </View>
-              </ScrollView>
-          </View>
-          <View style={styles.subTituloView} enable>
-            {(servicos.length > 0) ? 
-              <Text style={styles.subTituloTexto}>Selecione o serviço</Text>
-            : null }
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> 
-                { servicos.map((item,key) => (
-                <View style={{padding:5}} key={key}>
-                  <View  style={key === servico ? styles.botaoServicoChecked : styles.botaoServico}>
-                    <TouchableOpacity 
-                      
-                      style={styles.iconeServico}
-                      onPress={() => updateTime(key)}
-                          >
-                      <Icones tipo={item.Icone} width={45} height={45} fill="#92a494" />
-                    </TouchableOpacity>
-                    <Text style={styles.textoServico}>{item.Nome}</Text>
-                  </View>
-                </View>
-              ))}
-            </ScrollView>
-          </View>
-
+          <View>
           
-          {(times.length > 0) ? 
-          <View style={styles.subTituloView}>
-            <Text style={styles.subTituloTexto}>Selecione o horário</Text>
-            <View style={styles.horarioView}>
-              {times.map((item,key) => (
-                <TouchableOpacity 
-                key={key} 
-                style={key === time ? styles.horarioBotaoChecked : styles.horarioBotao}
-                onPress= {() => selectTime(key)}
-                >
-                <Text style={styles.horariosTexto}>{item}</Text>
+            <Especialista />
+
+            <Servico />
+    
+            <Horarios />
+  
+            <View 
+              style={styles.reservarView}
+            >
+              <TouchableOpacity 
+                disabled={disabledSend}
+                style={(disabledSend) ? styles.reservarBotaoDisabled : styles.reservarBotao }
+                onPress={reservarTime}>
+                  <Text style={styles.reservarTexto}>Reservar Horário</Text>
               </TouchableOpacity>
-              ))}
             </View>
-          </View>
-          : null }
-          {(servico != null && times.length <= 0) ?
-          <View style={styles.subTituloView}>
-            <Text style={styles.subTituloTexto}>Selecione o horário</Text>
-            <Text style={styles.alertaTexto}>Não existe horário disponível para o serviço</Text> 
-          </View>
-          : null}
-
-          <View 
-            style={styles.reservarView}
-          >
-            <TouchableOpacity 
-              disabled={disabledSend}
-              style={(disabledSend) ? styles.reservarBotaoDisabled : styles.reservarBotao }
-              onPress={reservarTime}>
-                <Text style={styles.reservarTexto}>Reservar Horário</Text>
-            </TouchableOpacity>
-          </View>
           
-        </View>
+           </View>
+           
         : <Text style={styles.alertaTexto}>Não existe horário disponível</Text> 
       }
+
         </ScrollView>
       </SafeAreaView>
 
