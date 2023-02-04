@@ -12,6 +12,7 @@ export default function Agendar({navigation}) {
 
   const diadehoje = new Date();
   const scrollViewRef = useRef();
+  diadehoje.setUTCHours(0,0,0,0)
 
   //Setting type of states 
   //arrays
@@ -26,7 +27,7 @@ export default function Agendar({navigation}) {
   const [specialist,setSpecialist] = useState('')
   const [date,setDate] = useState(diadehoje)
   const [time,setTime] = useState('');
-  const [servico, setServico] = useState('');
+  const [servico, setServico] = useState(null);
 
   const [allEspecialistas, setAllEspecialistas] = useState([]);
   const [allServicos, setAllServicos] = useState([]);
@@ -37,18 +38,26 @@ export default function Agendar({navigation}) {
   }, [navigation]);
 
   function loadEspecialista() {
-    console.log(diadehoje + 'load ')
-    setDate(diadehoje)
+
+    setSpecialist('')
+    setServico(null);
+    setServicos([]);
+    setTimes([]);
+    setTime('');
+
     db
     .collection('Especialista')
     .get()
     .then(snapshot => {
-      setAllEspecialistas (snapshot.docs.map(doc => {
+      const shotdata =  (snapshot.docs.map(doc => {
         const data = doc.data();
         const id = doc.id;
         return { id, ...data }
       }))
+      setSpecialists(shotdata.filter((itemf) => itemf.Timetable.some((subElement) => subElement.Semana === diadasemana[date.getDay()])))
+      setAllEspecialistas(shotdata);
     })
+  
     db
     .collection('Servico')
     .get()
@@ -59,6 +68,7 @@ export default function Agendar({navigation}) {
         return { id, ...data }
       }))
     })
+
   }
 
   function updateDate(data){
@@ -66,7 +76,7 @@ export default function Agendar({navigation}) {
     setServicos([]);
 
     setSpecialist('');
-    setServico('');
+    setServico(null);
     setTime('');
 
     var dtData = new Date(data)
@@ -75,44 +85,58 @@ export default function Agendar({navigation}) {
       dtData = diadehoje
       setDate(diadehoje);
     } else {
+      dtData.setUTCHours(0,0,0,0)
       setDate(dtData);
     }
+
     setSpecialists(allEspecialistas.filter((itemf) => itemf.Timetable.some((subElement) => subElement.Semana === diadasemana[dtData.getDay()])))
 
   }
 
   function updateServico(key){
+    
     setSpecialist(key)
-    const specialist = specialists[key]
-    setServicos(specialist.Servicos.map((item) => ({...item, ...allServicos.find(itemf => item.idServicos == itemf.id) })));
-    setAllTimes(specialist.Timetable.filter((itemf) => (itemf.Semana == diadasemana[date.getDay()] )))
-    setServico('');
+    setServico(null);
     setTimes([]);
     setTime('');
+
+    var toremove = []
+   
+    const specialist = specialists[key]
+    const alltimetable = specialist.Timetable.filter((itemf) => (itemf.Semana == diadasemana[date.getDay()] ))
+    let final = alltimetable[0].Times
+
+    if (typeof(specialist.Agenda) != 'undefined') {
+      toremove = specialist.Agenda.filter((itemf) => (Date.parse(itemf.Data) === Date.parse(date)))
+    }
+      
+    if (toremove.length > 0) { 
+      final = alltimetable[0].Times.filter((itemf) => (!toremove[0].Times.includes(itemf)))
+    }
+
+    setServicos(specialist.Servicos.map((item) => ({...item, ...allServicos.find(itemf => item.idServicos == itemf.id) })));
+    setAllTimes(final)
+
     setDisabledSend(true);
   }
 
   function updateTime(key){
 
     let timesarray = [];
-
+    
     //Setar o serviço (pintar da borda)
     setServico(key)
     setTime('')
     setDisabledSend(true)
 
-    
     //clasificar o array de tempo do especialista
-    const timeespecialista = allTimes[0].Times.sort((a,b) => { return(
+    const timeespecialista = allTimes.sort((a,b) => { return(
       Date.parse("2019-01-01T"+a+":00") - Date.parse("2019-01-01T"+b+":00")
     )})
-    //console.log(timeespecialista + 'xx')
-    //console.log(JSON.stringify(servicos[key].Tempo) + 'yy')
     
     //verificar quantos blocos de 30 minutos o serviço possui
     var timeParts = servicos[key].Tempo.split(":");
     const convertido =  ((Number(timeParts[0]) * 60 + Number(timeParts[1]))/30) -1 ;
-    //console.log(convertido + 'zzz')
 
     //Verificar se existe espaço de tempo disponível (matemática braba)
     if (convertido > 0) {
@@ -138,12 +162,12 @@ export default function Agendar({navigation}) {
         }
       } 
     } else {
-      timesarray = allTimes[0].Times
+      timesarray = allTimes
     }
 
     //setar os horários disponíveis 
     setTimes(timesarray)
-    //console.log(JSON.stringify(times) + 'kkk')
+
   }
 
   function addMinutesToTime(time, minsAdd) {
@@ -156,50 +180,52 @@ export default function Agendar({navigation}) {
   function selectTime(key) {
     setTime(key);
     setDisabledSend(false);
+
   }
 
   function converteData(data) {
-    const mes =  Number(data.getMonth()) + 1
-    const fulldate = data.getFullYear() + '-' + ("0" + mes.toString()).slice(-2) + '-' + ("0" + data.getDate()).slice(-2)
+    const mes =  Number(data.getUTCMonth()) + 1
+    const fulldate = data.getFullYear() + '-' + ("0" + mes.toString()).slice(-2) + '-' + ("0" + data.getUTCDate()).slice(-2)
     return(fulldate)
     
   }
 
   function reservarTime(){
-    var temparray = {
-      'Data' : converteData(date),
-      'Times' : []
-    };
+    
+    var tempespecialista =  {
+      Data: converteData(date),
+      Times: []
+    }
 
-    var temparray3 = [];
+    var especialista = []
+    var especialistaindex = 0
+
+    if (typeof(specialists[specialist].Agenda) != 'undefined') {
+      especialista = specialists[specialist].Agenda
+      especialistaindex = specialists[specialist].Agenda.findIndex((itemf) => (Date.parse(itemf.Data) === Date.parse(date)))
+      if (especialistaindex < 0) {
+        especialista.push(tempespecialista)
+        especialistaindex = especialista.length - 1
+      }
+    } else {
+      especialista.push(tempespecialista)
+    }
+
     var timeParts = servicos[servico].Tempo.split(":");
     const convertido =  ((Number(timeParts[0]) * 60 + Number(timeParts[1]))/30) -1 ;
-
-    for (var i = 0; i <= convertido; i++){
-      temparray.Times.push(addMinutesToTime(times[time],i*30))
-    }
-
-    var temparray2 = specialists[specialist].Agenda
-    if (typeof(specialists[specialist].Agenda) == 'undefined') {
-      temparray3.push(temparray)
-    } else {
-      temparray3=temparray2.concat(temparray)
-    }
     
-    //console.log(JSON.stringify(specialists[specialist].Agenda) + ' AA')
-    //console.log(JSON.stringify(temparray) + ' BB')
-    //console.log(JSON.stringify(temparray2) + ' CC')
-    //console.log(JSON.stringify(temparray3) + ' DD')
+    for (var i = 0; i <= convertido; i++){
+      especialista[especialistaindex].Times.push(addMinutesToTime(times[time],i*30))
+    }
 
     db
     .collection('Especialista')
     .doc(specialists[specialist].id)
     .update({
-        Agenda: temparray3
+        Agenda: especialista
     })
     .then(() => {
         alert('Horário Reservado');
-        //loadUserData();
     })
     .catch(() => {
         console.error(e);
@@ -229,12 +255,12 @@ export default function Agendar({navigation}) {
             titleStyle = {styles.calendarioTitulo}
             dayLabelStyle = {styles.calendarioLabel}
             themeColor = '#357066'
-            onDayPress={(data,i) => updateDate(data,i)}
+            onDayPress={(data) => updateDate(data)}
           
           />
         </View>
-        
-
+        {(date >= diadehoje && specialists.length > 0) ? 
+        <View>
           <View style={styles.subTituloView}>
             <Text style={styles.subTituloTexto}>Selecione a especialista</Text>
               <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> 
@@ -277,10 +303,10 @@ export default function Agendar({navigation}) {
             </ScrollView>
           </View>
 
-          <View style={styles.subTituloView} enable>
+          
           {(times.length > 0) ? 
+          <View style={styles.subTituloView}>
             <Text style={styles.subTituloTexto}>Selecione o horário</Text>
-          : null }
             <View style={styles.horarioView}>
               {times.map((item,key) => (
                 <TouchableOpacity 
@@ -293,18 +319,28 @@ export default function Agendar({navigation}) {
               ))}
             </View>
           </View>
+          : null }
+          {(servico != null && times.length <= 0) ?
+          <View style={styles.subTituloView}>
+            <Text style={styles.subTituloTexto}>Selecione o horário</Text>
+            <Text style={styles.alertaTexto}>Não existe horário disponível para o serviço</Text> 
+          </View>
+          : null}
 
           <View 
             style={styles.reservarView}
           >
             <TouchableOpacity 
               disabled={disabledSend}
-              style={styles.reservarBotao}
+              style={(disabledSend) ? styles.reservarBotaoDisabled : styles.reservarBotao }
               onPress={reservarTime}>
                 <Text style={styles.reservarTexto}>Reservar Horário</Text>
             </TouchableOpacity>
           </View>
-
+          
+        </View>
+        : <Text style={styles.alertaTexto}>Não existe horário disponível</Text> 
+      }
         </ScrollView>
       </SafeAreaView>
 

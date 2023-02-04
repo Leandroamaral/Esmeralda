@@ -34,6 +34,13 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         alignSelf: 'center'
     },
+    alertaTexto: {
+        fontSize: 20, 
+        alignSelf: 'center',
+        textAlign: 'center',
+        marginTop: 50,
+        marginBottom: 50
+    },
     espMainView : {
         padding: 5, 
         flexDirection: 'row', 
@@ -126,6 +133,14 @@ export default StyleSheet.create({
         justifyContent:'center', 
         borderRadius:10,
         backgroundColor:'#1d817e'  
+    },
+    reservarBotaoDisabled: {
+        height: 50, 
+        width: 300, 
+        alignItems:'center', 
+        justifyContent:'center', 
+        borderRadius:10,
+        backgroundColor:'#CCC'  
     },
     reservarTexto: {
         color:'#fff', 
