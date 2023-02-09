@@ -38,7 +38,7 @@ const diasemana = [
 function diaformat(data) {
   let xDate = new Date(data)
   xDate.setHours(0,0,0,0)
-  return (diasemana[xDate.getDay() + 1] + ', '  + (xDate.getDate() + 1) + ' ' + mes[xDate.getMonth()])
+  return (diasemana[xDate.getDay() + 1] + ', '  + (xDate.getDate() + 1) + ' de ' + mes[xDate.getMonth()])
 } 
 
 export default function Horarios({navigation}) {
