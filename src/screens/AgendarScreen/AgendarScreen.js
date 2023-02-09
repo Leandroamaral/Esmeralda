@@ -13,6 +13,11 @@ export default function Agendar({navigation}) {
   const diadasemana = ['Domingo','Segunda-Feira','Terça-Feira','Quarta-Feira','Quinta-Feira','Sexta-Feira','Sabado']
 
   const diadehoje = new Date();
+  const horariodehoje = () => {
+    const diax = new Date();
+    function z(n){ return (n<10? '0':'') + n;};
+    return(z(diax.getHours()) + ':' + z(diax.getMinutes()))
+  }
   const scrollViewRef = useRef();
   diadehoje.setUTCHours(0,0,0,0)
 
@@ -139,9 +144,9 @@ export default function Agendar({navigation}) {
     const alltimetable = specialist.Timetable.filter((itemf) => (itemf.Semana == diadasemana[date.getUTCDay()] ))
     
     if (alltimetable.length > 0) {
-      final = alltimetable[0].Times
+      final = alltimetable[0].Times.filter((itemf) => (Date.parse("2019-01-01T"+itemf) > Date.parse("2019-01-01T"+horariodehoje())))
     }
-
+    
     if (typeof(usuario.Agenda) != 'undefined') {
       const toRemoveFilter = usuario.Agenda.filter((itemf) => (Date.parse(itemf.Data) === Date.parse(date) && itemf.idEspecialista == specialist.id ))
       const toRemoveUser = toRemoveFilter.map((item) => {
@@ -241,24 +246,22 @@ export default function Agendar({navigation}) {
       
     }
 
-
-    
     var tempespecialista =  {
       Data: converteData(date),
       Times: []
     }
 
     var tempAgenda = {
-      idEspecialista: specialists[specialist].id,
-      idServico: servicos[servico].id,
+      FotoEspecialista: specialists[specialist].Imagem,
+      NomeServico: servicos[servico].Nome,
+      Duracao: servicos[servico].Tempo,
       Data: converteData(date),
       Horario: times[time], 
     }
-
+   
     var especialista = []
     var especialistaindex = 0
     var userAgenda = []
-    var userAgendaIndex = 0
 
     if (typeof(specialists[specialist].Agenda) != 'undefined') {
       especialista = specialists[specialist].Agenda
@@ -311,22 +314,22 @@ export default function Agendar({navigation}) {
   }
 
   function Especialista() {
-     const tempEsp = specialists.map((item, key) => (
-        <View key={key} style={specialist === key ? styles.espViewChecked : styles.espView}>
-        <TouchableOpacity
-            onPress={() => updateServico(key)}
-            >
-          <Image
-            source={{uri: item.Imagem }}
-            style={styles.espImg}
-              />
-          <Text style={styles.espTexto}>{item.Nome}</Text>
-        </TouchableOpacity>
-      </View>
-      ))
+
+    const tempEsp = specialists.map((item, key) => (
+      <View key={key} style={specialist === key ? styles.espViewChecked : styles.espView}>
+      <TouchableOpacity
+          onPress={() => updateServico(key)}
+          >
+        <Image
+          source={{uri: item.Imagem }}
+          style={styles.espImg}
+            />
+        <Text style={styles.espTexto}>{item.Nome}</Text>
+      </TouchableOpacity>
+    </View>
+    ))
 
     return(
-
       <View style={styles.subTituloView}>
         <Text style={styles.subTituloTexto}>Selecione a especialista</Text>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> 
@@ -335,7 +338,6 @@ export default function Agendar({navigation}) {
             </View>
           </ScrollView>
       </View>
-
     )
   }
 
@@ -345,10 +347,9 @@ export default function Agendar({navigation}) {
       <View style={{padding:5}} key={key}>
         <View  style={key === servico ? styles.botaoServicoChecked : styles.botaoServico}>
           <TouchableOpacity 
-            
             style={styles.iconeServico}
             onPress={() => updateTime(key)}
-                >
+          >
             <Icones tipo={item.Icone} width={45} height={45} fill="#92a494" />
           </TouchableOpacity>
           <Text style={styles.textoServico}>{item.Nome}</Text>
@@ -380,8 +381,7 @@ export default function Agendar({navigation}) {
         return (semHorario)
       }
     }
-   
-    //return((servicos.length > 0 ) ? tempServico : semHorario)
+
   }
 
   function Horarios() {

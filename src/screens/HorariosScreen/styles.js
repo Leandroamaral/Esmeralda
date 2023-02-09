@@ -4,12 +4,13 @@ export default StyleSheet.create({
     tituloView: {
         padding:10,
         height: 80, 
-        alignItems:'center'
+        alignItems:'center',
+        marginBottom: 20
     },
     tituloTexto: {
         top:40, 
         fontSize: 28, 
-        color: '#92a494', 
+        color: '#000', 
         fontWeight: 'bold'
     },
     mesTexto: {
@@ -19,7 +20,7 @@ export default StyleSheet.create({
     dataView: {
         padding:10, 
         alignItems:'center',
-        top: 10,
+
     },
     texto16: {
         fontSize: 16
@@ -30,6 +31,11 @@ export default StyleSheet.create({
     horarioMainView: {
         backgroundColor: '#fff',
         borderRadius: 20,
+        height: 165,
+        padding: 10,
+        width: '95%',
+        alignSelf: 'center',
+        marginBottom: 10
     },
     horarioAView: {
         borderRightWidth: 1, 
@@ -38,7 +44,6 @@ export default StyleSheet.create({
         padding: 20, 
         width: 130, 
         alignItems:'center',
-        top: 10,
         
     },
     horarioATexto: {
@@ -60,7 +65,7 @@ export default StyleSheet.create({
     },
     horarioSubView: {
         left: 20, 
-        top: 10
+
     }
 
 
