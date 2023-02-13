@@ -138,7 +138,7 @@ export default function Horarios({navigation}) {
     const eventoSorted = eventoP.sort((a,b) => {
       let dataA = setDataHora(a.Data, a.Horario)
       let dataB = setDataHora(b.Data, b.Horario)
-      return (dataA - dataB)
+      return (dataB - dataA)
     } ) 
     const horarios = eventoSorted.map((item, index) => (
       <View style={styles.horarioMainView} key={index}>
@@ -185,7 +185,7 @@ export default function Horarios({navigation}) {
          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={loadUser} />}
          ref={scrollViewRef}>
             
-            {(eventoF.length > 0 || eventoP > 0) ?
+            {(eventoF.length > 0 || eventoP.length > 0) ?
               <>
               <ProximosHorarios />
               <Historico />

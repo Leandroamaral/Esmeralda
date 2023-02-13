@@ -5,35 +5,40 @@ import styles from './styles';
 
 export default function DetailServico({route, navigation}){
 
-    const [imageUri, setImageUri] = useState('../../../assets/notfound.png');
-    const [image64, setImage64] = useState('');
-    const [nome, setNome] = useState('');
-    const [descricao, setDescricao] = useState('');
+  const [image64, setImage64] = useState('../../../assets/notfound.png');
+  const [nome, setNome] = useState('');
+  const [descricao, setDescricao] = useState('');
 
-    const parametros = route.params
+  const parametros = route.params
 
-    if (parametros.itemId) {
+  if (parametros.itemId) {
 
-        useEffect(() => {
-          db
-          .collection('Servico')
-          .doc(parametros.itemId)
-          .get()
-          .then(snapshot => {
-            const shotdata = snapshot.data()
-            setNome(shotdata.Nome)
-            setDescricao(shotdata.Descricao)
-            setImage64(shotdata.Imagem)
-            if (shotdata.Imagem) {
-              setImageUri(shotdata.Imagem) 
-            } else {
-              setImageUri('../../../assets/notfound.png')
-            }
-            
-            })
-          
-        }, []);
-    }
+    useEffect(() => {
+
+      db
+      .collection('Servico')
+      .doc(parametros.itemId)
+      .get()
+      .then(snapshot => {
+        const shotdata = snapshot.data()
+        setNome(shotdata.Nome)
+      })
+     
+      db
+      .collection('Servico')
+      .doc(parametros.itemId + '/Imagem/1')
+      .get()
+      .then(snapshot => {
+        const shotdata = snapshot.data()
+        setDescricao(shotdata.Descricao)
+        if (shotdata.Imagem) {
+          setImage64(shotdata.Imagem) 
+        } else {
+          setImage64('../../../assets/notfound.png')
+        }
+      })
+    }, []);
+  }
 
     return (
         
@@ -43,7 +48,7 @@ export default function DetailServico({route, navigation}){
                 <View style={{height: 350, backgroundColor: '#FFF' }}>
                     <Image 
                         style={{height: 350}}
-                        source={{uri: imageUri}} 
+                        source={{uri: image64}} 
                         resizeMode='stretch'/>
                 </View>
          

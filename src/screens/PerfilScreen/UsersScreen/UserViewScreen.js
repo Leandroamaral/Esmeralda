@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Text, View, SafeAreaView, ScrollView,Image,TextInput , TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native';
+import { Text, View, SafeAreaView, ScrollView, Image, TextInput, TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native';
 import styles from './styles';
 import { auth,db, firebase } from '../../../firebase/config';
 import { AntDesign } from '@expo/vector-icons';

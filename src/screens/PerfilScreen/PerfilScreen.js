@@ -27,6 +27,7 @@ export default function Perfil ({ navigation }) {
 
   const [userName, setUserName] = useState("");
 
+
   const load = async () => {
     try {
       const name = await AsyncStorage.getItem('@user')
@@ -40,8 +41,9 @@ export default function Perfil ({ navigation }) {
 
   if (!userName) {
     load();
+    
   }
-
+ 
   return(
     <SafeAreaView>
         <ScrollView>
@@ -63,7 +65,7 @@ export default function Perfil ({ navigation }) {
               </LinearGradient>
             </TouchableOpacity>
           </View>
-        
+          {(userName.administrator) ?
           <View style={styles.userView}>
             <TouchableOpacity onPress={() => navigation.navigate('ServicoView') }>
               <View style={styles.menuView}>
@@ -101,6 +103,7 @@ export default function Perfil ({ navigation }) {
               </View>
             </TouchableOpacity>
           </View>
+          : null }
           <View style={styles.sairView}>
             <TouchableOpacity onPress={onLogoutPress}>
               <View style={styles.menuView}>

@@ -2,19 +2,20 @@ import React, { useState, useEffect } from 'react'
 import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, TextInput, Image } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import * as ImagePicker from 'expo-image-picker';
 import uuid from 'react-native-uuid';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { firebase, db } from '../../../firebase/config';
-import { LinearGradient } from 'expo-linear-gradient'
-import styles from '../styles';
+
+import * as ImagePicker from 'expo-image-picker';
 import { AntDesign } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient'
+
+import { db } from '../../../firebase/config';
+import styles from '../styles';
 
 
 export default function ServicosEdit ({ route, navigation }) {
 
-  const [imageUri, setImageUri] = useState('../../../assets/notfound.png');
-  const [image64, setImage64] = useState('');
+  
+  const [image64, setImage64] = useState('../../../assets/notfound.png');
   const [nome, setNome] = useState('');
   const [descricao, setDescricao] = useState('');
   const [icone, setIcone] = useState('');
@@ -29,17 +30,21 @@ export default function ServicosEdit ({ route, navigation }) {
       .then(snapshot => {
         const shotdata = snapshot.data()
         setNome(shotdata.Nome)
-        setDescricao(shotdata.Descricao)
         setIcone(shotdata.Icone)
-        setImage64(shotdata.Imagem)
+        });
+      db
+      .collection('Servico')
+      .doc(parametros.itemId + '/Imagem/1')
+      .get()
+      .then( snapshot => {
+        const shotdata = snapshot.data()
+        setDescricao(shotdata.Descricao)
         if (shotdata.Imagem) {
-          setImageUri(shotdata.Imagem) 
+          setImage64(shotdata.Imagem) 
         } else {
-          setImageUri('../../../assets/notfound.png')
+          setImage64('../../../assets/notfound.png')
         }
-        
-        })
-      
+      })
     }, []);
   };
 
@@ -58,7 +63,6 @@ export default function ServicosEdit ({ route, navigation }) {
         alert('Imagem deve ter largura máxima de 1080px')
       } else {
         setImage64('data:image/png;base64,' + result.assets[0].base64);
-        setImageUri(result.assets[0].uri);
       }
 
     }
@@ -73,31 +77,49 @@ export default function ServicosEdit ({ route, navigation }) {
         .doc(parametros.itemId)
         .update({
           Nome: nome,
-          Imagem: image64,
-          Descricao: descricao,
           Icone: icone
         })
-        .then(() => {
-          alert('Atualização Efetuada');
+        .catch((e) => {
+          alert(e);
         })
-        .catch(() => {
-          console.error(e);
-        })
-      } else {
         db
         .collection('Servico')
-        .doc(uuid.v4())
-        .set({
-          Nome: nome,
+        .doc(parametros.itemId + '/Imagem/1')
+        .update({
           Imagem: image64,
-          Descricao: descricao,
-          Icone: icone
+          Descricao: descricao
         })
         .then(() => {
-          alert('Servico Incluído');
+          alert('Especialidade Atualizada')
+        })
+        .catch((e) => {
+          alert(e);
+        })
+      } else {
+        const uid = uuid.v4()
+        db
+        .collection('Servico')
+        .doc(uid)
+        .set({
+          Nome: nome,
+          Icone: icone
         })
         .catch(() => {
-          console.error(e);
+          alert(e);
+        })
+        
+        db
+        .collection('Servico')
+        .doc(uid + '/Imagem/1')
+        .set({
+          Imagem: image64,
+          Descricao: descricao
+        })
+        .then(() => {
+          alert('Especialidade Incluída')
+        })
+        .catch((e) => {
+          alert(e);
         })
       }
     } else {
@@ -134,7 +156,7 @@ export default function ServicosEdit ({ route, navigation }) {
                 <TouchableOpacity onPress={pickImage}   style={{ width: 300, height:380, backgroundColor:'#BBBBBB' }}>
                   <Image 
                     style={{width: 300, height:380}}
-                    source={{uri: imageUri}} />
+                    source={{uri: image64}} />
                 </TouchableOpacity>
                 <Text style={{position:'absolute', alignSelf:'center', top: 60}}>Clique para carregar uma imagem</Text>
               </View>

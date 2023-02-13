@@ -6,12 +6,7 @@ import Dialog from "react-native-dialog";
 import { LinearGradient } from 'expo-linear-gradient'
 import { firebase } from '../../firebase/config'
 
-//Authetication Social
-import { ResponseType } from 'expo-auth-session';
-import * as Google from 'expo-auth-session/providers/google';
 import { getAuth, GoogleAuthProvider, signInWithCredential } from 'firebase/auth';
-import * as WebBrowser from 'expo-web-browser';
-WebBrowser.maybeCompleteAuthSession();
 
 import styles from './styles';
 
@@ -24,25 +19,7 @@ export default function LoginScreen({navigation}) {
     const [mensagem, setMensagem] = useState('');
 
 
-    //Auth with google
-    const [request, response, promptAsync] = Google.useIdTokenAuthRequest(
-        {
-          clientId: '125988439077-lp5tcdml4r1p7rlp9pptecv58fvso9ri.apps.googleusercontent.com',
-        },
-    );
-
-    React.useEffect(() => {
-        if (response?.type === 'success') {
-          const { id_token } = response.params;
-          const auth = getAuth();
-          const credential = GoogleAuthProvider.credential(id_token);
-          signInWithCredential(auth, credential);
-        }
-    }, [response]);
-    
-    const onLoginGooglePress = () =>{
-        promptAsync();
-    }
+   
 
     const onFooterLinkPress = () => {
         navigation.navigate('Registro')
@@ -146,18 +123,7 @@ export default function LoginScreen({navigation}) {
                         <Text style={styles.buttonTitle}>Entrar</Text>
                     </LinearGradient>
                 </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => onLoginGooglePress()}>
-                    <LinearGradient
-                        // Button Linear Gradient
-                        colors={['#005582', '#0086ad', '#00c2c7']}
-                        start={[0, 0]}
-                        end={[1, 1]}
-                        location={[0.25, 0.4, 1]}
-                        style={styles.button} >
-                        <Text style={styles.buttonTitle}>Entrar com Google</Text>
-                    </LinearGradient>
-                </TouchableOpacity>
+               
                 
                 <View style={styles.footerView}>
                     <Text style={styles.footerText}>Não tem uma conta? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Registre-se</Text></Text>
