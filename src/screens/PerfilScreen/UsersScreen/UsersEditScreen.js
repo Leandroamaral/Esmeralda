@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Text, View, Image,TextInput , TouchableOpacity } from 'react-native';
-import uuid from 'react-native-uuid';
 
 import { LinearGradient } from 'expo-linear-gradient';
-import * as ImagePicker from 'expo-image-picker';
 import { AntDesign } from '@expo/vector-icons';
+import Checkbox from 'expo-checkbox';
 
 import styles from './styles';
 import { db } from '../../../firebase/config';
@@ -15,84 +14,43 @@ export default function UserEditScreen ({ route, navigation }) {
     const [nome, setNome] = useState('');
     const [whatsapp, setWhatsapp] = useState('');
     const [imagem, setImagem] = useState('');
-    const [email, setEmail] = useState('');
-    const [administrator, setAdministrator] = useState('')
+    const [administrator, setAdministrator] = useState(null)
     const [contaGoogle, setContaGoogle] = useState('');
+    const [email, setEmail] = useState('');
 
-    if (parametros.itemId) {
-        useEffect(() => {
-          db
-            .collection('users')
-            .doc(parametros.itemId)
-            .get()
-            .then(snapshot => {
-                const shotdata = snapshot.data();
-                setNome(shotdata.fullName);
-                setEmail(shotdata.email);
-                setImagem(shotdata.Imagem);
-                setWhatsapp(shotdata.telefone);
-                setContaGoogle(shotdata.ContaGoogle);
-            })
-        }, []);
-    }
-
-    const pickImage = async () => {
-      // No permissions request is necessary for launching the image library
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        allowsMultipleSelection: false,
-        aspect: [4, 4],
-        quality: 1,
-        base64: true
-      });
-      if (!result.canceled) {
-        console.log (result.assets[0].width)
-        if (result.assets[0].width > 480) {
-          alert('Imagem deve ter largura máxima de 480px')
-        } else {
-          setImagem('data:image/png;base64,' + result.assets[0].base64);
-        }
-
-      }
-    };
+    useEffect(() => {
+      db
+        .collection('users')
+        .doc(parametros.itemId)
+        .get()
+        .then(snapshot => {
+            const shotdata = snapshot.data();
+            setNome(shotdata.fullName);
+            setImagem(shotdata.Imagem);
+            setWhatsapp(shotdata.telefone);
+            setContaGoogle(shotdata.ContaGoogle);
+            setEmail(shotdata.email);
+            setAdministrator(shotdata.administrator)
+        })
+    }, []);
 
     function onSaveEditUser() {
-        if (nome && whatsapp && email && contaGoogle) {
-            if(parametros.itemId) {
-                db
-                .collection('users')
-                .doc(parametros.itemId)
-                .update({
-                  fullName: nome,
-                  email: email,
-                  telefone: whatsapp,
-                  ContaGoogle: contaGoogle
-                })
-                .then(() => {
-                  alert('Atualização Efetuada');
-                })
-                .catch(() => {
-                  console.error(e);
-                })
-            } else {
-                db
-                .collection('users')
-                .doc(uuid.v4())
-                .set({
-                    name: nome,
-                    Imagem: imagem,
-                    Email: email,
-                    telefone: whatsapp,
-                    ContaGoogle: contaGoogle
-                })
-                .then(() => {
-                  alert('Especialista Incluído');
-                })
-                .catch(() => {
-                  console.error(e);
-                })
-            }
+        if (nome && whatsapp) {
+          db
+          .collection('users')
+          .doc(parametros.itemId)
+          .update({
+            fullName: nome,
+            telefone: whatsapp,
+            ContaGoogle: contaGoogle,
+            administrator: administrator
+          })
+          .then(() => {
+            alert('Atualização Efetuada');
+          })
+          .catch(() => {
+            console.error(e);
+          })
         } else {
             alert ('Todos os campos são obrigatórios');
         }
@@ -101,18 +59,11 @@ export default function UserEditScreen ({ route, navigation }) {
 
     return (
     <View style={styles.userCard2}>
-       <TouchableOpacity onPress={pickImage}>
-     { (imagem) ? 
-        <Image
-          source={{uri: imagem}}
-          style={{borderRadius:50, width: 80, height:80}}
-        />
-     :
-     <AntDesign name="user" size={80} color="#92a494" style={styles.padding10} />
-     }
-     </TouchableOpacity>
-     
+      
+      <AntDesign name="user" size={80} color="#92a494" style={styles.padding10} />
+      
       <View style={styles.userCardDescription}>
+        <Text style={{alignSelf: 'center', margin: 10, fontSize: 18, fontWeight: 'bold'}}>{email}</Text>
         <TextInput
             style={styles.input}
             placeholder='Nome'
@@ -124,15 +75,6 @@ export default function UserEditScreen ({ route, navigation }) {
         />
         <TextInput
             style={styles.input}
-            placeholder='Email'
-            placeholderTextColor="#aaaaaa"
-            value={email}
-            underlineColorAndroid="transparent"
-            autoCapitalize="none"
-            onChangeText={(text) => setEmail(text)}
-        />
-        <TextInput
-            style={styles.input}
             placeholder='Whatsapp'
             placeholderTextColor="#aaaaaa"
             value={whatsapp}
@@ -140,6 +82,15 @@ export default function UserEditScreen ({ route, navigation }) {
             autoCapitalize="none"
             onChangeText={(text) => setWhatsapp(text)}
         />
+        <View style={styles.check}>
+          <Checkbox 
+              style={{ alignSelf:'center'}} 
+              value={administrator}
+              onValueChange={setAdministrator}    
+          />
+          <Text style={{padding:10, alignSelf:'center'}}>Administrador</Text>
+        </View>
+        {(administrator) ?
         <TextInput
             style={styles.input}
             placeholder='Conta Google'
@@ -149,6 +100,7 @@ export default function UserEditScreen ({ route, navigation }) {
             autoCapitalize="none"
             onChangeText={(text) => setContaGoogle(text)}
         />
+        : null }
          <View style={{alignSelf:'center', padding: 10, flexDirection: 'row',}}>
              <TouchableOpacity onPress={onSaveEditUser}>
                     <LinearGradient

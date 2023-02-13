@@ -99,5 +99,13 @@ export default StyleSheet.create({
         marginTop: 30,
         width:'95%',
         borderRadius:10,
+    },    
+    check: {
+        marginTop: 5,
+        marginBottom: 5,
+        marginLeft: 30,
+        marginRight: 30,
+        paddingLeft: 16,
+        flexDirection:'row'
     },
 })
