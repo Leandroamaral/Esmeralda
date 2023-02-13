@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, Image,TextInput , TouchableOpacity  } from 'react-native';
+import { Text, View, Image,TextInput , TouchableOpacity } from 'react-native';
 import uuid from 'react-native-uuid';
 
 import { LinearGradient } from 'expo-linear-gradient';
@@ -16,6 +16,7 @@ export default function UserEditScreen ({ route, navigation }) {
     const [whatsapp, setWhatsapp] = useState('');
     const [imagem, setImagem] = useState('');
     const [email, setEmail] = useState('');
+    const [administrator, setAdministrator] = useState('')
     const [contaGoogle, setContaGoogle] = useState('');
 
     if (parametros.itemId) {

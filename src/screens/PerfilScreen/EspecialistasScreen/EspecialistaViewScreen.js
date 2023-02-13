@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Text, View, SafeAreaView, ScrollView, Image, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react'
+import { Text, View, SafeAreaView, ScrollView, Image, TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native';
 
 import { AntDesign } from '@expo/vector-icons';
 
@@ -12,6 +12,8 @@ export default function EspecialistasViewScreen ({ navigation }) {
 
   const [users,setUsers] = useState([]);
   const [tempKey, setTempKey] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
+  const scrollViewRef = useRef();
 
   const PersonCard = ({dados, navigation}) => {
 
@@ -73,26 +75,28 @@ export default function EspecialistasViewScreen ({ navigation }) {
   }
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    loadEspecialista();
+  }, []);
 
-      db.collection('Especialista')
-      .get()
-      .then(snapshot => {
-        setUsers(snapshot.docs.map(doc =>{
-          const data = doc.data();
-          const id = doc.id;
-          return {id,...data};
-        }));
-      });
+  const loadEspecialista = async () => {
+    db.collection('Especialista')
+    .get()
+    .then(snapshot => {
+      setUsers(snapshot.docs.map(doc =>{
+        const data = doc.data();
+        const id = doc.id;
+        return {id,...data};
+      }));
     });
-    return unsubscribe;
-  }, [navigation]);
-
-
+  }
   
   return(
     <SafeAreaView>
-      <ScrollView>
+      {refreshing ? <ActivityIndicator /> : null}
+      <ScrollView
+      horizontal={false}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={loadEspecialista} />}
+      ref={scrollViewRef}>
         <View key={tempKey.toString}>
         {users.map((item,key)=>(
             <PersonCard 

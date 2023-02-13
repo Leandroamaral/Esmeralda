@@ -7,7 +7,7 @@ import  { MaskedTextInput } from 'react-native-mask-text'
 import styles from './styles';
 
 export default function RegistrationScreen({navigation}) {
-    const [isDisabled, setIsDisabled] = useState('');
+    const [isDisabled, setIsDisabled] = useState(false);
     const [fullName, setFullName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -42,13 +42,30 @@ export default function RegistrationScreen({navigation}) {
                     navigation.navigate('Home', {user: data})
                 })
                 .catch((error) => {
-                     //Need Change to UI deisgner
                     alert(error)
                 });
         }).catch((error) => {
-            //Need Change to UI deisgner
+            console.log(error.code)
+            switch (error.code) {
+                case 'auth/email-already-in-use':
+                  alert(`O endereço de e-mail ${email} já está em uso`);
+                  navigation.navigate('Login')
+                  break;
+                case 'auth/invalid-email':
+                  alert(`O e-mail ${email} é inválido.`);
+                  break;
+                case 'auth/operation-not-allowed':
+                  alert('Erro na criação do usuário.');
+                  break;
+                case 'auth/weak-password':
+                  alert('A senha digitada não apresenta os requisitos mínimos. Favor incluir ao menos um caractere maiúsculo, minúsculo e um número ');
+                  break;
+                default:
+                  alert(error.message);
+                  break;
+              }
+        }).finally(() => {
             setIsDisabled(false)
-            alert(error)
         });
     }
 
