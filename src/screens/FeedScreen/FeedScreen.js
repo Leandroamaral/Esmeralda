@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { Image, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SocialIcon } from 'react-native-elements'
+import MapView, { Marker } from 'react-native-maps';
+import { createStackNavigator } from '@react-navigation/stack'
+
+import { Entypo } from '@expo/vector-icons';
+
 import styles from './styles';
 import { db } from '../../firebase/config';
-import { Entypo } from '@expo/vector-icons';
 import { Icones, WhatsappIcon } from './icons';
-import { SocialIcon } from 'react-native-elements'
-import MapView from 'react-native-maps';
-import { createStackNavigator } from '@react-navigation/stack'
 import DetailServico from './DetailServico';
 
 
@@ -178,13 +180,13 @@ function Mapa() {
     .then(supported => {
       if (!supported) {
         Alert.alert(
-          'Please install whats app to send direct message to students via whats app'
+          'Por favor instale o whatsapp para envio de mensagens'
         );
       } else {
         return Linking.openURL(link);
       }
     })
-    .catch(err => console.error('An error occurred', err));
+    .catch(err => alert(e));
 };
 
 
@@ -201,15 +203,17 @@ function Mapa() {
       style={styles.mapaView}
       onLayout={(event) => {
         const layout = event.nativeEvent.layout;
-        setYofMap(layout.y + 160)
+        setYofMap(layout.y + 190)
       }}
     >
         <MapView 
           style={styles.mapa} 
           showsUserLocation = {true}
           initialRegion = {Region}
-          minZoomLevel = {15}
-          />
+          minZoomLevel = {17}
+          >
+            <Marker  coordinate={{ latitude : latitude , longitude : longitude }}/>
+        </MapView>
           <Text style={styles.mapaTitulo}> <Entypo name="location-pin" size={24} color="#1d817e" />{nomeEmp}</Text>
           <Text style={styles.mapaEndereco}>{endL1} </Text>
           <Text style={styles.mapaEndereco}>{endL2}</Text>
