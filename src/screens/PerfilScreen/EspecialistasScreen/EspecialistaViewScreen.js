@@ -10,12 +10,14 @@ import { db } from '../../../firebase/config';
 //Tela principal
 export default function EspecialistasViewScreen ({ navigation }) {
 
+  
+
   const [users,setUsers] = useState([]);
   const [tempKey, setTempKey] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
   const scrollViewRef = useRef();
 
-  const PersonCard = ({dados, navigation}) => {
+    const PersonCard = ({dados, navigation}) => {
 
     return (
       <View style={styles.userCard}>
@@ -55,6 +57,12 @@ export default function EspecialistasViewScreen ({ navigation }) {
               onPress={() => onDeleteEspecialista(dados.id,navigation)}
             >
               <AntDesign name="delete" size={26} color='#1d817e' style={styles.padding10}/>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={styles.editButton}
+              onPress={() => onLoginGoogle()}
+            >
+              <AntDesign name="login" size={26} color='#1d817e' style={styles.padding10}/>
             </TouchableOpacity>
           </View>
         </View>
