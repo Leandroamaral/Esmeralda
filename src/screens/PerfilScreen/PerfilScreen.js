@@ -1,71 +1,69 @@
-import React, { useState } from 'react'
-import { Text, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import {Text, View, SafeAreaView, ScrollView, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { firebase } from '../../firebase/config';
-import { AntDesign } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient'
+import {firebase} from '../../firebase/config';
+import {AntDesign} from '@expo/vector-icons';
+import {LinearGradient} from 'expo-linear-gradient';
 import styles from './styles';
 import * as Updates from 'expo-updates';
 
-export default function Perfil ({ navigation }) {
-
+export default function Perfil({navigation}) {
   const onLogoutPress = () =>{
     firebase.auth().signOut()
-    .then(() => {
-      AsyncStorage.removeItem('@user')
-        .catch ((error) => {
+        .then(() => {
+          AsyncStorage.removeItem('@user')
+              .catch((error) => {
+                console.error(error);
+              });
+        })
+        .catch((error) => {
           console.error(error);
+        })
+        .finally(() => {
+          Updates.reloadAsync();
         });
-      })
-    .catch ((error) => {
-      console.error(error);
-    })
-    .finally(() => {
-      Updates.reloadAsync();
-    })
-  }
+  };
 
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState('');
 
 
   const load = async () => {
     try {
-      const name = await AsyncStorage.getItem('@user')
+      const name = await AsyncStorage.getItem('@user');
       if (name !== null) {
         setUserName(JSON.parse(name));
       }
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
-  }
+  };
 
   if (!userName) {
     load();
-    
   }
- 
-  return(
+
+  return (
     <SafeAreaView>
-        <ScrollView>
-          <View style={styles.userView}>
-            <AntDesign name="user" size={80} color="#92a494" style={styles.padding10} />
-            <Text style={styles.userNome}>{userName.fullName}</Text>
-            <Text style={styles.userEmail}>{userName.email}</Text>
-            <TouchableOpacity style={styles.top40} onPress={() => navigation.navigate('Editar Perfil') }>
-              <LinearGradient
-                  // Button Linear Gradient
-                  colors={['#1d817e', '#2fa192', '#50c8cc']}
-                  start={[0, 0]}
-                  end={[1, 1]}
-                  location={[0.25, 0.4, 1]}
-                  style={styles.botao}>
-                  
-                  <Text style={styles.botaoTexto}>Editar Minha Conta</Text>
-              
-              </LinearGradient>
-            </TouchableOpacity>
-          </View>
-          {(userName.administrator) ?
+      <ScrollView>
+        <View style={styles.userView}>
+          <AntDesign name="user" size={80} color="#92a494" style={styles.padding10} />
+          <Text style={styles.userNome}>{userName.fullName}</Text>
+          <Text style={styles.userEmail}>{userName.email}</Text>
+          <TouchableOpacity style={styles.top40} onPress={() => navigation.navigate('Editar Perfil') }>
+            <LinearGradient
+              // Button Linear Gradient
+              colors={['#1d817e', '#2fa192', '#50c8cc']}
+              start={[0, 0]}
+              end={[1, 1]}
+              location={[0.25, 0.4, 1]}
+              style={styles.botao}>
+
+              <Text style={styles.botaoTexto}>Editar Minha Conta</Text>
+
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+        {(userName.administrator) ?
           <View style={styles.userView}>
             <TouchableOpacity onPress={() => navigation.navigate('ServicoView') }>
               <View style={styles.menuView}>
@@ -88,7 +86,7 @@ export default function Perfil ({ navigation }) {
                 <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity  onPress={() => navigation.navigate('InfEmpresa')}>
+            <TouchableOpacity onPress={() => navigation.navigate('InfEmpresa')}>
               <View style={styles.menuView}>
                 <AntDesign name="earth" size={26} color="#92a494" style={styles.padding10}/>
                 <Text style={styles.menuTexto}>Editar Informações Empresariais</Text>
@@ -102,22 +100,20 @@ export default function Perfil ({ navigation }) {
                 <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
               </View>
             </TouchableOpacity>
-          </View>
-          : null }
-          <View style={styles.sairView}>
-            <TouchableOpacity onPress={onLogoutPress}>
-              <View style={styles.menuView}>
-                <AntDesign name="logout" size={26} color="#92a494" style={styles.padding10}/>
-                <Text style={styles.sairTexto}>Sair</Text>
-                <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
-              </View>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-  )
- 
+          </View> :
+          null }
+        <View style={styles.sairView}>
+          <TouchableOpacity onPress={onLogoutPress}>
+            <View style={styles.menuView}>
+              <AntDesign name="logout" size={26} color="#92a494" style={styles.padding10}/>
+              <Text style={styles.sairTexto}>Sair</Text>
+              <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
+            </View>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
 }
-
 
 

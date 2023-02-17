@@ -1,45 +1,45 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { Image, Text, View, SafeAreaView, ScrollView, TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native';
+import React, {useEffect, useState, useRef} from 'react';
+import {Image, Text, View, SafeAreaView, ScrollView, TouchableOpacity, RefreshControl, ActivityIndicator} from 'react-native';
 import WeeklyCalendar from 'react-native-weekly-calendar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import styles from './styles';
-import { db } from '../../firebase/config';
-import { Icones } from '../FeedScreen/icons';
+import {db} from '../../firebase/config';
+import {Icones} from '../FeedScreen/icons';
 
 export default function Agendar({navigation}) {
-
-
-  const diadasemana = ['Domingo','Segunda-Feira','Terça-Feira','Quarta-Feira','Quinta-Feira','Sexta-Feira','Sabado']
+  const diadasemana = ['Domingo', 'Segunda-Feira', 'Terça-Feira', 'Quarta-Feira', 'Quinta-Feira', 'Sexta-Feira', 'Sabado'];
 
   const diadehoje = new Date();
   const horariodehoje = () => {
     const diax = new Date();
-    function z(n){ return (n<10? '0':'') + n;};
-    return(z(diax.getHours()) + ':' + z(diax.getMinutes()))
-  }
+    function z(n) {
+      return (n<10? '0':'') + n;
+    };
+    return (z(diax.getHours()) + ':' + z(diax.getMinutes()));
+  };
   const scrollViewRef = useRef();
-  diadehoje.setUTCHours(0,0,0,0)
+  diadehoje.setUTCHours(0, 0, 0, 0);
 
-  //Setting type of states 
-  //arrays
-  const [specialists,setSpecialists] = useState([]);
-  const [times,setTimes] = useState([]);
+  // Setting type of states
+  // arrays
+  const [specialists, setSpecialists] = useState([]);
+  const [times, setTimes] = useState([]);
   const [servicos, setServicos] = useState([]);
 
-  const [disabledSend,setDisabledSend] = useState(true)
-  const [refreshing, setRefreshing] = useState(false);
+  const [disabledSend, setDisabledSend] = useState(true);
+  const [refreshing] = useState(false);
 
-  //Text
-  const [specialist,setSpecialist] = useState(null)
-  const [date,setDate] = useState(diadehoje)
-  const [time,setTime] = useState('');
+  // Text
+  const [specialist, setSpecialist] = useState(null);
+  const [date, setDate] = useState(diadehoje);
+  const [time, setTime] = useState('');
   const [servico, setServico] = useState(null);
 
-  const [allEspecialistas, setAllEspecialistas] = useState([]);
+  // const [allEspecialistas, setAllEspecialistas] = useState([]);
   const [allServicos, setAllServicos] = useState([]);
-  const [allTimes,setAllTimes] = useState([]);
-  const [usuario, setUsuario] = useState("");
+  const [allTimes, setAllTimes] = useState([]);
+  const [usuario, setUsuario] = useState('');
 
   useEffect(() => {
     loadEspecialista();
@@ -47,67 +47,67 @@ export default function Agendar({navigation}) {
   }, [navigation]);
 
   function addMinutesToTime(time, minsAdd) {
-    function z(n){ return (n<10? '0':'') + n;};
-    var bits = time.split(':');
-    var mins = bits[0]*60 + +bits[1] + +minsAdd;
+    function z(n) {
+      return (n<10? '0':'') + n;
+    };
+    const bits = time.split(':');
+    const mins = bits[0]*60 + +bits[1] + +minsAdd;
     return z(mins%(24*60)/60 | 0) + ':' + z(mins%60);
   }
 
   const loadUser = async () => {
     try {
-      const aStorage = await AsyncStorage.getItem('@user')
+      const aStorage = await AsyncStorage.getItem('@user');
       if (aStorage !== null) {
         db
-        .collection('users')
-        .doc(JSON.parse(aStorage).id)
-        .get()
-        .then((snapshot) => {
-          setUsuario(snapshot.data())
-        })
-        .catch((e) => {
-          console.error(e)
-        })
+            .collection('users')
+            .doc(JSON.parse(aStorage).id)
+            .get()
+            .then((snapshot) => {
+              setUsuario(snapshot.data());
+            })
+            .catch((e) => {
+              console.error(e);
+            });
       }
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
-  }
+  };
 
   function loadEspecialista() {
-
-    setSpecialist(null)
+    setSpecialist(null);
     setServico(null);
     setServicos([]);
     setTimes([]);
     setTime('');
 
     db
-    .collection('Especialista')
-    .get()
-    .then(snapshot => {
-      const shotdata =  (snapshot.docs.map(doc => {
-        const data = doc.data();
-        const id = doc.id;
-        return { id, ...data }
-      }))
-      setSpecialists(shotdata)
-      setAllEspecialistas(shotdata);
-    })
-  
-    db
-    .collection('Servico')
-    .get()
-    .then(snapshot => {
-      setAllServicos (snapshot.docs.map(doc => {
-        const data = doc.data();
-        const id = doc.id;
-        return { id, ...data }
-      }))
-    })
+        .collection('Especialista')
+        .get()
+        .then((snapshot) => {
+          const shotdata = (snapshot.docs.map((doc) => {
+            const data = doc.data();
+            const id = doc.id;
+            return {id, ...data};
+          }));
+          setSpecialists(shotdata);
+          // setAllEspecialistas(shotdata);
+        });
 
+    db
+        .collection('Servico')
+        .get()
+        .then((snapshot) => {
+          setAllServicos(snapshot.docs.map((doc) => {
+            const data = doc.data();
+            const id = doc.id;
+            return {id, ...data};
+          }));
+        });
   }
 
-  function updateDate(data){
+  function updateDate(data) {
     setTimes([]);
     setServicos([]);
 
@@ -115,101 +115,103 @@ export default function Agendar({navigation}) {
     setServico(null);
     setTime('');
 
-    var dtData = new Date(data)
-     
+    let dtData = new Date(data);
+
     if (typeof(data) =='undefined') {
-      dtData = diadehoje
+      dtData = diadehoje;
       setDate(diadehoje);
     } else {
-      dtData.setUTCHours(0,0,0,0)
+      dtData.setUTCHours(0, 0, 0, 0);
       setDate(dtData);
     }
 
-    //setSpecialists(allEspecialistas.filter((itemf) => itemf.Timetable.some((subElement) => subElement.Semana === diadasemana[dtData.getUTCDay()])))
-
+    // setSpecialists(allEspecialistas.filter((itemf) => itemf.Timetable.some((subElement) => subElement.Semana === diadasemana[dtData.getUTCDay()])))
   }
 
-  function updateServico(key){
-    
-    setSpecialist(key)
+  function updateServico(key) {
+    setSpecialist(key);
     setServico(null);
     setTimes([]);
     setTime('');
 
-    var toremove = []
-    var toremoveuser = []
-    var final = []
+    let toremove = [];
+    let toremoveuser = [];
+    let final = [];
 
-    const specialist = specialists[key]
-    const alltimetable = specialist.Timetable.filter((itemf) => (itemf.Semana == diadasemana[date.getUTCDay()] ))
-    
-    if (alltimetable.length > 0) {
-      final = alltimetable[0].Times.filter((itemf) => (Date.parse("2019-01-01T"+itemf) > Date.parse("2019-01-01T"+horariodehoje())))
+    const specialist = specialists[key];
+    const alltimetable = specialist.Timetable.filter((itemf) => (itemf.Semana == diadasemana[date.getUTCDay()] ));
+
+    if (alltimetable.length > 0 && (Date.parse(diadehoje) === Date.parse(date))) {
+      final = alltimetable[0].Times.filter((itemf) => (Date.parse('2019-01-01T'+itemf) > Date.parse('2019-01-01T'+horariodehoje())));
     }
-    
+
+    if (alltimetable.length > 0 && !(Date.parse(diadehoje) === Date.parse(date))) {
+      final = alltimetable[0].Times;
+    }
+
     if (typeof(usuario.Agenda) != 'undefined') {
-      const toRemoveFilter = usuario.Agenda.filter((itemf) => (Date.parse(itemf.Data) === Date.parse(date) && itemf.idEspecialista == specialist.id ))
+      const toRemoveFilter = usuario.Agenda.filter((itemf) => (Date.parse(itemf.Data) === Date.parse(date) && itemf.idEspecialista == specialist.id ));
       const toRemoveUser = toRemoveFilter.map((item) => {
-        const horaservico = specialist.Servicos.filter((itemf) => (itemf.idServicos == item.idServico ))
-        var temp = [];
+        const horaservico = specialist.Servicos.filter((itemf) => (itemf.idServicos == item.idServico ));
+        const temp = [];
         if (typeof(horaservico[0].Tempo) != 'undefined') {
-          var timeParts = horaservico[0].Tempo.split(":");
-          const convertido =  ((Number(timeParts[0]) * 60 + Number(timeParts[1]))/30) -1 ;
-          
-          for (var i = 0; i <= convertido; i++){
-            temp.push(addMinutesToTime(item.Horario,i*30))
+          const timeParts = horaservico[0].Tempo.split(':');
+          const convertido = ((Number(timeParts[0]) * 60 + Number(timeParts[1]))/30) -1;
+
+          for (let i = 0; i <= convertido; i++) {
+            temp.push(addMinutesToTime(item.Horario, i*30));
           }
         }
-        return(temp)
-      })
-      toremoveuser = toRemoveUser.flat()
+        return (temp);
+      });
+      toremoveuser = toRemoveUser.flat();
     }
-
 
     if (typeof(specialist.Agenda) != 'undefined') {
-      toremove = specialist.Agenda.filter((itemf) => (Date.parse(itemf.Data) === Date.parse(date)))
+      toremove = specialist.Agenda.filter((itemf) => (Date.parse(itemf.Data) === Date.parse(date)));
     }
-    
-    if (toremove.length > 0) { 
-      final = final.filter((itemf) => (!toremove[0].Times.includes(itemf)))
+
+    if (toremove.length > 0) {
+      final = final.filter((itemf) => (!toremove[0].Times.includes(itemf)));
     }
 
     if (toremoveuser.length > 0) {
-      final = final.filter((itemf) => (!toremoveuser.includes(itemf)))
+      final = final.filter((itemf) => (!toremoveuser.includes(itemf)));
     }
 
-    setServicos(specialist.Servicos.map((item) => ({...item, ...allServicos.find(itemf => item.idServicos == itemf.id) })));
-    setAllTimes(final)
+    setServicos(specialist.Servicos.map((item) => ({...item, ...allServicos.find((itemf) => item.idServicos == itemf.id)})));
+    setAllTimes(final);
     setDisabledSend(true);
   }
 
-  function updateTime(key){
-
+  function updateTime(key) {
     let timesarray = [];
-    
-    //Setar o serviço (pintar da borda)
-    setServico(key)
-    setTime('')
-    setDisabledSend(true)
 
-    //clasificar o array de tempo do especialista
-    const timeespecialista = allTimes.sort((a,b) => { return(
-      Date.parse("2019-01-01T"+a+":00") - Date.parse("2019-01-01T"+b+":00")
-    )})
-    
-    //verificar quantos blocos de 30 minutos o serviço possui
-    var timeParts = servicos[key].Tempo.split(":");
-    const convertido =  ((Number(timeParts[0]) * 60 + Number(timeParts[1]))/30) -1 ;
+    // Setar o serviço (pintar da borda)
+    setServico(key);
+    setTime('');
+    setDisabledSend(true);
 
-    //Verificar se existe espaço de tempo disponível (matemática braba)
+    // clasificar o array de tempo do especialista
+    const timeespecialista = allTimes.sort((a, b) => {
+      return (
+        Date.parse('2019-01-01T'+a+':00') - Date.parse('2019-01-01T'+b+':00')
+      );
+    });
+
+    // verificar quantos blocos de 30 minutos o serviço possui
+    const timeParts = servicos[key].Tempo.split(':');
+    const convertido = ((Number(timeParts[0]) * 60 + Number(timeParts[1]))/30) -1;
+
+    // Verificar se existe espaço de tempo disponível (matemática braba)
     if (convertido > 0) {
       let ok = false;
-      for (let i = 0; i < timeespecialista.length;i++){
-        let x = Date.parse("2019-01-01T"+timeespecialista[i]+":00");
-        let z = 1
-        for (let ii = i+1; ii <= convertido+i; ii++){
-          let y = Date.parse("2019-01-01T"+timeespecialista[ii]+":00");
-          let dif1 = y-x;
+      for (let i = 0; i < timeespecialista.length; i++) {
+        const x = Date.parse('2019-01-01T'+timeespecialista[i]+':00');
+        let z = 1;
+        for (let ii = i+1; ii <= convertido+i; ii++) {
+          const y = Date.parse('2019-01-01T'+timeespecialista[ii]+':00');
+          const dif1 = y-x;
           if (dif1 == (1800000*z)) {
             ok = true;
           } else {
@@ -221,132 +223,126 @@ export default function Agendar({navigation}) {
         if (ok) {
           timesarray.push(timeespecialista[i]);
         }
-      } 
+      }
     } else {
-      timesarray = allTimes
+      timesarray = allTimes;
     }
 
-    //setar os horários disponíveis 
-    setTimes(timesarray)
-
+    // setar os horários disponíveis
+    setTimes(timesarray);
   }
 
   function selectTime(key) {
     setTime(key);
     setDisabledSend(false);
-
   }
 
-  function reservarTime(){
-
+  function reservarTime() {
     function converteData(data) {
-      const mes =  Number(data.getUTCMonth()) + 1
-      const fulldate = data.getFullYear() + '-' + ("0" + mes.toString()).slice(-2) + '-' + ("0" + data.getUTCDate()).slice(-2)
-      return(fulldate)
-      
+      const mes = Number(data.getUTCMonth()) + 1;
+      const fulldate = data.getFullYear() + '-' + ('0' + mes.toString()).slice(-2) + '-' + ('0' + data.getUTCDate()).slice(-2);
+      return (fulldate);
     }
 
-    var tempespecialista =  {
+    const tempespecialista = {
       Data: converteData(date),
-      Times: []
-    }
+      Times: [],
+    };
 
-    var tempAgenda = {
+    const tempAgenda = {
       FotoEspecialista: specialists[specialist].Imagem,
       NomeServico: servicos[servico].Nome,
       Duracao: servicos[servico].Tempo,
       Data: converteData(date),
-      Horario: times[time], 
-    }
-   
-    var especialista = []
-    var especialistaindex = 0
-    var userAgenda = []
+      Horario: times[time],
+    };
+
+    let especialista = [];
+    let especialistaindex = 0;
+    let userAgenda = [];
 
     if (typeof(specialists[specialist].Agenda) != 'undefined') {
-      especialista = specialists[specialist].Agenda
-      especialistaindex = specialists[specialist].Agenda.findIndex((itemf) => (Date.parse(itemf.Data) === Date.parse(date)))
+      especialista = specialists[specialist].Agenda;
+      especialistaindex = specialists[specialist].Agenda.findIndex((itemf) => (Date.parse(itemf.Data) === Date.parse(date)));
       if (especialistaindex < 0) {
-        especialista.push(tempespecialista)
-        especialistaindex = especialista.length - 1
+        especialista.push(tempespecialista);
+        especialistaindex = especialista.length - 1;
       }
     } else {
-      especialista.push(tempespecialista)
+      especialista.push(tempespecialista);
     }
 
-    var timeParts = servicos[servico].Tempo.split(":");
-    const convertido =  ((Number(timeParts[0]) * 60 + Number(timeParts[1]))/30) -1 ;
-    
-    for (var i = 0; i <= convertido; i++){
-      especialista[especialistaindex].Times.push(addMinutesToTime(times[time],i*30))
+    const timeParts = servicos[servico].Tempo.split(':');
+    const convertido = ((Number(timeParts[0]) * 60 + Number(timeParts[1]))/30) -1;
+
+    for (let i = 0; i <= convertido; i++) {
+      especialista[especialistaindex].Times.push(addMinutesToTime(times[time], i*30));
     }
-    
+
     if (typeof(usuario.Agenda) != 'undefined') {
-      userAgenda = usuario.Agenda
+      userAgenda = usuario.Agenda;
     }
-    userAgenda.push(tempAgenda)
+    userAgenda.push(tempAgenda);
 
 
     db
-    .collection('users')
-    .doc(usuario.id)
-    .update({
-        Agenda: userAgenda
-    })
-    .catch(() => {
-        console.error(e);
-    })
-    
-    db
-    .collection('Especialista')
-    .doc(specialists[specialist].id)
-    .update({
-        Agenda: especialista
-    })
-    .then(() => {
-        alert('Horário Reservado');
-    })
-    .catch(() => {
-        console.error(e);
-    })
+        .collection('users')
+        .doc(usuario.id)
+        .update({
+          Agenda: userAgenda,
+        })
+        .catch(() => {
+          console.error(e);
+        });
 
-    loadEspecialista()
+    db
+        .collection('Especialista')
+        .doc(specialists[specialist].id)
+        .update({
+          Agenda: especialista,
+        })
+        .then(() => {
+          alert('Horário Reservado');
+        })
+        .catch(() => {
+          console.error(e);
+        });
+
+    loadEspecialista();
   }
 
   function Especialista() {
-
     const tempEsp = specialists.map((item, key) => (
       <View key={key} style={specialist === key ? styles.espViewChecked : styles.espView}>
-      <TouchableOpacity
+        <TouchableOpacity
           onPress={() => updateServico(key)}
-          >
-        <Image
-          source={{uri: item.Imagem }}
-          style={styles.espImg}
-            />
-        <Text style={styles.espTexto}>{item.Nome}</Text>
-      </TouchableOpacity>
-    </View>
-    ))
+        >
+          <Image
+            source={{uri: item.Imagem}}
+            style={styles.espImg}
+          />
+          <Text style={styles.espTexto}>{item.Nome}</Text>
+        </TouchableOpacity>
+      </View>
+    ));
 
-    return(
+    return (
       <View style={styles.subTituloView}>
         <Text style={styles.subTituloTexto}>Selecione a especialista</Text>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> 
-            <View style={styles.espMainView}>
-              {tempEsp}
-            </View>
-          </ScrollView>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <View style={styles.espMainView}>
+            {tempEsp}
+          </View>
+        </ScrollView>
       </View>
-    )
+    );
   }
 
   function Servico() {
-
-    const mapServico = servicos.map((item,key) => (
-      <View style={{padding:5}} key={key}>
-        <View  style={key === servico ? styles.botaoServicoChecked : styles.botaoServico}>
-          <TouchableOpacity 
+    const mapServico = servicos.map((item, key) => (
+      <View style={{padding: 5}} key={key}>
+        <View style={key === servico ? styles.botaoServicoChecked : styles.botaoServico}>
+          <TouchableOpacity
             style={styles.iconeServico}
             onPress={() => updateTime(key)}
           >
@@ -355,46 +351,44 @@ export default function Agendar({navigation}) {
           <Text style={styles.textoServico}>{item.Nome}</Text>
         </View>
       </View>
-    ))
+    ));
 
     const tempServico = (
       <View style={styles.subTituloView}>
         <Text style={styles.subTituloTexto}>Selecione o serviço</Text>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> 
-        {mapServico}  
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          {mapServico}
         </ScrollView>
       </View>
-    )
+    );
 
     const semHorario = (
       <View style={styles.subTituloView}>
-        <Text style={styles.alertaTexto}>Não existe horário disponível para o Especialista</Text> 
+        <Text style={styles.alertaTexto}>Não existe horário disponível para o Especialista</Text>
       </View>
-    )
-  
+    );
+
     if (specialist == null ) {
-      return (null)
+      return (null);
     } else {
       if (allTimes.length > 0) {
-        return (tempServico)
+        return (tempServico);
       } else {
-        return (semHorario)
+        return (semHorario);
       }
     }
-
   }
 
   function Horarios() {
-
-    const mapHorario = times.map((item,key) => (
-      <TouchableOpacity 
-        key={key} 
+    const mapHorario = times.map((item, key) => (
+      <TouchableOpacity
+        key={key}
         style={key === time ? styles.horarioBotaoChecked : styles.horarioBotao}
         onPress= {() => selectTime(key)}
-        >
+      >
         <Text style={styles.horariosTexto}>{item}</Text>
       </TouchableOpacity>
-      ))
+    ));
 
     const comHorario = (
       <View style={styles.subTituloView}>
@@ -403,36 +397,35 @@ export default function Agendar({navigation}) {
           {mapHorario}
         </View>
       </View>
-    )
+    );
 
     const semHorario = (
       <View style={styles.subTituloView}>
         <Text style={styles.subTituloTexto}>Selecione o horário</Text>
-        <Text style={styles.alertaTexto}>Não existe horário disponível para o serviço</Text> 
+        <Text style={styles.alertaTexto}>Não existe horário disponível para o serviço</Text>
       </View>
-    )
+    );
     if (servico == null) {
-      return(null)
+      return (null);
     } else {
       if (times.length > 0) {
-        return(comHorario)
+        return (comHorario);
       } else {
-        return(semHorario)
+        return (semHorario);
       }
     }
-
   }
 
   return (
     <SafeAreaView>
-      
+
       {refreshing ? <ActivityIndicator /> : null}
 
-      <ScrollView 
+      <ScrollView
         horizontal={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={loadEspecialista} />}
         ref={scrollViewRef}
-      > 
+      >
 
         <View style={styles.tituloView}>
           <Text style={styles.tituloTexto}>Agendar</Text>
@@ -446,37 +439,37 @@ export default function Agendar({navigation}) {
             dayLabelStyle = {styles.calendarioLabel}
             themeColor = '#357066'
             onDayPress={(data) => updateDate(data)}
-          
+
           />
         </View>
 
-        {(date >= diadehoje && specialists.length > 0) ? 
+        {(date >= diadehoje && specialists.length > 0) ?
           <View>
-          
+
             <Especialista />
 
             <Servico />
-    
+
             <Horarios />
-  
-            <View 
+
+            <View
               style={styles.reservarView}
             >
-              <TouchableOpacity 
+              <TouchableOpacity
                 disabled={disabledSend}
                 style={(disabledSend) ? styles.reservarBotaoDisabled : styles.reservarBotao }
                 onPress={reservarTime}>
-                  <Text style={styles.reservarTexto}>Reservar Horário</Text>
+                <Text style={styles.reservarTexto}>Reservar Horário</Text>
               </TouchableOpacity>
             </View>
-          
-           </View>
-           
-        : <Text style={styles.alertaTexto}>Não existe horário disponível</Text> 
-      }
 
-        </ScrollView>
-      </SafeAreaView>
+          </View> :
+
+        <Text style={styles.alertaTexto}>Não existe horário disponível</Text>
+        }
+
+      </ScrollView>
+    </SafeAreaView>
 
   );
 }

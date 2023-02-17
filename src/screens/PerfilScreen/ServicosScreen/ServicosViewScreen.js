@@ -1,62 +1,61 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Text, View, SafeAreaView, ScrollView, TouchableOpacity, RefreshControl, ActivityIndicator } from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {Text, View, SafeAreaView, ScrollView, TouchableOpacity, RefreshControl, ActivityIndicator} from 'react-native';
 
-import { AntDesign } from '@expo/vector-icons';
+import {AntDesign} from '@expo/vector-icons';
 
-import { db } from '../../../firebase/config';
+import {db} from '../../../firebase/config';
 import styles from './styles';
-import { Icones } from '../../FeedScreen/icons';
+import {Icones} from '../../FeedScreen/icons';
 
 
-export default function ServicosView ({ navigation }) {
-
-  const [refreshing, setRefreshing] = useState(false);
+export default function ServicosView({navigation}) {
+  const [refreshing] = useState(false);
   const scrollViewRef = useRef();
 
   const [shotdata, setshotdata] = useState([]);
-      
+
   useEffect(() => {
     loadServico();
   }, []);
 
   const loadServico = async () => {
     db
-    .collection('Servico')
-    .get()
-    .then(snapshot => {
-      setshotdata (snapshot.docs.map(doc => {
-        const data = doc.data();
-        const id = doc.id;
-        return { id, ...data }
-      }))
-    })
-  }
+        .collection('Servico')
+        .get()
+        .then((snapshot) => {
+          setshotdata(snapshot.docs.map((doc) => {
+            const data = doc.data();
+            const id = doc.id;
+            return {id, ...data};
+          }));
+        });
+  };
 
   function ViewServicos() {
-    const listitens = shotdata.map( (a, index) => { 
-      return(
-        <View style={{padding:3}} key={index}>
+    const listitens = shotdata.map( (a, index) => {
+      return (
+        <View style={{padding: 3}} key={index}>
           <View style={styles.botaoServico}>
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.iconeServico}
               onPress={() => navigation.navigate('ServicosEdit', {itemId: a.id})}
-              >
+            >
               <Icones tipo={a.Icone} width={45} height={45} fill="#92a494" />
             </TouchableOpacity>
             <Text style={styles.textoServico}>{a.Nome}</Text>
           </View>
         </View>
-      )
-      });
-    
+      );
+    });
+
     return (
       <View style={styles.servicos}>
         {listitens}
       </View>
-    )
+    );
   }
 
-  return(
+  return (
     <SafeAreaView>
       {refreshing ? <ActivityIndicator /> : null}
       <ScrollView
@@ -75,10 +74,8 @@ export default function ServicosView ({ navigation }) {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </SafeAreaView> 
-  )
- 
+    </SafeAreaView>
+  );
 }
-
 
 
