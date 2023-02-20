@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "esmeralda",
-    "slug": "esmeraldav2",
+    "slug": "esmeralda",
     "scheme": "com.esmeralda",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -27,11 +27,9 @@
       "**/*"
     ],
     "ios": {
-      "googleServicesFile": "./GoogleService-info.plist",
       "supportsTablet": true
     },
     "android": {
-      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -44,7 +42,7 @@
     "owner": "leobsb",
     "extra": {
       "eas": {
-        "projectId": "84a98b4f-c835-4a65-b099-972b6058b68b"
+        "projectId": "ba801d84-b755-4a82-b3b2-5e9d70298a7b"
       }
     }
   }
