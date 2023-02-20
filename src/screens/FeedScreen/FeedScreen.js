@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Image, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Linking} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {SocialIcon} from 'react-native-elements';
-import MapView, {Marker} from 'react-native-maps';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {Entypo} from '@expo/vector-icons';
@@ -205,6 +205,7 @@ function Mapa() {
           showsUserLocation = {true}
           initialRegion = {Region}
           minZoomLevel = {17}
+          provider = {PROVIDER_GOOGLE}
         >
           <Marker coordinate={{latitude: latitude, longitude: longitude}}/>
         </MapView>
