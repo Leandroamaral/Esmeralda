@@ -53,12 +53,6 @@ export default function EspecialistasViewScreen({navigation}) {
             >
               <AntDesign name="delete" size={26} color='#1d817e' style={styles.padding10}/>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.editButton}
-              onPress={() => onLoginGoogle()}
-            >
-              <AntDesign name="login" size={26} color='#1d817e' style={styles.padding10}/>
-            </TouchableOpacity>
           </View>
         </View>
       </View>
