@@ -134,4 +134,55 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 15,
   },
+  horarioAView: {
+    borderRightWidth: 1,
+    borderColor: '#92a494',
+    borderStyle: 'dotted',
+    padding: 20,
+    width: 130,
+    alignItems: 'center',
+
+  },
+  horarioATexto: {
+    fontSize: 25,
+    color: '#1d817e',
+  },
+  horarioBTexto: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#1d817e',
+  },
+  horarioMainView: {
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    height: 185,
+    padding: 10,
+    width: '95%',
+    alignSelf: 'center',
+    marginBottom: 10,
+  },
+  horarioSubView: {
+    left: 20,
+
+  },
+  flexrow: {
+    flexDirection: 'row',
+  },
+  dataView: {
+    padding: 10,
+    alignItems: 'center',
+
+  },
+  tituloTexto: {
+    top: 20,
+    fontSize: 28,
+    color: '#000',
+    fontWeight: 'bold',
+  },
+  tituloView: {
+    padding: 10,
+    height: 80,
+    alignItems: 'center',
+    marginBottom: 20,
+  },
 });

@@ -251,6 +251,7 @@ export default function Agendar({navigation}) {
 
     const tempAgenda = {
       FotoEspecialista: specialists[specialist].Imagem,
+      idEspecialista: specialists[specialist].id,
       NomeServico: servicos[servico].Nome,
       Duracao: servicos[servico].Tempo,
       Data: converteData(date),

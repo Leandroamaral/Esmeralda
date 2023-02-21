@@ -36,7 +36,7 @@ export default function LoginScreen({navigation}) {
               .get()
               .then((firestoreDocument) => {
                 if (!firestoreDocument.exists) {
-                  alert('User does not exist anymore.');
+                  alert('O usuário não existe mais');
                   return;
                 }
                 // const user = firestoreDocument.data();
@@ -48,7 +48,11 @@ export default function LoginScreen({navigation}) {
         })
         .catch((error) => {
           setIsDisabled(false);
-          alert(error);
+          if (error.code == 'invalid-email' || error.code == 'user-disabled' || error.code == 'user-not-found' || error.code == 'wrong-password') {
+            alert('Usuário ou senha inválido');
+          } else {
+            alert(error);
+          };
         });
   };
 

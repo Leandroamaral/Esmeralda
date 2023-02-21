@@ -53,6 +53,12 @@ export default function EspecialistasViewScreen({navigation}) {
             >
               <AntDesign name="delete" size={26} color='#1d817e' style={styles.padding10}/>
             </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.editButton}
+              onPress={() => navigation.navigate('EspecialistaAgenda', {itemId: dados.id})}
+            >
+              <AntDesign name="calendar" size={26} color='#1d817e' style={styles.padding10}/>
+            </TouchableOpacity>
           </View>
         </View>
       </View>

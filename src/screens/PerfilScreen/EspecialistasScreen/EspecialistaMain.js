@@ -4,6 +4,7 @@ import EspecialistasViewScreen from './EspecialistaViewScreen';
 import EspecialistasEditScreen from './EspecialistaEditScreen';
 import TimetableScreen from './TimetableScreen';
 import EspecialistaServicos from './EspecialistaServicos';
+import EspecialistaAgenda from './EspecialistaAgendaScreen';
 
 
 export default function EspecialistasMain({navigation}) {
@@ -33,6 +34,11 @@ export default function EspecialistasMain({navigation}) {
           name="EspecialistaServicos"
           component={EspecialistaServicos}
           options={{headerTitle: 'Editar Serviços '}}
+        />
+        <RootStack.Screen
+          name="EspecialistaAgenda"
+          component={EspecialistaAgenda}
+          options={{headerTitle: 'Agenda '}}
         />
       </RootStack.Group>
     </RootStack.Navigator>
