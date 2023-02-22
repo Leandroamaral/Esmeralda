@@ -86,7 +86,7 @@ export default function ServicosEdit({route, navigation}) {
               Descricao: descricao,
             })
             .then(() => {
-              alert('Especialidade Atualizada');
+              alert('Serviço Atualizado');
             })
             .catch((e) => {
               alert(e);
@@ -112,7 +112,7 @@ export default function ServicosEdit({route, navigation}) {
               Descricao: descricao,
             })
             .then(() => {
-              alert('Especialidade Incluída');
+              alert('Serviço Incluído');
             })
             .catch((e) => {
               alert(e);
@@ -129,7 +129,7 @@ export default function ServicosEdit({route, navigation}) {
         .doc(parametros.itemId)
         .delete()
         .then( () => {
-          alert('Campanha apagada');
+          alert('Serviço apagado');
         })
         .catch( (e) => console.error(e))
         .finally( () => navigation.navigate('ServicosView'));

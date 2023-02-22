@@ -140,15 +140,14 @@ function Campanha() {
 }
 
 function Mapa() {
-  const [latitude, setLatitude] = useState(-15.916248);
-  const [longitude, setLongitude] = useState(-48.099713);
-  const [latitudeDelta, setLatitudeDelta] = useState(0.0622);
-  const [longitudeDelta, setLongitudeDelta] = useState(0.0121);
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
   const [nomeEmp, setNomeEmp] = useState('');
   const [endL1, setEndL1] = useState('');
   const [endL2, setEndL2] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
   const [YofMap, setYofMap] = useState(100);
+  const [region, setRegion] = useState();
 
   useEffect(() => {
     db
@@ -162,11 +161,18 @@ function Mapa() {
           setEndL2(shotdata.EndL2);
           setLatitude(Number(shotdata.Latitude));
           setLongitude(Number(shotdata.Longitude));
-          setLatitudeDelta(Number(shotdata.LatitudeDelta));
-          setLongitudeDelta(Number(shotdata.LongitudeDelta));
           setWhatsapp(shotdata.Whatsapp);
+
+          const regiao = {
+            latitude: Number(shotdata.Latitude),
+            longitude: Number(shotdata.Longitude),
+            latitudeDelta: Number(shotdata.LatitudeDelta),
+            longitudeDelta: Number(shotdata.LongitudeDelta),
+          };
+
+          setRegion(regiao);
         });
-  });
+  }, []);
 
   const sendWhatsAppMessage = () => {
     const link = `https://api.whatsapp.com/send?phone=${whatsapp}`;
@@ -183,14 +189,6 @@ function Mapa() {
         .catch((err) => alert(e));
   };
 
-
-  const Region = {
-    latitude: latitude,
-    longitude: longitude,
-    latitudeDelta: latitudeDelta,
-    longitudeDelta: longitudeDelta,
-  };
-
   return (
     <>
       <View
@@ -203,8 +201,8 @@ function Mapa() {
         <MapView
           style={styles.mapa}
           showsUserLocation = {true}
-          initialRegion = {Region}
-          minZoomLevel = {17}
+          region = {region}
+          minZoomLevel = {15}
           provider = {PROVIDER_GOOGLE}
         >
           <Marker coordinate={{latitude: latitude, longitude: longitude}}/>

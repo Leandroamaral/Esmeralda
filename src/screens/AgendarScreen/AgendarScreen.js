@@ -3,6 +3,8 @@ import {Image, Text, View, SafeAreaView, ScrollView, TouchableOpacity, RefreshCo
 import WeeklyCalendar from 'react-native-weekly-calendar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import {AntDesign} from '@expo/vector-icons';
+
 import styles from './styles';
 import {db} from '../../firebase/config';
 import {Icones} from '../FeedScreen/icons';
@@ -137,9 +139,13 @@ export default function Agendar({navigation}) {
     let toremove = [];
     let toremoveuser = [];
     let final = [];
+    let alltimetable = [];
+    let serv = [];
 
     const specialist = specialists[key];
-    const alltimetable = specialist.Timetable.filter((itemf) => (itemf.Semana == diadasemana[date.getUTCDay()] ));
+    if (typeof(specialist.Timetable) != 'undefined') {
+      alltimetable = specialist.Timetable.filter((itemf) => (itemf.Semana == diadasemana[date.getUTCDay()] ));
+    };
 
     if (alltimetable.length > 0 && (Date.parse(diadehoje) === Date.parse(date))) {
       final = alltimetable[0].Times.filter((itemf) => (Date.parse('2019-01-01T'+itemf) > Date.parse('2019-01-01T'+horariodehoje())));
@@ -152,9 +158,13 @@ export default function Agendar({navigation}) {
     if (typeof(usuario.Agenda) != 'undefined') {
       const toRemoveFilter = usuario.Agenda.filter((itemf) => (Date.parse(itemf.Data) === Date.parse(date) && itemf.idEspecialista == specialist.id ));
       const toRemoveUser = toRemoveFilter.map((item) => {
-        const horaservico = specialist.Servicos.filter((itemf) => (itemf.idServicos == item.idServico ));
+        let horaservico = [];
         const temp = [];
-        if (typeof(horaservico[0].Tempo) != 'undefined') {
+
+        if (typeof(specialist.Servicos) != 'undefined') {
+          horaservico = specialist.Servicos.filter((itemf) => (itemf.idServicos == item.idServico ));
+        }
+        if (horaservico.length > 0) {
           const timeParts = horaservico[0].Tempo.split(':');
           const convertido = ((Number(timeParts[0]) * 60 + Number(timeParts[1]))/30) -1;
 
@@ -179,7 +189,10 @@ export default function Agendar({navigation}) {
       final = final.filter((itemf) => (!toremoveuser.includes(itemf)));
     }
 
-    setServicos(specialist.Servicos.map((item) => ({...item, ...allServicos.find((itemf) => item.idServicos == itemf.id)})));
+    if (typeof(specialist.Servicos) != 'undefined') {
+      serv = specialist.Servicos.map((item) => ({...item, ...allServicos.find((itemf) => item.idServicos == itemf.id)}));
+    }
+    setServicos(serv);
     setAllTimes(final);
     setDisabledSend(true);
   }
@@ -318,10 +331,13 @@ export default function Agendar({navigation}) {
         <TouchableOpacity
           onPress={() => updateServico(key)}
         >
+          { (item.Imagem) ?
           <Image
             source={{uri: item.Imagem}}
             style={styles.espImg}
-          />
+          /> :
+          <AntDesign name="user" size={60} color="#92a494" style={styles.espImg2} />
+          }
           <Text style={styles.espTexto}>{item.Nome}</Text>
         </TouchableOpacity>
       </View>

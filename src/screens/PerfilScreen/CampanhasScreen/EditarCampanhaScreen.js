@@ -1,19 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, SafeAreaView, ScrollView, TextInput, TouchableOpacity, Image} from 'react-native';
-import {LinearGradient} from 'expo-linear-gradient';
-import * as ImagePicker from 'expo-image-picker';
 import {Picker} from '@react-native-picker/picker';
-import {AntDesign} from '@expo/vector-icons';
-import styles from '../styles';
-import {db} from '../../../firebase/config';
 import uuid from 'react-native-uuid';
 
+import {LinearGradient} from 'expo-linear-gradient';
+import * as ImagePicker from 'expo-image-picker';
+import {AntDesign} from '@expo/vector-icons';
+
+import styles from './styles';
+import {db} from '../../../firebase/config';
+import {Notfound} from '../../FeedScreen/icons.js';
 
 export default function EditarCampanha() {
   const [nomeCampanha, setNomeCampanha] = useState('');
-  const [imageUri, setImageUri] = useState('../../../assets/notfound.png');
-  const [image64, setImage64] = useState('../../../assets/notfound.png');
+  const [indice, setIndice] = useState('');
+  const [image64, setImage64] = useState(Notfound);
   const [tempKey, setTempKey] = useState(0);
+
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -26,19 +29,17 @@ export default function EditarCampanha() {
       base64: true,
     });
     if (!result.canceled) {
-      console.log(result.assets[0].width);
       if (result.assets[0].width > 1080) {
         alert('Imagem deve ter largura máxima de 740px');
       } else {
         setImage64('data:image/png;base64,' + result.assets[0].base64);
-        setImageUri(result.assets[0].uri);
       }
     }
   };
 
 
   function onAddCampanha() {
-    if ( !nomeCampanha || !imageUri ) {
+    if ( !nomeCampanha || !image64 ) {
       alert('Necessário o nome da campanha e uma imagem');
     } else {
       db
@@ -48,12 +49,13 @@ export default function EditarCampanha() {
             nomeCampanha: nomeCampanha,
             image: image64,
             star: false,
+            indice: indice,
           })
           .then(() => {
             alert('Campanha Adicionada com Sucesso');
             setTempKey(tempKey+1);
             setNomeCampanha('');
-            setImageUri('../../../assets/notfound.png');
+            setImage64(Notfound);
           })
           .catch((e) => {
             console.error(e);
@@ -106,22 +108,28 @@ export default function EditarCampanha() {
         });
   }
 
+  const [shotdata, setshotdata] = useState([]);
+
+  useEffect(() => {
+    loadCampanha();
+  }, []);
+
+
+  function loadCampanha() {
+    db
+        .collection('Campanha')
+        .get()
+        .then((snapshot) => {
+          setshotdata(snapshot.docs.map((doc) => {
+            const data = doc.data();
+            const id = doc.id;
+            return {id, ...data};
+          }));
+        });
+  }
+
+
   function NovaCampanha() {
-    const [shotdata, setshotdata] = useState([]);
-
-    useEffect(() => {
-      db
-          .collection('Campanha')
-          .get()
-          .then((snapshot) => {
-            setshotdata(snapshot.docs.map((doc) => {
-              const data = doc.data();
-              const id = doc.id;
-              return {id, ...data};
-            }));
-          });
-    }, []);
-
     return (
       <ScrollView
         horizontal={true}
@@ -175,12 +183,11 @@ export default function EditarCampanha() {
 
         <NovaCampanha/>
 
-
         <View style={styles.subTituloView}>
           <Text style={styles.subTituloTexto}>Criar nova Campanha</Text>
         </View>
 
-        <View>
+        <View style={{flexDirection: 'row'}}>
           <TextInput
             style={styles.input}
             placeholder='Nome da Campanha'
@@ -190,16 +197,33 @@ export default function EditarCampanha() {
             underlineColorAndroid="transparent"
             autoCapitalize="none"
           />
+          <Picker style={{width: 90, height: 0, top: 10, borderStyle: 'solid', backgroundColor: '#fff'}}
+            mode="dropdown"
+            onValueChange={(valor) => setIndice(valor) }
+            selectedValue={indice.toString()}
+          >
+            <Picker.Item label='1' value='1' />
+            <Picker.Item label='2' value='2' />
+            <Picker.Item label='3' value='3' />
+            <Picker.Item label='4' value='4' />
+            <Picker.Item label='5' value='5' />
+            <Picker.Item label='6' value='6' />
+            <Picker.Item label='7' value='7' />
+            <Picker.Item label='8' value='8' />
+            <Picker.Item label='9' value='9' />
+            <Picker.Item label='10' value='10' />
+          </Picker>
         </View>
         <View style={{alignSelf: 'center'}}>
           <TouchableOpacity onPress={pickImage} style={{width: 300, height: 150, backgroundColor: '#BBBBBB'}}>
             <Image
               style={{width: 300, height: 150}}
-              source={{uri: imageUri}} />
+              source={{uri: image64}} />
           </TouchableOpacity>
           <Text style={{position: 'absolute', alignSelf: 'center', top: 60}}>Clique para carregar uma imagem</Text>
         </View>
         <View style={{alignSelf: 'center', padding: 10}}>
+
           <TouchableOpacity onPress={onAddCampanha}>
             <LinearGradient
               // Button Linear Gradient

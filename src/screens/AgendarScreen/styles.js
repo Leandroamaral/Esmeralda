@@ -75,7 +75,13 @@ export default StyleSheet.create({
     top: 10,
     borderRadius: 50,
   },
-
+  espImg2: {
+    width: 100,
+    height: 100,
+    top: 20,
+    left: 20,
+    alignSelf: 'center',
+  },
   espTexto: {
     fontSize: 13,
     fontWeight: 'bold',

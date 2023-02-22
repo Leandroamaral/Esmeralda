@@ -13,7 +13,7 @@ export default function UserEditScreen({route, navigation}) {
   const [nome, setNome] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
   // const [imagem, setImagem] = useState('');
-  const [administrator, setAdministrator] = useState(null);
+  const [administrator, setAdministrator] = useState(false);
   const [contaGoogle, setContaGoogle] = useState('');
   const [email, setEmail] = useState('');
 
@@ -27,9 +27,13 @@ export default function UserEditScreen({route, navigation}) {
           setNome(shotdata.fullName);
           // setImagem(shotdata.Imagem);
           setWhatsapp(shotdata.telefone);
-          setContaGoogle(shotdata.ContaGoogle);
           setEmail(shotdata.email);
-          setAdministrator(shotdata.administrator);
+          if (typeof(shotdata.administrator) != 'undefined') {
+            setAdministrator(shotdata.administrator);
+          }
+          if (typeof(shotdata.ContaGoogle) != 'undefined') {
+            setContaGoogle(shotdata.ContaGoogle);
+          };
         });
   }, []);
 
@@ -41,8 +45,8 @@ export default function UserEditScreen({route, navigation}) {
           .update({
             fullName: nome,
             telefone: whatsapp,
-            ContaGoogle: contaGoogle,
             administrator: administrator,
+            ContaGoogle: contaGoogle,
           })
           .then(() => {
             alert('Atualização Efetuada');

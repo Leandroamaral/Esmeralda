@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Text, View, Image, TextInput, TouchableOpacity} from 'react-native';
 import uuid from 'react-native-uuid';
+import {MaskedTextInput} from 'react-native-mask-text';
 
 import {LinearGradient} from 'expo-linear-gradient';
 import * as ImagePicker from 'expo-image-picker';
@@ -128,10 +129,11 @@ export default function EspecialistasEditScreen({route, navigation}) {
           autoCapitalize="none"
           onChangeText={(text) => setEmail(text)}
         />
-        <TextInput
+        <MaskedTextInput
           style={styles.input}
           placeholder='Whatsapp'
           placeholderTextColor="#aaaaaa"
+          mask="(99) 99999-9999"
           value={whatsapp}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
