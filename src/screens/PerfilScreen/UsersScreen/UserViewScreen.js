@@ -33,7 +33,7 @@ export default function UsuariosViewScreen({navigation}) {
 
   function filterUser(text) {
     if (text) {
-      setUsers(users.filter((itemf) => (itemf.fullName.includes(text))));
+      setUsers(users.filter((itemf) => (itemf.fullName.toLowerCase().includes(text.toLowerCase()))));
     } else {
       setUsers(allUsers);
     }
