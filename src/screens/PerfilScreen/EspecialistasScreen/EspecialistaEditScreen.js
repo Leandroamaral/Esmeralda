@@ -46,7 +46,6 @@ export default function EspecialistasEditScreen({route, navigation}) {
       base64: true,
     });
     if (!result.canceled) {
-      console.log(result.assets[0].width);
       if (result.assets[0].width > 480) {
         alert('Imagem deve ter largura máxima de 480px');
       } else {
@@ -109,6 +108,7 @@ export default function EspecialistasEditScreen({route, navigation}) {
      <AntDesign name="user" size={80} color="#92a494" style={styles.padding10} />
         }
       </TouchableOpacity>
+      <Text>Clique na imagem para trocar </Text>
 
       <View style={styles.userCardDescription}>
         <TextInput

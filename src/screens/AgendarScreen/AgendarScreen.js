@@ -388,7 +388,7 @@ export default function Agendar({navigation}) {
     if (specialist == null ) {
       return (null);
     } else {
-      if (allTimes.length > 0) {
+      if (allTimes.length > 0 && servicos.length > 0) {
         return (tempServico);
       } else {
         return (semHorario);

@@ -68,7 +68,17 @@ export default function LoginScreen({navigation}) {
           setvisibleDL(false);
         })
         .catch((error) => {
-          console.error(error);
+          switch (error.code) {
+            case 'auth/invalid-email':
+              alert(`O e-mail ${email} é inválido.`);
+              break;
+            case 'auth/user-not-found':
+              alert('O usuário não existe');
+              break;
+            default:
+              alert(error.message);
+              break;
+          }
         });
   };
 

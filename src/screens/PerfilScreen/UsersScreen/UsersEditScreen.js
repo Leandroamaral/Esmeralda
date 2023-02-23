@@ -12,9 +12,7 @@ export default function UserEditScreen({route, navigation}) {
   const [parametros] = useState(route.params);
   const [nome, setNome] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
-  // const [imagem, setImagem] = useState('');
   const [administrator, setAdministrator] = useState(false);
-  const [contaGoogle, setContaGoogle] = useState('');
   const [email, setEmail] = useState('');
 
   useEffect(() => {
@@ -25,15 +23,11 @@ export default function UserEditScreen({route, navigation}) {
         .then((snapshot) => {
           const shotdata = snapshot.data();
           setNome(shotdata.fullName);
-          // setImagem(shotdata.Imagem);
           setWhatsapp(shotdata.telefone);
           setEmail(shotdata.email);
           if (typeof(shotdata.administrator) != 'undefined') {
             setAdministrator(shotdata.administrator);
           }
-          if (typeof(shotdata.ContaGoogle) != 'undefined') {
-            setContaGoogle(shotdata.ContaGoogle);
-          };
         });
   }, []);
 
@@ -46,7 +40,6 @@ export default function UserEditScreen({route, navigation}) {
             fullName: nome,
             telefone: whatsapp,
             administrator: administrator,
-            ContaGoogle: contaGoogle,
           })
           .then(() => {
             alert('Atualização Efetuada');
@@ -93,17 +86,6 @@ export default function UserEditScreen({route, navigation}) {
           />
           <Text style={{padding: 10, alignSelf: 'center'}}>Administrador</Text>
         </View>
-        {(administrator) ?
-        <TextInput
-          style={styles.input}
-          placeholder='Conta Google'
-          placeholderTextColor="#aaaaaa"
-          value={contaGoogle}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-          onChangeText={(text) => setContaGoogle(text)}
-        /> :
-        null }
         <View style={{alignSelf: 'center', padding: 10, flexDirection: 'row'}}>
           <TouchableOpacity onPress={onSaveEditUser}>
             <LinearGradient

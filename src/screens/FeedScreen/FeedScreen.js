@@ -281,7 +281,7 @@ function RedesSociais() {
         });
   });
 
-  return (
+  const redes = (
     <View style={styles.rsMainView}>
       <Text></Text>
       <Text> Siga em nossas redes sociais</Text>
@@ -300,6 +300,12 @@ function RedesSociais() {
       </View>
     </View>
   );
+
+  if (instagramA || facebookA || flickerA || foursquareA || pinterestA || linkedinA || redditA || twitchA || twitterA || googleA || youtubeA) {
+    return (redes);
+  } else {
+    return (null);
+  }
 }
 
 function DetailFeed({navigation}) {

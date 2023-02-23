@@ -120,11 +120,15 @@ export default function EditarCampanha() {
         .collection('Campanha')
         .get()
         .then((snapshot) => {
-          setshotdata(snapshot.docs.map((doc) => {
+          const dados = snapshot.docs.map((doc) => {
             const data = doc.data();
             const id = doc.id;
             return {id, ...data};
-          }));
+          });
+          dados.sort((a, b) => {
+            return (a.indice > b.indice) ? 1 : -1;
+          });
+          setshotdata(dados);
         });
   }
 
@@ -187,7 +191,7 @@ export default function EditarCampanha() {
           <Text style={styles.subTituloTexto}>Criar nova Campanha</Text>
         </View>
 
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', alignSelf: 'center'}}>
           <TextInput
             style={styles.input}
             placeholder='Nome da Campanha'

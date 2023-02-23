@@ -10,10 +10,10 @@ import {LinearGradient} from 'expo-linear-gradient';
 
 import {db} from '../../../firebase/config';
 import styles from '../styles';
-
+import {Notfound} from '../../FeedScreen/icons.js';
 
 export default function ServicosEdit({route, navigation}) {
-  const [image64, setImage64] = useState('../../../assets/notfound.png');
+  const [image64, setImage64] = useState(Notfound);
   const [nome, setNome] = useState('');
   const [descricao, setDescricao] = useState('');
   const [icone, setIcone] = useState('');
@@ -40,7 +40,7 @@ export default function ServicosEdit({route, navigation}) {
             if (shotdata.Imagem) {
               setImage64(shotdata.Imagem);
             } else {
-              setImage64('../../../assets/notfound.png');
+              setImage64(Notfound);
             }
           });
     }, []);

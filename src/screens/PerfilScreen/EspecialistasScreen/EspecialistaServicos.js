@@ -35,9 +35,6 @@ export default function EspecialistaServicos({route, navigation}) {
             const id = doc.id;
             return {id, ...data};
           }));
-        })
-        .finally(() => {
-          console.log('aqui');
         });
 
     if (parametros.itemId) {
