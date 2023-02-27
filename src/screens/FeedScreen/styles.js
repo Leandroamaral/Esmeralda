@@ -2,7 +2,7 @@ import {StyleSheet, Dimensions} from 'react-native';
 
 const largura = Dimensions.get('window').width - 25;
 const altura = Dimensions.get('window').height/4;
-console.log(largura/4)
+
 export default StyleSheet.create({
   safeareaview: {
     flex: 1,
@@ -54,7 +54,7 @@ export default StyleSheet.create({
     borderRadius: 10,
     margin: 5,
     backgroundColor: '#eaeceb',
-    width: 60, 
+    width: 60,
     height: 60,
     marginTop: 12,
     alignItems: 'center',
