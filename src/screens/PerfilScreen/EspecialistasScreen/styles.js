@@ -112,7 +112,7 @@ export default StyleSheet.create({
   horarioBotao: {
     marginRight: 10,
     marginBottom: 10,
-    width: 75,
+    width: '22%',
     height: 35,
     borderRadius: 10,
     backgroundColor: '#fff',
@@ -122,7 +122,7 @@ export default StyleSheet.create({
   horarioBotaoChecked: {
     marginRight: 10,
     marginBottom: 10,
-    width: 75,
+    width: '22%',
     height: 35,
     borderRadius: 10,
     backgroundColor: '#92a494',

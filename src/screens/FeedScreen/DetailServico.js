@@ -51,7 +51,7 @@ export default function DetailServico({route, navigation}) {
 
           <View style={{backgroundColor: '#fff', minHeight: 250, alignContent: 'center', padding: 20}}>
             <Text style={{fontSize: 30, alignSelf: 'center', color: '#92a494', fontFamily: 'sans-serif-light', padding: 10}}>{nome}</Text>
-            <Text style={{fontSize: 15, fontFamily: 'sans-serif-condensed', color: '#5c635d'}}> {descricao}</Text>
+            <Text style={{fontSize: 15, fontFamily: 'sans-serif-condensed', color: '#5c635d'}}>{descricao}</Text>
 
           </View>
 
