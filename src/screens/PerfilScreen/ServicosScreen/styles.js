@@ -1,4 +1,6 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
+
+const largura = Dimensions.get('window').width - 25;
 
 export default StyleSheet.create({
   userView: {
@@ -121,7 +123,7 @@ export default StyleSheet.create({
   botaoServico: {
     backgroundColor: '#fff',
     height: 100,
-    width: 80,
+    width: (largura/4) - 10,
     borderRadius: 10,
     alignItems: 'center',
     marginBottom: 5,

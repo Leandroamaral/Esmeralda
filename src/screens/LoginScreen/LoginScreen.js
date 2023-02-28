@@ -48,7 +48,7 @@ export default function LoginScreen({navigation}) {
         })
         .catch((error) => {
           setIsDisabled(false);
-          if (error.code == 'invalid-email' || error.code == 'user-disabled' || error.code == 'user-not-found' || error.code == 'wrong-password') {
+          if (error.code == 'auth/invalid-email' || error.code == 'auth/user-disabled' || error.code == 'auth/user-not-found' || error.code == 'auth/wrong-password') {
             alert('Usuário ou senha inválido');
           } else {
             alert(error);

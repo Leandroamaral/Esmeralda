@@ -24,7 +24,7 @@ export default StyleSheet.create({
     fontSize: 16,
   },
   viewcampanha: {
-    height: 190,
+    height: altura + 10,
     alignContent: 'center',
 
   },

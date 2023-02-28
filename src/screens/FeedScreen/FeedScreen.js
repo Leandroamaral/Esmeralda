@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {Image, Text, View, SafeAreaView, ScrollView, TouchableOpacity, Linking} from 'react-native';
+import {Image, Text, View, SafeAreaView, ScrollView, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {SocialIcon} from 'react-native-elements';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import {Entypo} from '@expo/vector-icons';
+import * as Linking from 'expo-linking';
 
 import styles from './styles';
 import {db} from '../../firebase/config';
@@ -176,7 +177,7 @@ function Mapa() {
 
   const sendWhatsAppMessage = () => {
     const link = `https://api.whatsapp.com/send?phone=${whatsapp}`;
-    Linking.canOpenURL(link)
+    Linking.openURL(link)
         .then((supported) => {
           if (!supported) {
             Alert.alert(
