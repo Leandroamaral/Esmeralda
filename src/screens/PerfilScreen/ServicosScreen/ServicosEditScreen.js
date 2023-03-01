@@ -184,12 +184,18 @@ export default function ServicosEdit({route, navigation}) {
               <Picker.Item label='Selecione um Icone' style={{color: '#AAA', fontSize: 15}} />
               <Picker.Item label="Pedicure" value="Pedicure" />
               <Picker.Item label="Cilios" value="Cilios" />
-              <Picker.Item label="Alisamento" value="Alisamento" />
               <Picker.Item label="Maquiagem" value="Maquiagem" />
               <Picker.Item label="Tintura" value="Tintura" />
               <Picker.Item label="Manicure" value="Manicure" />
               <Picker.Item label="Hidratacao" value="Hidratacao" />
               <Picker.Item label="Corte" value="Corte" />
+              <Picker.Item label="Escova" value="Escova" />
+              <Picker.Item label="Botox" value="Botox" />
+              <Picker.Item label="Selagem" value="Selagem" />
+              <Picker.Item label="Cauterização" value="Cauterizacao" />
+              <Picker.Item label="Progressiva" value="Progressiva" />
+              <Picker.Item label="Cronograma" value="Cronograma" />
+              <Picker.Item label="Spa" value="Spa" />
             </Picker>
 
             <View style={{alignSelf: 'center', padding: 10, flexDirection: 'row'}}>

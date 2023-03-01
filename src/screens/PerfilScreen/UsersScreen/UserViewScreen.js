@@ -40,7 +40,7 @@ export default function UsuariosViewScreen({navigation}) {
   }
 
   // Componente para um card de pessoa
-  const PersonCard = ({id, picture, name, email, whatsapp, navigation}) => {
+  const PersonCard = ({id, picture, name, email, whatsapp, dtnascimento, navigation}) => {
     return (
       <View style={styles.userCard}>
         {(picture) ?
@@ -54,6 +54,7 @@ export default function UsuariosViewScreen({navigation}) {
           <Text style={{marginLeft: 10, fontWeight: 'bold'}}>{name}</Text>
           <Text style={{marginLeft: 10}}>{email}</Text>
           <Text style={{marginLeft: 10}}>{whatsapp}</Text>
+          <Text style={{marginLeft: 10}}>{dtnascimento}</Text>
           <View style={styles.userActions}>
             <TouchableOpacity
               style={styles.editButton}
@@ -90,6 +91,7 @@ export default function UsuariosViewScreen({navigation}) {
             navigation={navigation}
             email={item.email}
             whatsapp={item.telefone}
+            dtnascimento={item.dtnascimento}
 
           />
         ))}

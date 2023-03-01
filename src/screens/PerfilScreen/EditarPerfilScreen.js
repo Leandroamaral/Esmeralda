@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, View, TouchableOpacity, TextInput} from 'react-native';
 import {MaskedTextInput} from 'react-native-mask-text';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
@@ -12,9 +12,9 @@ import {firebase, db} from '../../firebase/config';
 import styles from './styles';
 
 export default function EditarPerfil({navigation}) {
-  const [userName, setUserName] = useState('');
   const [fullName, setFullName] = useState();
   const [telefone, setTelefone] = useState();
+  const [dtnascimento, setDtNascimento] = useState();
   const [email, setEmail] = useState();
   const [id, setID] = useState();
   const [visibleDL, setvisibleDL] = useState(false);
@@ -26,21 +26,30 @@ export default function EditarPerfil({navigation}) {
     try {
       const name = await AsyncStorage.getItem('@user');
       if (name !== null) {
-        setUserName(JSON.parse(name));
         const parser = JSON.parse(name);
-        setFullName(parser.fullName);
-        setTelefone(parser.telefone);
-        setEmail(parser.email);
-        setID(parser.id);
+        db
+            .collection('users')
+            .doc(parser.id)
+            .get()
+            .then((snapshot) => {
+              const shotdata = snapshot.data();
+              setFullName(shotdata.fullName);
+              setTelefone(shotdata.telefone);
+              setDtNascimento(shotdata.dtnascimento);
+              setEmail(shotdata.email);
+              setID(parser.id);
+            });
       }
     } catch (e) {
       console.error(e);
     }
   };
 
-  if (!userName) {
-    load();
-  }
+  useEffect(() => {
+    if (!email) {
+      load();
+    }
+  }, []);
 
   function onChangeUserData() {
     db
@@ -49,6 +58,7 @@ export default function EditarPerfil({navigation}) {
         .update({
           fullName: fullName,
           telefone: telefone,
+          dtnascimento: dtnascimento,
         })
         .then(() => {
           setTitulo('Editar Perfil');
@@ -105,7 +115,6 @@ export default function EditarPerfil({navigation}) {
           }}
           value={fullName}
           underlineColorAndroid="transparent"
-          autoCapitalize="none"
         />
         <MaskedTextInput
           style={styles.input}
@@ -118,7 +127,20 @@ export default function EditarPerfil({navigation}) {
           }}
           value={telefone}
           underlineColorAndroid="transparent"
-          autoCapitalize="none"
+          keyboardType="numeric"
+        />
+        <MaskedTextInput
+          style={styles.input}
+          placeholder={dtnascimento}
+          placeholderTextColor="#aaaaaa"
+          mask="99/99/9999"
+          onChangeText={(text) => {
+            setDtNascimento(text);
+            setIsDisabled(false);
+          }}
+          value={dtnascimento}
+          underlineColorAndroid="transparent"
+          keyboardType="numeric"
         />
         <TouchableOpacity
           disabled={isDisabled}

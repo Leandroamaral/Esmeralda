@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Image, SafeAreaView, ScrollView} from 'react-native';
+import {View, Text, Image, SafeAreaView, ScrollView, Dimensions} from 'react-native';
 import {db} from '../../firebase/config';
 
 export default function DetailServico({route, navigation}) {
   const [image64, setImage64] = useState('../../../assets/notfound.png');
   const [nome, setNome] = useState('');
   const [descricao, setDescricao] = useState('');
+  const largura = Dimensions.get('window').width - 25;
+  console.log(largura);
 
   const parametros = route.params;
 
@@ -41,9 +43,9 @@ export default function DetailServico({route, navigation}) {
     <SafeAreaView>
       <ScrollView >
         <View>
-          <View style={{height: 350, backgroundColor: '#FFF'}}>
+          <View style={{height: largura, backgroundColor: '#FFF'}}>
             <Image
-              style={{height: 350}}
+              style={{height: largura}}
               source={{uri: image64}}
               resizeMode='stretch'/>
           </View>
