@@ -2,6 +2,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import {Image, Text, View, SafeAreaView, ScrollView, TouchableOpacity, RefreshControl, ActivityIndicator} from 'react-native';
 import WeeklyCalendar from 'react-native-weekly-calendar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid';
 
 import {AntDesign} from '@expo/vector-icons';
 
@@ -44,9 +45,9 @@ export default function Agendar({navigation}) {
   const [usuario, setUsuario] = useState('');
 
   useEffect(() => {
+    loadUserId();
     loadEspecialista();
-    loadUser();
-  }, [navigation]);
+  }, []);
 
   function addMinutesToTime(time, minsAdd) {
     function z(n) {
@@ -57,7 +58,7 @@ export default function Agendar({navigation}) {
     return z(mins%(24*60)/60 | 0) + ':' + z(mins%60);
   }
 
-  const loadUser = async () => {
+  const loadUserId = async () => {
     try {
       const aStorage = await AsyncStorage.getItem('@user');
       if (aStorage !== null) {
@@ -72,8 +73,8 @@ export default function Agendar({navigation}) {
               console.error(e);
             });
       }
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -83,6 +84,8 @@ export default function Agendar({navigation}) {
     setServicos([]);
     setTimes([]);
     setTime('');
+
+    loadUserId();
 
     db
         .collection('Especialista')
@@ -269,6 +272,7 @@ export default function Agendar({navigation}) {
       Duracao: servicos[servico].Tempo,
       Data: converteData(date),
       Horario: times[time],
+      id: uuid.v4(),
     };
 
     let especialista = [];
@@ -298,14 +302,13 @@ export default function Agendar({navigation}) {
     }
     userAgenda.push(tempAgenda);
 
-
     db
         .collection('users')
         .doc(usuario.id)
         .update({
           Agenda: userAgenda,
         })
-        .catch(() => {
+        .catch((e) => {
           console.error(e);
         });
 
@@ -318,11 +321,20 @@ export default function Agendar({navigation}) {
         .then(() => {
           alert('Horário Reservado');
         })
-        .catch(() => {
+        .catch((e) => {
           console.error(e);
         });
 
     loadEspecialista();
+    setDisabledSend(true);
+    setSpecialists([]);
+    setTimes([]);
+    setServicos([]);
+    setSpecialist(null);
+    setTime('');
+    setAllServicos([]);
+    setAllTimes([]);
+    setUsuario('');
   }
 
   function Especialista() {
