@@ -7,8 +7,6 @@ export default function DetailServico({route, navigation}) {
   const [nome, setNome] = useState('');
   const [descricao, setDescricao] = useState('');
   const largura = Dimensions.get('window').width - 25;
-  console.log(largura);
-
   const parametros = route.params;
 
   if (parametros.itemId) {
