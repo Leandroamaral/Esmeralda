@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, Image, SafeAreaView, ScrollView, Dimensions} from 'react-native';
+
 import {db} from '../../firebase/config';
+import {Notfound} from './icons';
 
 export default function DetailServico({route, navigation}) {
-  const [image64, setImage64] = useState('../../../assets/notfound.png');
+  const [image64, setImage64] = useState(Notfound);
   const [nome, setNome] = useState('');
   const [descricao, setDescricao] = useState('');
   const largura = Dimensions.get('window').width - 25;
@@ -30,7 +32,7 @@ export default function DetailServico({route, navigation}) {
             if (shotdata.Imagem) {
               setImage64(shotdata.Imagem);
             } else {
-              setImage64('../../../assets/notfound.png');
+              setImage64(Notfound);
             }
           });
     }, []);
