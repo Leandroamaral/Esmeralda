@@ -11,15 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f362e12e-bd3b-4e1a-b770-7edac9f3bd15" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/FeedScreen/DetailServico.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/FeedScreen/DetailServico.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/FeedScreen/icons.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/FeedScreen/icons.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/PerfilScreen/EditarPerfilScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/PerfilScreen/EditarPerfilScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/PerfilScreen/ServicosScreen/ServicosEditScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/PerfilScreen/ServicosScreen/ServicosEditScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/PerfilScreen/UsersScreen/UserViewScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/PerfilScreen/UsersScreen/UserViewScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/PerfilScreen/UsersScreen/UsersEditScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/PerfilScreen/UsersScreen/UsersEditScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/screens/RegistrationScreen/RegistrationScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/../src/screens/RegistrationScreen/RegistrationScreen.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

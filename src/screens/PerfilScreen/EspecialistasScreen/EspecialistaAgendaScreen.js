@@ -179,8 +179,8 @@ export default function EspecialistaAgenda({route, navigation}) {
     } catch (e) {
       console.error(e);
     } finally {
-      loadUser();
       alert('Horario apagado');
+      navigation.navigate('EditarEspecialistas');
     };
   };
 
