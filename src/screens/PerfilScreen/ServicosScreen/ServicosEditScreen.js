@@ -196,6 +196,10 @@ export default function ServicosEdit({route, navigation}) {
               <Picker.Item label="Progressiva" value="Progressiva" />
               <Picker.Item label="Cronograma" value="Cronograma" />
               <Picker.Item label="Spa" value="Spa" />
+              <Picker.Item label="Esmaltacao" value="Esmaltacao" />
+              <Picker.Item label="Unha1" value="Unha1" />
+              <Picker.Item label="Unha2" value="Unha2" />
+              <Picker.Item label="Unha3" value="Unha3" />
             </Picker>
 
             <View style={{alignSelf: 'center', padding: 10, flexDirection: 'row'}}>

@@ -44,8 +44,8 @@ export default StyleSheet.create({
   },
   botaoServico: {
     backgroundColor: '#fff',
-    height: 100,
-    width: (largura/4) - 10,
+    height: 104,
+    width: (largura/4) - 5,
     borderRadius: 10,
     alignItems: 'center',
     marginBottom: 5,
@@ -56,13 +56,14 @@ export default StyleSheet.create({
     backgroundColor: '#eaeceb',
     width: 60,
     height: 60,
-    marginTop: 12,
+    marginTop: 5,
     alignItems: 'center',
     justifyContent: 'center',
   },
   textoServico: {
     color: '#92a494',
     fontSize: 12,
+    textAlign: 'center',
   },
   mapaView: {
     height: 300,

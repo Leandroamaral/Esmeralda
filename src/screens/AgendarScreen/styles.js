@@ -155,8 +155,8 @@ export default StyleSheet.create({
   },
   botaoServico: {
     backgroundColor: '#fff',
-    height: 100,
-    width: 80,
+    height: 105,
+    width: 90,
     borderRadius: 10,
     alignItems: 'center',
     marginBottom: 5,
@@ -178,13 +178,14 @@ export default StyleSheet.create({
     margin: 5,
     backgroundColor: '#eaeceb',
     width: 60, height: 60,
-    marginTop: 12,
+    marginTop: 5,
     alignItems: 'center',
     justifyContent: 'center',
   },
   textoServico: {
     color: '#92a494',
     fontSize: 12,
+    textAlign: 'center',
   },
 
 
