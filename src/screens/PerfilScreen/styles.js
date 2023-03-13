@@ -41,7 +41,7 @@ export default StyleSheet.create({
     fontSize: 16,
     alignContent: 'center',
     marginLeft: 10,
-    width: 240,
+    width: '70%',
   },
   sairView: {
     marginTop: 20,
@@ -54,7 +54,7 @@ export default StyleSheet.create({
     fontSize: 16,
     alignContent: 'center',
     marginLeft: 10,
-    width: 240,
+    width: '70%',
     fontWeight: 'bold',
   },
   logo: {
@@ -117,53 +117,6 @@ export default StyleSheet.create({
   subTituloTexto: {
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  botaoServico: {
-    backgroundColor: '#fff',
-    height: 100,
-    width: 80,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginBottom: 5,
-
-  },
-  iconeServico: {
-    borderRadius: 10,
-    margin: 5,
-    backgroundColor: '#eaeceb',
-    width: 60, height: 60,
-    marginTop: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textoServico: {
-    color: '#92a494',
-    fontSize: 12,
-  },
-  servicos: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    position: 'relative',
-    flexWrap: 'wrap',
-    padding: 5,
-  },
-  userCard: {
-    backgroundColor: '#fff',
-    flexDirection: 'row',
-    alignItems: 'center',
-    color: '#000',
-    width: '90%',
-    alignSelf: 'center',
-    marginTop: 5,
-    borderRadius: 10,
-    padding: 20,
-  },
-  userActions: {
-    flexDirection: 'row',
-    marginLeft: 10,
-    marginTop: 5,
-    alignItems: 'center',
   },
   editButton: {
     padding: 10,

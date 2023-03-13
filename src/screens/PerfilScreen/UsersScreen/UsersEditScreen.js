@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Text, View, TextInput, TouchableOpacity} from 'react-native';
+import {MaskedTextInput} from 'react-native-mask-text';
 
 import {LinearGradient} from 'expo-linear-gradient';
 import {AntDesign} from '@expo/vector-icons';
@@ -12,6 +13,7 @@ export default function UserEditScreen({route, navigation}) {
   const [parametros] = useState(route.params);
   const [nome, setNome] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
+  const [dtnascimento, setDtNascimento] = useState('');
   const [administrator, setAdministrator] = useState(false);
   const [email, setEmail] = useState('');
 
@@ -25,6 +27,7 @@ export default function UserEditScreen({route, navigation}) {
           setNome(shotdata.fullName);
           setWhatsapp(shotdata.telefone);
           setEmail(shotdata.email);
+          setDtNascimento(shotdata.dtnascimento);
           if (typeof(shotdata.administrator) != 'undefined') {
             setAdministrator(shotdata.administrator);
           }
@@ -39,6 +42,7 @@ export default function UserEditScreen({route, navigation}) {
           .update({
             fullName: nome,
             telefone: whatsapp,
+            dtnascimento: dtnascimento,
             administrator: administrator,
           })
           .then(() => {
@@ -77,6 +81,18 @@ export default function UserEditScreen({route, navigation}) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
           onChangeText={(text) => setWhatsapp(text)}
+        />
+        <MaskedTextInput
+          style={styles.input}
+          placeholder={dtnascimento}
+          placeholderTextColor="#aaaaaa"
+          mask="99/99/9999"
+          onChangeText={(text) => {
+            setDtNascimento(text);
+          }}
+          value={dtnascimento}
+          underlineColorAndroid="transparent"
+          keyboardType="numeric"
         />
         <View style={styles.check}>
           <Checkbox

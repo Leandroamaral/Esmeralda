@@ -1,13 +1,20 @@
-import React, {useState} from 'react';
-import {Text, View, SafeAreaView, ScrollView, TouchableOpacity} from 'react-native';
+import React, {useState, useRef} from 'react';
+import {Text, View, SafeAreaView, ScrollView, TouchableOpacity, ActivityIndicator, RefreshControl} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {firebase} from '../../firebase/config';
-import {AntDesign} from '@expo/vector-icons';
+
 import {LinearGradient} from 'expo-linear-gradient';
-import styles from './styles';
 import * as Updates from 'expo-updates';
+import {AntDesign} from '@expo/vector-icons';
+
+import {firebase, db} from '../../firebase/config';
+import styles from './styles';
+
 
 export default function Perfil({navigation}) {
+  const [refreshing] = useState(false);
+  const scrollViewRef = useRef();
+  const [userName, setUserName] = useState('');
+
   const onLogoutPress = () =>{
     firebase.auth().signOut()
         .then(() => {
@@ -24,14 +31,20 @@ export default function Perfil({navigation}) {
         });
   };
 
-  const [userName, setUserName] = useState('');
-
-
   const load = async () => {
     try {
-      const name = await AsyncStorage.getItem('@user');
-      if (name !== null) {
-        setUserName(JSON.parse(name));
+      const aStorage = await AsyncStorage.getItem('@user');
+      if (aStorage !== null) {
+        db
+            .collection('users')
+            .doc(JSON.parse(aStorage).id)
+            .get()
+            .then((snapshot) => {
+              setUserName(snapshot.data());
+            })
+            .catch((e) => {
+              console.error(e);
+            });
       }
     } catch (e) {
       console.error(e);
@@ -44,7 +57,11 @@ export default function Perfil({navigation}) {
 
   return (
     <SafeAreaView>
-      <ScrollView>
+      {refreshing ? <ActivityIndicator /> : null}
+      <ScrollView
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={load} />}
+        ref={scrollViewRef}
+      >
         <View style={styles.userView}>
           <AntDesign name="user" size={80} color="#92a494" style={styles.padding10} />
           <Text style={styles.userNome}>{userName.fullName}</Text>

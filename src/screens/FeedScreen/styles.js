@@ -24,7 +24,7 @@ export default StyleSheet.create({
     fontSize: 16,
   },
   viewcampanha: {
-    height: 190,
+    height: altura + 10,
     alignContent: 'center',
 
   },
@@ -44,8 +44,8 @@ export default StyleSheet.create({
   },
   botaoServico: {
     backgroundColor: '#fff',
-    height: 100,
-    width: 75,
+    height: 104,
+    width: (largura/4) - 5,
     borderRadius: 10,
     alignItems: 'center',
     marginBottom: 5,
@@ -54,14 +54,16 @@ export default StyleSheet.create({
     borderRadius: 10,
     margin: 5,
     backgroundColor: '#eaeceb',
-    width: 60, height: 60,
-    marginTop: 12,
+    width: 60,
+    height: 60,
+    marginTop: 5,
     alignItems: 'center',
     justifyContent: 'center',
   },
   textoServico: {
     color: '#92a494',
     fontSize: 12,
+    textAlign: 'center',
   },
   mapaView: {
     height: 300,

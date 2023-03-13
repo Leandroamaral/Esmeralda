@@ -1,6 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {Text, View, SafeAreaView, ScrollView, RefreshControl, ActivityIndicator} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Text, View, SafeAreaView, ScrollView, RefreshControl, ActivityIndicator, TouchableOpacity} from 'react-native';
 
 import {Entypo} from '@expo/vector-icons';
 
@@ -61,45 +60,128 @@ export default function EspecialistaAgenda({route, navigation}) {
 
   const loadUser = async () => {
     try {
-      const aStorage = await AsyncStorage.getItem('@user');
-      if (aStorage !== null) {
-        db
-            .collection('users')
-            .get()
-            .then((snapshot) => {
-              const filtrado = [];
-              snapshot.forEach((doc) => {
-                const docdados = doc.data();
-                if (typeof(docdados.Agenda) != 'undefined') {
-                  const agenda = docdados.Agenda;
-                  agenda.map((item) => {
-                    item['Nome'] = docdados.fullName;
-                    item['Telefone'] = docdados.telefone;
-                    item['email'] = docdados.email;
-                  });
-                  filtrado.push(agenda.filter((itemf) => (itemf.idEspecialista == parametros.itemId)));
-                }
-              });
-              const dados = filtrado.flat();
-              if (typeof(dados) != 'undefined') {
-                setEventoF(dados.filter((itemf) => {
-                  const datay = setDataHora(itemf.Data, itemf.Horario);
-                  return (datay >= Date.parse(diadehoje) );
-                }));
-
-                setEventoP(dados.filter((itemf) => {
-                  const data = setDataHora(itemf.Data, itemf.Horario);
-                  return (data < Date.parse(diadehoje) );
-                }));
+      db
+          .collection('users')
+          .get()
+          .then((snapshot) => {
+            const filtrado = [];
+            snapshot.forEach((doc) => {
+              const docdados = doc.data();
+              if (typeof(docdados.Agenda) != 'undefined') {
+                const agenda = docdados.Agenda;
+                agenda.map((item, index) => {
+                  item['Nome'] = docdados.fullName;
+                  item['Telefone'] = docdados.telefone;
+                  item['email'] = docdados.email;
+                  item['FotoEspecialista'] = 'a';
+                  item['idUsuario'] = docdados.id;
+                });
+                filtrado.push(agenda.filter((itemf) => (itemf.idEspecialista == parametros.itemId)));
               }
-            })
-            .catch((e) => {
-              console.error(e);
             });
-      }
+            const dados = filtrado.flat();
+            if (typeof(dados) != 'undefined') {
+              setEventoF(dados.filter((itemf) => {
+                const datay = setDataHora(itemf.Data, itemf.Horario);
+                return (datay >= Date.parse(diadehoje) );
+              }));
+
+              setEventoP(dados.filter((itemf) => {
+                const data = setDataHora(itemf.Data, itemf.Horario);
+                return (data < Date.parse(diadehoje) );
+              }));
+            }
+          })
+          .catch((e) => {
+            console.error(e);
+          });
     } catch (e) {
       console.error(e);
     }
+  };
+
+  function apagarAgendamento(itemArray) {
+    function updateUser(agendaAtual, idUsuario) {
+      db
+          .collection('users')
+          .doc(idUsuario)
+          .update({
+            Agenda: agendaAtual,
+          })
+          .catch((e) => {
+            console.error(e);
+          });
+    }
+
+    function updateEspecialista(agendaAtual, idEspecialista) {
+      db
+          .collection('Especialista')
+          .doc(idEspecialista)
+          .update({
+            Agenda: agendaAtual,
+          })
+          .catch((e) => {
+            console.error(e);
+          });
+    }
+
+    function addMinutesToTime(time, minsAdd) {
+      function z(n) {
+        return (n<10? '0':'') + n;
+      };
+      const bits = time.split(':');
+      const mins = bits[0]*60 + +bits[1] + +minsAdd;
+      return z(mins%(24*60)/60 | 0) + ':' + z(mins%60);
+    }
+
+    try {
+      db
+          .collection('users')
+          .doc(itemArray.idUsuario)
+          .get()
+          .then((snapshot) => {
+            const shotdata = snapshot.data();
+            const agenda = shotdata.Agenda;
+            updateUser(agenda.filter((itemf) => (itemf.id != itemArray.id)), itemArray.idUsuario);
+          });
+
+      // verificar quantos blocos de 30 minutos o serviço possui
+      const timeParts = itemArray.Duracao.split(':');
+      const convertido = ((Number(timeParts[0]) * 60 + Number(timeParts[1]))/30) - 1;
+      const timedelete = [];
+
+      timedelete.push(itemArray.Horario);
+      if (convertido > 0) {
+        for (let i = 1; i <= convertido; i++ ) {
+          timedelete.push(addMinutesToTime(itemArray.Horario, 30 * i));
+        }
+      }
+
+      db
+          .collection('Especialista')
+          .doc(itemArray.idEspecialista)
+          .get()
+          .then((snapshot) => {
+            const shotdata = snapshot.data();
+            const agenda = shotdata.Agenda;
+            const filtroAgenda = agenda.filter((itemf) => (itemf.Data == itemArray.Data));
+            const agendaFull = agenda.filter((itemf) => (itemf.Data != itemArray.Data));
+            const filtroTimes = filtroAgenda[0].Times.filter((itemf) => (!timedelete.includes(itemf)));
+            if (filtroTimes.length > 0) {
+              const agendaAdd = {
+                Data: itemArray.Data,
+                Times: filtroTimes,
+              };
+              agendaFull.push(agendaAdd);
+            }
+            updateEspecialista(agendaFull, itemArray.idEspecialista);
+          });
+    } catch (e) {
+      console.error(e);
+    } finally {
+      alert('Horario apagado');
+      navigation.navigate('EditarEspecialistas');
+    };
   };
 
   function ProximosHorarios() {
@@ -120,6 +202,11 @@ export default function EspecialistaAgenda({route, navigation}) {
         <View style={styles.flexrow}>
           <View style={styles.horarioAView}>
             <Text style={styles.horarioATexto}>{item.Horario}</Text>
+            <TouchableOpacity
+              onPress={() => apagarAgendamento(item)}
+            >
+              <Entypo name="circle-with-cross" size={30} color="#8a1212" />
+            </TouchableOpacity>
           </View>
           <View style={styles.horarioSubView}>
             <Text style={styles.horarioBTexto}>{item.NomeServico}</Text>

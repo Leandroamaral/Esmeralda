@@ -12,6 +12,7 @@ export default function RegistrationScreen({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [telefone, setTelefone] = useState('');
+  const [dtnascimento, setDtNascimento] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const onFooterLinkPress = () => {
@@ -33,6 +34,7 @@ export default function RegistrationScreen({navigation}) {
         email,
         fullName,
         telefone,
+        dtnascimento,
       };
       const usersRef = db.collection('users');
       usersRef
@@ -103,6 +105,16 @@ export default function RegistrationScreen({navigation}) {
           placeholderTextColor="#aaaaaa"
           onChangeText={(text) => setTelefone(text)}
           value={telefone}
+          underlineColorAndroid="transparent"
+          keyboardType="numeric"
+        />
+        <MaskedTextInput
+          style={styles.input}
+          mask="99/99/9999"
+          placeholder='Data de Nascimento'
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setDtNascimento(text)}
+          value={dtnascimento}
           underlineColorAndroid="transparent"
           keyboardType="numeric"
         />
