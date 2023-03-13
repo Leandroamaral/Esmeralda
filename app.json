@@ -48,7 +48,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "owner": "leobsb",
+    "owner": "cleideson",
     "extra": {
       "eas": {
         "projectId": "ba801d84-b755-4a82-b3b2-5e9d70298a7b"
