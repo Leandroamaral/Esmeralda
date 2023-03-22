@@ -275,6 +275,16 @@ export default function Agendar({navigation}) {
       id: uuid.v4(),
     };
 
+    const tempMessage = {
+      emailEspecialista: specialists[specialist].Email,
+      NomeServico: servicos[servico].Nome,
+      Duracao: servicos[servico].Tempo,
+      Data: converteData(date),
+      Horario: times[time],
+      Nome: usuario.fullName,
+      Telefone: usuario.telefone,
+    };
+
     let especialista = [];
     let especialistaindex = 0;
     let userAgenda = [];
@@ -311,7 +321,13 @@ export default function Agendar({navigation}) {
         .catch((e) => {
           console.error(e);
         });
-
+    db
+        .collection('messages')
+        .doc(uuid.v4())
+        .set(tempMessage)
+        .catch((e) => {
+          console.error(e);
+        });
     db
         .collection('Especialista')
         .doc(specialists[specialist].id)
