@@ -3,7 +3,7 @@
     "name": "esmeralda",
     "slug": "esmeralda",
     "scheme": "com.esmeralda",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -25,7 +25,8 @@
       ]
     ],
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/ba801d84-b755-4a82-b3b2-5e9d70298a7b"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -39,21 +40,22 @@
         "foregroundImage": "./assets/iconEsmeralda.png",
         "backgroundColor": "#FFFFFF"
       },
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyCCR63hMWEDwv7q4uBKeSGuzcOGBLKG_2k"
-        }
-      },
-      "package": "com.leobsb.esmeralda"
+      "package": "com.leobsb.esmeralda",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "owner": "cleideson",
+    "owner": "leobsb",
     "extra": {
       "eas": {
         "projectId": "ba801d84-b755-4a82-b3b2-5e9d70298a7b"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }

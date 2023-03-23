@@ -277,11 +277,13 @@ export default function Agendar({navigation}) {
 
     const tempMessage = {
       emailEspecialista: specialists[specialist].Email,
+      NomeEspecialista: specialists[specialist].Nome,
       NomeServico: servicos[servico].Nome,
       Duracao: servicos[servico].Tempo,
       Data: converteData(date),
       Horario: times[time],
       Nome: usuario.fullName,
+      Email: usuario.email,
       Telefone: usuario.telefone,
     };
 
