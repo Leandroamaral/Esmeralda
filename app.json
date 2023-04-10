@@ -3,7 +3,7 @@
     "name": "esmeralda",
     "slug": "esmeralda",
     "scheme": "com.esmeralda",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -41,6 +41,12 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.leobsb.esmeralda",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDlc_lD0LrUSvNBhPQqTAbXS2Lqg8yJG44"
+        }
+      },
+      "versionCode": 3,
       "permissions": [
         "android.permission.RECORD_AUDIO"
       ]
