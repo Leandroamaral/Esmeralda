@@ -72,6 +72,17 @@ export default StyleSheet.create({
     borderColor: '#DDD',
     borderWidth: 1,
   },
+  combo: {
+    height: 48,
+    width: 300,
+    borderRadius: 5,
+    backgroundColor: '#EEE',
+    marginTop: 5,
+    marginBottom: 5,
+    fontSize: 15,
+    borderColor: '#000',
+    borderWidth: 2,
+  },
   botaoServico: {
     backgroundColor: '#fff',
     height: 100,
@@ -103,9 +114,8 @@ export default StyleSheet.create({
   check: {
     marginTop: 5,
     marginBottom: 5,
-    marginLeft: 30,
+    marginLeft: 15,
     marginRight: 30,
     paddingLeft: 16,
-    flexDirection: 'row',
   },
 });

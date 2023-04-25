@@ -80,45 +80,46 @@ export default function Perfil({navigation}) {
             </LinearGradient>
           </TouchableOpacity>
         </View>
-        {(userName.administrator) ?
-          <View style={styles.userView}>
-            <TouchableOpacity onPress={() => navigation.navigate('ServicoView') }>
-              <View style={styles.menuView}>
-                <AntDesign name="carryout" size={26} color="#92a494" style={styles.padding10}/>
-                <Text style={styles.menuTexto}>Editar Serviços</Text>
-                <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
-              </View>
-            </TouchableOpacity>
+        {(userName.administrator == 2 || userName.administrator == 1 ) ?
+        <View style={styles.userView}>
+          {(userName.administrator == 2 || userName.administrator == 1 ) ?
             <TouchableOpacity onPress={() => navigation.navigate('EspecialistasMain')}>
               <View style={styles.menuView}>
                 <AntDesign name="smileo" size={26} color="#92a494" style={styles.padding10}/>
                 <Text style={styles.menuTexto}>Editar Especialistas</Text>
                 <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
               </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Visualizar Usuarios')}>
-              <View style={styles.menuView}>
-                <AntDesign name="addusergroup" size={26} color="#92a494" style={styles.padding10}/>
-                <Text style={styles.menuTexto}>Visualizar Usuários</Text>
-                <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('InfEmpresa')}>
-              <View style={styles.menuView}>
-                <AntDesign name="earth" size={26} color="#92a494" style={styles.padding10}/>
-                <Text style={styles.menuTexto}>Editar Informações Empresariais</Text>
-                <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Criar Campanha')}>
-              <View style={styles.menuView}>
-                <AntDesign name="staro" size={26} color="#92a494" style={styles.padding10}/>
-                <Text style={styles.menuTexto}>Criar Campanhas</Text>
-                <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
-              </View>
-            </TouchableOpacity>
-          </View> :
-          null }
+            </TouchableOpacity> : null }
+          {( userName.administrator == 1 ) ?
+            <>
+              <TouchableOpacity onPress={() => navigation.navigate('ServicoView')}>
+                <View style={styles.menuView}>
+                  <AntDesign name="carryout" size={26} color="#92a494" style={styles.padding10} />
+                  <Text style={styles.menuTexto}>Editar Serviços</Text>
+                  <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Visualizar Usuarios')}>
+                <View style={styles.menuView}>
+                  <AntDesign name="addusergroup" size={26} color="#92a494" style={styles.padding10} />
+                  <Text style={styles.menuTexto}>Visualizar Usuários</Text>
+                  <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
+                </View>
+              </TouchableOpacity><TouchableOpacity onPress={() => navigation.navigate('InfEmpresa')}>
+                <View style={styles.menuView}>
+                  <AntDesign name="earth" size={26} color="#92a494" style={styles.padding10} />
+                  <Text style={styles.menuTexto}>Editar Informações Empresariais</Text>
+                  <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
+                </View>
+              </TouchableOpacity><TouchableOpacity onPress={() => navigation.navigate('Criar Campanha')}>
+                <View style={styles.menuView}>
+                  <AntDesign name="staro" size={26} color="#92a494" style={styles.padding10} />
+                  <Text style={styles.menuTexto}>Criar Campanhas</Text>
+                  <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
+                </View>
+              </TouchableOpacity>
+            </> : null }
+        </View> : null }
         <View style={styles.sairView}>
           <TouchableOpacity onPress={onLogoutPress}>
             <View style={styles.menuView}>

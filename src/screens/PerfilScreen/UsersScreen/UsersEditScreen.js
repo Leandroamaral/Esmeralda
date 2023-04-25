@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {Text, View, TextInput, TouchableOpacity} from 'react-native';
 import {MaskedTextInput} from 'react-native-mask-text';
+import {Picker} from '@react-native-picker/picker';
 
 import {LinearGradient} from 'expo-linear-gradient';
 import {AntDesign} from '@expo/vector-icons';
-import Checkbox from 'expo-checkbox';
+// import Checkbox from 'expo-checkbox';
 
 import styles from './styles';
 import {db} from '../../../firebase/config';
@@ -95,12 +96,16 @@ export default function UserEditScreen({route, navigation}) {
           keyboardType="numeric"
         />
         <View style={styles.check}>
-          <Checkbox
-            style={{alignSelf: 'center'}}
-            value={administrator}
+          <Text>Perfil:</Text>
+          <Picker style={styles.combo}
+            mode="dropdown"
+            selectedValue={administrator}
             onValueChange={setAdministrator}
-          />
-          <Text style={{padding: 10, alignSelf: 'center'}}>Administrador</Text>
+          >
+            <Picker.Item label="Usuario" value='3'/>
+            <Picker.Item label='Especialista' value='2' />
+            <Picker.Item label='Administrador' value='1' />
+          </Picker>
         </View>
         <View style={{alignSelf: 'center', padding: 10, flexDirection: 'row'}}>
           <TouchableOpacity onPress={onSaveEditUser}>
