@@ -17,7 +17,7 @@
     "@react-navigation/native": "^6.1.1",
     "@react-navigation/stack": "^6.3.10",
     "base-64": "^1.0.0",
-    "expo": "~47.0.12",
+    "expo": "^50.0.7",
     "expo-auth-session": "^3.8.0",
     "expo-checkbox": "^2.2.2",
     "expo-dev-client": "~2.0.1",
@@ -27,10 +27,12 @@
     "expo-linking": "~3.3.1",
     "expo-random": "~13.0.0",
     "expo-secure-store": "~12.0.0",
+    "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",
     "expo-updates": "~0.15.6",
     "expo-web-browser": "~12.0.0",
     "firebase": "^9.15.0",
+    "metro": "^0.80.6",
     "react": "18.1.0",
     "react-native": "0.70.5",
     "react-native-dialog": "^9.3.0",
@@ -47,8 +49,7 @@
     "react-native-svg": "13.4.0",
     "react-native-uuid": "^2.0.1",
     "react-native-weekly-calendar": "^0.2.0",
-    "react-navigation": "^4.4.4",
-    "expo-splash-screen": "~0.17.5"
+    "react-navigation": "^4.4.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -56,5 +57,9 @@
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-react": "^7.32.2"
   },
-  "private": true
+  "private": true,
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
