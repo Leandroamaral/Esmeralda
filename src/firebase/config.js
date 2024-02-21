@@ -7,13 +7,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const firebaseConfig = {
-  apiKey: ,
-  authDomain: ,
-  databaseURL: ,
-  projectId: ,
-  storageBucket: ,
-  messagingSenderId: ,
-  appId: ,
+  apiKey: "AIzaSyCaVmrotY1FxYvQqvfdHnPg9tGS3kMvomM",
+  authDomain: "esmeralda-9cbcf.firebaseapp.com",
+  projectId: "esmeralda-9cbcf",
+  storageBucket: "esmeralda-9cbcf.appspot.com",
+  messagingSenderId: "49981549747",
+  appId: "1:49981549747:web:a7256a88eb3f503ff414c6"
 };
 
 let app;

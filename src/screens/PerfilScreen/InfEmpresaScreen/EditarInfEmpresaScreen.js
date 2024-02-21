@@ -47,36 +47,39 @@ export default function InfEmpresa() {
         .get()
         .then((snapshot) => {
           const shotdata = snapshot.data();
-          setNomeEmp(shotdata.NomeEmp);
-          setEndL1(shotdata.EndL1);
-          setEndL2(shotdata.EndL2);
-          setLatitude(shotdata.Latitude);
-          setLongitude(shotdata.Longitude);
-          setLatitudeDelta(shotdata.LatitudeDelta);
-          setLongitudeDelta(shotdata.LongitudeDelta);
-          setWhatsapp(shotdata.Whatsapp);
-          setFacebook(shotdata.Facebook.End);
-          setFlicker(shotdata.Flicker.End);
-          setFoursquare(shotdata.Foursquare.End);
-          setInstagram(shotdata.Instagram.End);
-          setPinterest(shotdata.Pinterest.End);
-          setLinkedin(shotdata.Linkedin.End);
-          setReddit(shotdata.Reddit.End);
-          setTwitch(shotdata.Twitch.End);
-          setTwitter(shotdata.Twitter.End);
-          setGoogle(shotdata.Google.End);
-          setYoutube(shotdata.Youtube.End);
-          setFacebookA(shotdata.Facebook.Ativo);
-          setFlickerA(shotdata.Flicker.Ativo);
-          setFoursquareA(shotdata.Foursquare.Ativo);
-          setInstagramA(shotdata.Instagram.Ativo);
-          setPinterestA(shotdata.Pinterest.Ativo);
-          setLinkedinA(shotdata.Linkedin.Ativo);
-          setRedditA(shotdata.Reddit.Ativo);
-          setTwitchA(shotdata.Twitch.Ativo);
-          setTwitterA(shotdata.Twitter.Ativo);
-          setGoogleA(shotdata.Google.Ativo);
-          setYoutubeA(shotdata.Youtube.Ativo);
+          if (typeof(shotdata) != 'undefined') {
+            console.log('aqui')
+            setNomeEmp(shotdata.NomeEmp);
+            setEndL1(shotdata.EndL1);
+            setEndL2(shotdata.EndL2);
+            setLatitude(shotdata.Latitude);
+            setLongitude(shotdata.Longitude);
+            setLatitudeDelta(shotdata.LatitudeDelta);
+            setLongitudeDelta(shotdata.LongitudeDelta);
+            setWhatsapp(shotdata.Whatsapp);
+            setFacebook(shotdata.Facebook.End);
+            setFlicker(shotdata.Flicker.End);
+            setFoursquare(shotdata.Foursquare.End);
+            setInstagram(shotdata.Instagram.End);
+            setPinterest(shotdata.Pinterest.End);
+            setLinkedin(shotdata.Linkedin.End);
+            setReddit(shotdata.Reddit.End);
+            setTwitch(shotdata.Twitch.End);
+            setTwitter(shotdata.Twitter.End);
+            setGoogle(shotdata.Google.End);
+            setYoutube(shotdata.Youtube.End);
+            setFacebookA(shotdata.Facebook.Ativo);
+            setFlickerA(shotdata.Flicker.Ativo);
+            setFoursquareA(shotdata.Foursquare.Ativo);
+            setInstagramA(shotdata.Instagram.Ativo);
+            setPinterestA(shotdata.Pinterest.Ativo);
+            setLinkedinA(shotdata.Linkedin.Ativo);
+            setRedditA(shotdata.Reddit.Ativo);
+            setTwitchA(shotdata.Twitch.Ativo);
+            setTwitterA(shotdata.Twitter.Ativo);
+            setGoogleA(shotdata.Google.Ativo);
+            setYoutubeA(shotdata.Youtube.Ativo);
+          }
         })
         .catch((e) => {
           console.error(e);
@@ -87,7 +90,7 @@ export default function InfEmpresa() {
     db
         .collection('Empresa')
         .doc('Main')
-        .update({
+        .set({
           NomeEmp: nomeEmp,
           EndL1: endL1,
           EndL2: endL2,
@@ -148,7 +151,7 @@ export default function InfEmpresa() {
         .then(() => {
           alert('Atualização Efetuada');
         })
-        .catch(() => {
+        .catch((e) => {
           console.error(e);
         });
   }

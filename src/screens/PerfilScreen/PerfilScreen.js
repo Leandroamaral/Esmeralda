@@ -90,7 +90,6 @@ export default function Perfil({navigation}) {
                 <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
               </View>
             </TouchableOpacity> : null }
-          {( userName.administrator == 1 ) ?
             <>
               <TouchableOpacity onPress={() => navigation.navigate('ServicoView')}>
                 <View style={styles.menuView}>
@@ -118,7 +117,7 @@ export default function Perfil({navigation}) {
                   <AntDesign name="rightcircleo" size={22} color="#92a494" style={styles.padding10} />
                 </View>
               </TouchableOpacity>
-            </> : null }
+            </>
         </View> : null }
         <View style={styles.sairView}>
           <TouchableOpacity onPress={onLogoutPress}>
