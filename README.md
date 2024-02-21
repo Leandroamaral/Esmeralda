@@ -79,3 +79,17 @@ service cloud.firestore {
 }
 ```
 
+# Starting the App
+To start the app on development mode is required Expo Go App
+
+Expo GO [Android](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_US&gl=US&pli=1)
+
+Expo GO [IOS](https://apps.apple.com/us/app/expo-go/id982107779)
+
+```
+npm start
+```
+
+With this is possible to make changes on the software without android studio or compiling the program
+
+More details [Expo.dev](https://expo.dev/)
