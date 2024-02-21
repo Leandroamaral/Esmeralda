@@ -50,3 +50,32 @@ npm install
 ![image11](https://github.com/Leandroamaral/Esmeralda/blob/78a9d5ee6befc49339daf164c21f147f47d6c82b/assets/readme/14.png?raw=true)
 - Save Authentication method
 ![image12](https://github.com/Leandroamaral/Esmeralda/blob/78a9d5ee6befc49339daf164c21f147f47d6c82b/assets/readme/15.png?raw=true)
+
+4. Configure Firebase Cloud in your App
+- On project overview gear -> project settings copy the variable firebaseConf
+```
+const firebaseConfig = {
+  apiKey: "xxxxxx",
+  authDomain: "xxxx",
+  projectId: "xxxxx",
+  storageBucket: "xxxx",
+  messagingSenderId: "xxxx",
+  appId: "xxxxx"
+};
+```
+- replace this variable on src/firebase/config.js
+
+5. Configure security params on Firestore Database
+- On Firestore Database -> Rules change to permit access from App (replace to code bellow)
+```
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+```
+
