@@ -95,3 +95,15 @@ npm start
 With this is possible to make changes on the software without android studio or compiling the program
 
 More details [Expo.dev](https://expo.dev/)
+
+# First User
+After include the first user in the app is required to change the user on firebase to add administrator profile.
+![image13](https://github.com/Leandroamaral/Esmeralda/blob/78a9d5ee6befc49339daf164c21f147f47d6c82b/assets/readme/16.png?raw=true)
+Add the key value administrator = "2" on colection "user"
+
+# Compiling
+```
+npx eas build --clear-cache -p=android -e=preview
+```
+
+
