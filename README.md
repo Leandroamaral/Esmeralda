@@ -1,6 +1,8 @@
 # About
 This little App works on Android and was developed to be used as scheduler for a services in a beauty salon but can be customizable for any service provider
 
+The app is published for android in [play store](https://play.google.com/store/apps/details?id=com.leobsb.esmeralda&hl=en_US&gl=US)
+
 This was developed with Firebase database and expo framework with React native
  
 # Prehequisites 
